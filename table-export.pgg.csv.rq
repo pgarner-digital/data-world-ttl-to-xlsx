@@ -1,0 +1,129 @@
+PREFIX : <https://fl-dms.linked.data.world/d/ddw-catalogs/>
+PREFIX apf: <http://jena.apache.org/ARQ/property#>
+PREFIX dwec: <https://dwec.data.world/v0/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT
+    #("fl-dms" AS ?agency)
+    (GROUP_CONCAT(?collection_name;SEPARATOR=", ") as ?collections) 
+    ?type_prefix 
+    ?database_name 
+    ?schema
+    ?type 
+    ?table_name 
+    ?table_IRI
+    ?description
+    ?business_summary
+    ?restricted_to_public_disclosure_per_federal_or_state_law
+    ?sensitive_data
+    ?data_sharing_agreement
+    ?program_office
+    ?data_steward
+    ?data_ownner
+    ?technical_steward
+    ?contact_email
+    ?status
+
+WHERE
+{
+    ?typeRaw rdfs:subClassOf* dwec:DatabaseTable . ## This query will bring back anything that isa table 
+
+    ?table_IRI a ?typeRaw ;
+        dct:isPartOf ?databaseIRI ;
+        dct:identifier ?table_name .
+    OPTIONAL {
+        ?table_IRI dct:isPartOf ?schemaIRI .
+
+        ?schemaIRI a dwec:DatabaseSchema ;
+            dct:identifier ?schema .
+    }
+
+    ?typeRaw apf:splitIRI (?type_prefix  ?type) .
+
+    ?tableCatalogRecord foaf:primaryTopic ?table_IRI .
+
+    ?collectionIRI dcat:record ?tableCatalogRecord ;
+        dct:identifier ?collection_name .
+
+    ?databaseIRI dct:identifier ?database_name .
+
+    FILTER (?database_name IN 
+    (   
+        # "d5c6gc8s0gmfjn"
+        "ClaimDataStateofFlorida_kjackson2"
+        # "d431aap1keh3vl"
+        # "andy_1"
+        # "andy_2"
+        # "cherwell"
+        # "dmspr10"
+        # "CData"
+        # "d4n1orn72lteqa"
+        # "PF3"
+    ))
+
+    OPTIONAL {
+        ?table_IRI dct:description ?description .
+    }
+
+    OPTIONAL {
+        ?table_IRI :business_summary ?business_summary .
+    }
+    # Restricted to Public Disclosure
+    OPTIONAL {
+        ?table_IRI :restricted_to_public_disclosure ?restricted_to_public_disclosure_per_federal_or_state_law_label .
+        ?restricted_to_public_disclosure_per_federal_or_state_law_label skos:altLabel ?restricted_to_public_disclosure_per_federal_or_state_law
+    }
+    # Contains Sensitive Data
+    OPTIONAL {
+        ?table_IRI :contains_sensitive_data ?sensitive_data_label .
+        ?sensitive_data_label skos:altLabel ?sensitive_data .
+    }
+    # Data Sharing Aggreement
+    OPTIONAL {
+         ?table_IRI :data_sharing_agreement_required ?data_sharing_agreement_label .
+         ?data_sharing_agreement_label skos:altLabel ?data_sharing_agreement .
+    }
+    # Program Office
+    OPTIONAL {
+        ?table_IRI :program_office ?program_office .
+    }
+    # Data Steward
+    OPTIONAL {
+        ?table_IRI :data_steward ?data_steward .
+    }
+    # Data Ownner
+    OPTIONAL {
+        ?table_IRI :data_ownner ?data_ownner .
+    }
+    # Technical Steward
+    OPTIONAL {
+        ?table_IRI :technical_steward ?technical_steward .
+    }
+       # Contact Email
+    OPTIONAL {
+        ?table_IRI :contact_email ?contact_email .
+    }
+    # Status
+    OPTIONAL {
+        ?table_IRI dwec:hasAssetStatus ?status_label .
+        ?status_label rdfs:label ?status .
+    }
+
+}
+GROUP BY 
+?type_prefix ?schema ?type ?database_name ?table_name ?table_IRI 
+?description
+?business_summary
+?restricted_to_public_disclosure_per_federal_or_state_law
+?sensitive_data
+?data_sharing_agreement
+?program_office
+?data_steward
+?data_ownner
+?technical_steward
+?contact_email
+?status

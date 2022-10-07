@@ -1,0 +1,19 @@
+PREFIX : <https://fl-dms.linked.data.world/d/ddw-catalog-build/>
+PREFIX ds-ddw-catalogs: <https://fl-dms.linked.data.world/d/ddw-catalogs/>
+PREFIX ds-full-graph: <https://fl-dms.linked.data.world/d/full-graph/>
+
+SELECT (?o AS ?Glossary_Terms)
+FROM ds-full-graph:
+WHERE
+{
+    {
+        ?s rdf:type dwec:BusinessTerm ;
+        dct:title ?o .
+    }
+    UNION
+    {
+        ?s rdf:type dwec:BusinessTerm ;
+        rdfs:lable ?o
+    }
+}
+ORDER BY ?o
