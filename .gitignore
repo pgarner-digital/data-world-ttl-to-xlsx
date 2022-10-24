@@ -4,7 +4,8 @@ target/
 !**/src/test/**/target/
 
 ### File too large for Github ###
-fl-dms-full-graph.ttl
+*.ttl
+*.xlsx
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
@@ -39,3 +40,4 @@ build/
 
 ### Mac OS ###
 .DS_Store
+/logs/

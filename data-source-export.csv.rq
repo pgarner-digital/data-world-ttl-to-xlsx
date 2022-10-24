@@ -1,0 +1,51 @@
+PREFIX : <https://fl-dms.linked.data.world/d/ddw-catalogs/>
+PREFIX apf: <http://jena.apache.org/ARQ/property#>
+PREFIX dwec: <https://dwec.data.world/v0/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT DISTINCT
+#("fl-dms" AS ?agency)
+(GROUP_CONCAT(?collection_name;SEPARATOR=", ") as ?collections)
+?databaseiri
+?databaseName
+?jdbcURL
+?databaseServer
+?databasePort
+#?databaseSchema
+(GROUP_CONCAT(?databaseSchema;SEPARATOR=", ") as ?schemas)
+
+WHERE
+{
+    ?databaseiri dct:identifier ?databaseName ;
+    rdf:type dwec:Database .
+    OPTIONAL{
+        ?databaseiri   dwec:databaseConnection ?bnode .
+        OPTIONAL{
+            ?bnode  dwec:databasePort ?databasePort .
+        }
+        OPTIONAL{
+            ?bnode  dwec:databaseServer ?databaseServer .
+        }
+        OPTIONAL{
+            ?bnode  dwec:jdbcUrl ?jdbcURL .
+        }
+        OPTIONAL{
+            ?bnode dwec:databaseSchema ?databaseSchema .
+        }
+    ?s foaf:primaryTopic ?databaseiri .
+    ?collectionIRI dcat:record ?s ;
+        dct:identifier ?collection_name .
+    }
+}
+
+GROUP BY
+?databaseiri
+?jdbcURL
+?databaseServer
+?databasePort
+?databaseName

@@ -1,12 +1,14 @@
 import org.apache.jena.query.*;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.RDFNode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.streaming.SXSSFCell;
+import org.apache.poi.xssf.streaming.SXSSFRow;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,29 +19,52 @@ import java.time.temporal.ChronoUnit;
 
 public class DataDotWorldModelProcessor {
 
+    /************************************************  INPUTS  ********************************************************/
+    private static final String OWNER = "FL-DMS";
+    //private static final String OWNER = "FL-DCF";
+
+    private static final String FULL_GRAPH_TTL_FILE_PATH = "fl-dms-full-graph.ttl";
+    //private static final String FULL_GRAPH_TTL_FILE_PATH = "fl-dcf-full-graph.ttl";
+
+    /******************************************************************************************************************/
+
     private static final Logger logger = LogManager.getLogger(DataDotWorldModelProcessor.class);
-    private static final String SHEET_MAX_ROWS_EXCEEDED = "spreadsheet reached maximum row size: 500,000.  Aborting...";
     private static final int MAX_ROW_SIZE = 500000;
-    private static final String[] COLUMN_PROPERTIES = {
+    private static final String SHEET_MAX_ROWS_EXCEEDED_MSG;
+
+    static {
+        SHEET_MAX_ROWS_EXCEEDED_MSG = " spreadsheet reached maximum row size: " + MAX_ROW_SIZE + ".  Aborting...";
+    }
+
+    private static final String BUSINESS_TERMS_SHEET_NAME = "Business Terms";
+    private static final String DATA_SOURCES_SHEET_NAME = "Data Sources";
+    private static final String TABLES_SHEET_NAME = "Tables";
+    private static final String COLUMNS_SHEET_NAME = "Columns";
+    private static final String BUSINESS_TERMS_QUERY_FILE_PATH = "business-term-export.csv.rq";
+    private static final String DATA_SOURCES_QUERY_FILE_PATH = "data-source-export.csv.rq";
+    private static final String COLUMNS_QUERY_FILE_PATH = "columns-export.csv.rq";
+    private static final String TABLES_QUERY_FILE_PATH = "table-export.csv.rq";
+    private static final String[] BUSINESS_TERM_PROPERTIES = {
         "collections",
-        "columnTypeName",
-        "type_prefix",
-        "type",
-        "database_name",
-        "table_name",
-        "schema",
-        "column_name",
-        "column_IRI",
+        "businesstermiri",
+        "business_term",
         "description",
-        "business_summary",
-        "restricted_to_public_disclosure_per_federal_or_state_law",
-        "sensitive_data",
+        "summary",
         "data_ownner",
         "data_steward",
+        "program_officer",
         "technical_steward",
         "status"
     };
-
+    private static final String[] DATA_SOURCE_PROPERTIES = {
+        "collections",
+        "databaseiri",
+        "databaseName",
+        "jdbcURL",
+        "databaseServer",
+        "databasePort",
+        "schemas"
+    };
     private static final String[] TABLE_PROPERTIES = {
         "collections",
         "type_prefix",
@@ -60,147 +85,196 @@ public class DataDotWorldModelProcessor {
         "contact_email",
         "status"
     };
+    private static final String[] COLUMN_PROPERTIES = {
+            "collections",
+            "type_prefix",
+            "database_name",
+            "table_name",
+            "schema",
+            "type",
+            "column_name",
+            "column_IRI",
+            "description",
+            "business_summary",
+            "restricted_to_public_disclosure_per_federal_or_state_law",
+            "sensitive_data",
+            "data_ownner",
+            "data_steward",
+            "technical_steward",
+            "status"
+    };
 
-    private static final String COLUMNS_QUERY_FILE_PATH = "columns-export.pgg.csv.rq";
+    // These two fields supports singleton design pattern for reusability.
+    private static CellStyle bodyCellStyle;
+    private static CellStyle headerCellStyle;
 
-    private static final String TABLES_QUERY_FILE_PATH = "table-export.pgg.csv.rq";
+    public static void main(String[] args) throws IOException {
 
-    private static final String DATASET_TTL_FILE_PATH = "fl-dms-full-graph.ttl";
-    //private static final String DATASET_TTL_FILE_PATH = "fl-dms-full-graph.abbrev.ttl";
-
-    private static final String OWNER = "FL-DMS";
-
-    public static void main(String[] args) {
-
-        String queryString;
-        try {
-            queryString = Files.readString(Paths.get(COLUMNS_QUERY_FILE_PATH));
-        } catch (IOException e) {
-            //TODO: No-exception logic for handling an incorrect columns query file path
-            throw new RuntimeException(e);
-        }
-
-        XSSFWorkbook workbook = new XSSFWorkbook();
-        XSSFSheet sheet = workbook.createSheet("Columns");
-        installColumnHeader(sheet);
-        int rowCount = 1;
-        Model model = loadModel();
-        Query query = QueryFactory.create(queryString);
+        LocalDateTime begin = LocalDateTime.now();
+        SXSSFWorkbook workbook = new SXSSFWorkbook();
+        Model model = loadModel(FULL_GRAPH_TTL_FILE_PATH);
 
         // Columns
-        try (QueryExecution queryExecution = QueryExecutionFactory.create(query, model)) {
-            ResultSet results = queryExecution.execSelect() ;
-            logger.info("Begin extracting column results ...");
-            LocalDateTime begin = LocalDateTime.now();
-            while (results.hasNext()) {
-                logger.info("Processing column record: " + (rowCount + 1) + "(" +
-                        begin.until(LocalDateTime.now(), ChronoUnit.MINUTES) + " minutes).");
-                QuerySolution querySolution = results.nextSolution();
-                if(sheetCleanedDueToExceedingMaxRowSize(rowCount, sheet)) {
-                    logger.error(columnsSheetExceededMaxSizeMsg());
-                    break;
-                }
-                else {
-                    processColumnCellValues(querySolution, sheet.createRow(rowCount++));
-                }
-            }
-        }
+        processSheet(
+            workbook,
+            model,
+            COLUMNS_QUERY_FILE_PATH,
+            COLUMNS_SHEET_NAME,
+            COLUMN_PROPERTIES,
+            10000,
+            ChronoUnit.MINUTES
+        );
 
         // Tables
-        try {
-            queryString = Files.readString(Paths.get(TABLES_QUERY_FILE_PATH));
-        } catch (IOException e) {
-            //TODO: No-exception logic for handling an incorrect tables query file path
-            throw new RuntimeException(e);
-        }
-        sheet = workbook.createSheet("Tables");
-        installColumnHeader(sheet);
-        query = QueryFactory.create(queryString);
+        processSheet(
+            workbook,
+            model,
+            TABLES_QUERY_FILE_PATH,
+            TABLES_SHEET_NAME,
+            TABLE_PROPERTIES,
+            1000,
+            ChronoUnit.SECONDS
+        );
+
+        // Data sources
+        processSheet(
+            workbook,
+            model,
+            DATA_SOURCES_QUERY_FILE_PATH,
+            DATA_SOURCES_SHEET_NAME,
+            DATA_SOURCE_PROPERTIES,
+            1,
+            ChronoUnit.SECONDS
+        );
+
+        // Business glossary terms
+        processSheet(
+            workbook,
+            model,
+            BUSINESS_TERMS_QUERY_FILE_PATH,
+            BUSINESS_TERMS_SHEET_NAME,
+            BUSINESS_TERM_PROPERTIES,
+            1,
+            ChronoUnit.SECONDS
+        );
+
+        writeWorkbookToFileSystem(workbook);
+
+        logger.info("Total processing time: " + begin.until(LocalDateTime.now(), ChronoUnit.MINUTES) +
+                " minutes).");
+    }
+
+    private static Model loadModel(String filePath) {
+        LocalDateTime begin = LocalDateTime.now();
+        Model model = ModelFactory.createDefaultModel();
+        logger.info("Begin loading " + filePath + " into model...");
+        model.read(filePath);
+        logger.info("Model loaded (" + begin.until(LocalDateTime.now(), ChronoUnit.SECONDS) + " seconds).");
+        return model;
+    }
+
+    private static void processSheet(
+        SXSSFWorkbook workbook,
+        Model model,
+        String queryFilePath,
+        String sheetName,
+        String[] propertyNames,
+        int rowCountDisplayFrequency,
+        ChronoUnit logEntryTimeUnit
+    ) throws IOException {
+        String queryString;
+        queryString = Files.readString(Paths.get(queryFilePath));
+        int rowCount = 1;
+        SXSSFSheet sheet = workbook.createSheet(sheetName);
+        configureSheet(sheet, propertyNames);
+        Query query = QueryFactory.create(queryString);
         try (QueryExecution queryExecution = QueryExecutionFactory.create(query, model)) {
             ResultSet results = queryExecution.execSelect() ;
-            logger.info("Begin extracting table results ...");
-            LocalDateTime begin = LocalDateTime.now();
+            logger.info("Begin extracting " + sheetName.toLowerCase() + " results ...");
+            LocalDateTime localDateTime = LocalDateTime.now();
             while (results.hasNext()) {
-                logger.info("Processing table record: " + (rowCount + 1) + "(" +
-                        begin.until(LocalDateTime.now(), ChronoUnit.MINUTES) + " minutes).");
+                if(rowCount % rowCountDisplayFrequency == 0) {
+                    logger.info("Processing " + sheetName.toLowerCase() + " record: " + (rowCount + 1) + "(" +
+                            localDateTime.until(LocalDateTime.now(), logEntryTimeUnit) + " " +
+                                logEntryTimeUnit.name().toLowerCase() + ").");
+                }
                 QuerySolution querySolution = results.nextSolution();
                 if(sheetCleanedDueToExceedingMaxRowSize(rowCount, sheet)) {
-                    logger.error(tablesSheetExceededMaxSizeMsg());
+                    logger.error(sheetExceededMaxSizeMsg(sheetName));
                     break;
                 }
                 else {
-                    processTableCellValues(querySolution, sheet.createRow(rowCount++));
+                    installBodyRow(querySolution, sheet.createRow(rowCount++), propertyNames);
+                    if(rowCount % 100 == 0) {
+                        sheet.flushRows(100);
+                    }
                 }
             }
         }
-
-
-
-
-        writeWorkbookToFileSystem(workbook);
     }
 
-    private static void writeWorkbookToFileSystem(XSSFWorkbook workbook) {
-        try {
-            FileOutputStream out = new FileOutputStream("Data_Dictionary_" + OWNER + ".xlsx");
-            workbook.write(out);
-            out.close();
-        } catch (IOException e) {
-            throw new RuntimeException("Error writing spreadsheet workbook to file system.", e);
+    private static void configureSheet(SXSSFSheet sheet, String[] propertyNames) {
+        sheet.setDisplayGridlines(false);
+        sheet.setPrintGridlines(false);
+        sheet.setFitToPage(true);
+        sheet.setHorizontallyCenter(true);
+        PrintSetup printSetup = sheet.getPrintSetup();
+        printSetup.setLandscape(true);
+        for(int i=0; i < propertyNames.length; i++) {
+            sheet.setColumnWidth(i, 20*256);
+        }
+        installHeaderRow(sheet, propertyNames);
+    }
+
+    private static void installHeaderRow(SXSSFSheet sheet, String[] propertyNames) {
+        sheet.createFreezePane(0, 1);
+        SXSSFWorkbook workbook = sheet.getWorkbook();
+        CellStyle cellStyle = getHeaderCellStyle(workbook);
+        int columnCount = 0;
+        SXSSFRow row = sheet.createRow(0);
+        for(String cellProperty: propertyNames) {
+            SXSSFCell cell = row.createCell(columnCount++, CellType.STRING);
+            cell.setCellValue(cellProperty);
+            cell.setCellStyle(cellStyle);
         }
     }
 
-    private static String columnsSheetExceededMaxSizeMsg() {
-        return "Columns " + SHEET_MAX_ROWS_EXCEEDED;
+    private static void installBodyRow(
+        QuerySolution querySolution,
+        SXSSFRow row,
+        String[] propertyNames
+    ) {
+        CellStyle cellStyle = getStandardCellStyle(row.getSheet().getWorkbook());
+        cellStyle.setAlignment(HorizontalAlignment.LEFT);
+        cellStyle.setWrapText(true);
+
+        int count = 0;
+        for(String cellProperty: propertyNames) {
+            setCellValue(cellProperty, count++, querySolution, row, cellStyle);
+        }
     }
 
-    private static String tablesSheetExceededMaxSizeMsg() {
-        return "Tables " + SHEET_MAX_ROWS_EXCEEDED;
-    }
-
-    private static String dataSourcesSheetExceededMaxSizeMsg() {
-        return "Data sources " + SHEET_MAX_ROWS_EXCEEDED;
-    }
-
-    private static String stringValueOf(RDFNode rdfNode) {
-        return null == rdfNode ? "" : rdfNode.toString();
+    private static void writeWorkbookToFileSystem(SXSSFWorkbook workbook) throws IOException {
+        FileOutputStream out = new FileOutputStream("Catalog_Metadata_" + OWNER + ".xlsx");
+        workbook.write(out);
+        out.close();
+        workbook.dispose();
     }
 
     private static void setCellValue(
         String columnName,
         int columnCount,
         QuerySolution querySolution,
-        XSSFRow row
+        SXSSFRow row,
+        CellStyle cellStyle
     ) {
         RDFNode cellValue = querySolution.get(columnName) ;
-        XSSFCell cell = row.createCell(columnCount, CellType.STRING);
+        SXSSFCell cell = row.createCell(columnCount, CellType.STRING);
         cell.setCellValue(stringValueOf(cellValue));
+        cell.setCellStyle(cellStyle);
     }
 
-    private static void processColumnCellValues(QuerySolution querySolution, XSSFRow row) {
-        int count = 0;
-        for(String cellProperty: COLUMN_PROPERTIES) {
-            setCellValue(cellProperty, count++, querySolution, row);
-        }
-    }
-
-    private static void processTableCellValues(QuerySolution querySolution, XSSFRow row) {
-        int count = 0;
-        for(String cellProperty: TABLE_PROPERTIES) {
-            setCellValue(cellProperty, count++, querySolution, row);
-        }
-    }
-
-    private static void installColumnHeader(XSSFSheet sheet) {
-        int columnCount = 0;
-        XSSFRow row = sheet.createRow(0);
-        for(String cellProperty: COLUMN_PROPERTIES) {
-            XSSFCell cell = row.createCell(columnCount, CellType.STRING);
-            cell.setCellValue(cellProperty);
-        }
-    }
-
-    public static void cleanSheet(XSSFSheet sheet) {
+    public static void cleanSheet(SXSSFSheet sheet) {
         int numberOfRows = sheet.getPhysicalNumberOfRows();
         if(numberOfRows > 0) {
             for (int i = sheet.getFirstRowNum(); i <= sheet.getLastRowNum(); i++) {
@@ -215,24 +289,50 @@ public class DataDotWorldModelProcessor {
         }
     }
 
-    private static boolean sheetCleanedDueToExceedingMaxRowSize(int rowCount, XSSFSheet sheet) {
+    private static boolean sheetCleanedDueToExceedingMaxRowSize(int rowCount, SXSSFSheet sheet) {
         boolean conditionMetOrNot = rowCount >= MAX_ROW_SIZE;
         if(conditionMetOrNot) {
-            String errMsg = columnsSheetExceededMaxSizeMsg();
+            String errMsg = sheetExceededMaxSizeMsg(sheet.getSheetName());
             logger.error(errMsg);
             cleanSheet(sheet);
-            XSSFRow row = sheet.createRow(0);
+            SXSSFRow row = sheet.createRow(0);
             row.createCell(0, CellType.STRING).setCellValue(errMsg);
         }
         return conditionMetOrNot;
     }
 
-    private static Model loadModel() {
-        Model model = ModelFactory.createDefaultModel();
-        logger.info("Begin loading " + DATASET_TTL_FILE_PATH + " into model...");
-        LocalDateTime begin = LocalDateTime.now();
-        model.read(DATASET_TTL_FILE_PATH);
-        logger.info("Model loaded (" + begin.until(LocalDateTime.now(), ChronoUnit.SECONDS) + " seconds).");
-        return model;
+    private static String sheetExceededMaxSizeMsg(String sheetName) { return sheetName + SHEET_MAX_ROWS_EXCEEDED_MSG; }
+
+    private static String stringValueOf(RDFNode rdfNode) { return null == rdfNode ? "" : rdfNode.toString(); }
+
+    private static CellStyle getStandardCellStyle(SXSSFWorkbook workbook) {
+        if(null == bodyCellStyle) {
+            BorderStyle thin = BorderStyle.THIN;
+            short black = IndexedColors.BLACK.getIndex();
+            bodyCellStyle = workbook.createCellStyle();
+            bodyCellStyle.setBorderRight(thin);
+            bodyCellStyle.setRightBorderColor(black);
+            bodyCellStyle.setBorderBottom(thin);
+            bodyCellStyle.setBottomBorderColor(black);
+            bodyCellStyle.setBorderLeft(thin);
+            bodyCellStyle.setLeftBorderColor(black);
+            bodyCellStyle.setBorderTop(thin);
+            bodyCellStyle.setTopBorderColor(black);
+        }
+        return bodyCellStyle;
+    }
+
+    private static CellStyle getHeaderCellStyle(SXSSFWorkbook workbook) {
+        if(null == headerCellStyle) {
+            headerCellStyle = workbook.createCellStyle();
+            headerCellStyle.cloneStyleFrom(getStandardCellStyle(workbook));
+            Font headerFont = workbook.createFont();
+            headerFont.setBold(true);
+            headerCellStyle.setAlignment(HorizontalAlignment.CENTER);
+            headerCellStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+            headerCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            headerCellStyle.setFont(headerFont);
+        }
+        return headerCellStyle;
     }
 }

@@ -8,8 +8,8 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 SELECT
-    ?columnTypeName
     #("fl-dms" AS ?agency)
+    #?columnTypeName
     (GROUP_CONCAT(?collection_name;SEPARATOR=", ") as ?collections)
     ?type_prefix
     ?database_name
@@ -29,7 +29,7 @@ SELECT
 
 WHERE
 {
-    ?column_IRI dwec:columnTypeName ?columnTypeName .
+    #?column_IRI dwec:columnTypeName ?columnTypeName .
 
     ?typeRaw rdfs:subClassOf* dwec:DatabaseColumn .
 
@@ -54,7 +54,8 @@ WHERE
     ?collectionIRI dcat:record ?columnCatalogRecord ;
     dct:identifier ?collection_name .
 
-    ?databaseIRI dct:identifier ?database_name .
+    ?databaseIRI dct:identifier ?database_name ;
+         a dwec:Database .
 
 #    FILTER (?database_name IN
 #    (
@@ -107,11 +108,12 @@ WHERE
     }
     # Status
     OPTIONAL {
-        ?column_IRI :ApprovalStatus ?status .
+        ?column_IRI dwec:hasAssetStatus ?status_label .
+        ?status_label rdfs:label ?status .
     }
 }
 GROUP BY
-?columnTypeName
+#?columnTypeName
 ?type_prefix
 ?type
 ?database_name

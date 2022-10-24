@@ -1,0 +1,79 @@
+PREFIX : <https://fl-dms.linked.data.world/d/ddw-catalog-build/>
+PREFIX orgprofile: <https://fl-dms.linked.data.world/d/ddw-catalogs/>
+PREFIX apf: <http://jena.apache.org/ARQ/property#>
+PREFIX dwec: <https://dwec.data.world/v0/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT
+    #("fl-dms" AS ?agency)
+    (GROUP_CONCAT(?collection_name;SEPARATOR=", ") as ?collections)
+    ?businesstermiri
+    ?business_term
+    ?description
+    ?summary
+    ?data_ownner
+    ?data_steward
+    ?program_officer
+    ?technical_steward
+    ?status
+
+WHERE
+{
+    {
+        ?businesstermiri rdf:type dwec:BusinessTerm ;
+        dct:title ?business_term .
+    }
+    UNION
+    {
+        ?businesstermiri rdf:type dwec:BusinessTerm ;
+        rdfs:lable ?business_term
+    }
+    ?buesinesstermCatalogRecord foaf:primaryTopic ?businesstermiri .
+
+    ?collectionIRI dcat:record ?buesinesstermCatalogRecord ;
+    dct:identifier ?collection_name .
+    #discription
+    OPTIONAL {
+        ?businesstermiri dct:description ?description .
+    }
+    #summary
+    OPTIONAL {
+        ?businesstermiri dct:abstract ?summary .
+    }
+    # data owner
+    OPTIONAL {
+        ?businesstermiri orgprofile:data_ownner ?data_ownner .
+    }
+    # data steward
+    OPTIONAL {
+        ?businesstermiri orgprofile:data_steward ?data_steward .
+    }
+    # program officer
+    OPTIONAL {
+        ?businesstermiri orgprofile:program_office ?program_officer .
+    }
+    # technical steward
+    OPTIONAL {
+        ?businesstermiri orgprofile:technical_steward ?technical_steward .
+    }
+    # Status
+    OPTIONAL {
+        ?businesstermiri dwec:hasAssetStatus ?status_label .
+        ?status_label rdfs:label ?status .
+    }
+}
+GROUP BY
+    ?businesstermiri
+    ?business_term
+    ?description
+    ?summary
+    ?data_ownner
+    ?data_steward
+    ?program_officer
+    ?technical_steward
+    ?status
