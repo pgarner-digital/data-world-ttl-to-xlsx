@@ -1,8 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="DataDotWorldModelProcessor" type="Application" factoryName="Application" nameIsGenerated="true">
     <option name="MAIN_CLASS_NAME" value="DataDotWorldModelProcessor" />
-    <module name="data-world-ttl-to-xlsx" />
-    <option name="VM_PARAMETERS" value="-XX:+HeapDumpOnOutOfMemoryError" />
+    <module name="data-world-ttl-to-csv" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

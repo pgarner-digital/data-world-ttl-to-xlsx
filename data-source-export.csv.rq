@@ -23,29 +23,32 @@ WHERE
 {
     ?databaseiri dct:identifier ?databaseName ;
     rdf:type dwec:Database .
+
     OPTIONAL{
         ?databaseiri   dwec:databaseConnection ?bnode .
-        OPTIONAL{
-            ?bnode  dwec:databasePort ?databasePort .
-        }
-        OPTIONAL{
-            ?bnode  dwec:databaseServer ?databaseServer .
-        }
-        OPTIONAL{
-            ?bnode  dwec:jdbcUrl ?jdbcURL .
-        }
-        OPTIONAL{
-            ?bnode dwec:databaseSchema ?databaseSchema .
-        }
-    ?s foaf:primaryTopic ?databaseiri .
-    ?collectionIRI dcat:record ?s ;
+    OPTIONAL{
+        ?bnode  dwec:databasePort ?databasePort .
+    }
+    OPTIONAL{
+        ?bnode  dwec:databaseServer ?databaseServer .
+    }
+    OPTIONAL{
+        ?bnode  dwec:jdbcUrl ?jdbcURL .
+    }
+    OPTIONAL{
+        ?bnode dwec:databaseSchema ?databaseSchema .
+    }
+
+    ?dataSourceCatalogRecord foaf:primaryTopic ?databaseiri .
+
+    ?collectionIRI dcat:record ?dataSourceCatalogRecord ;
         dct:identifier ?collection_name .
     }
 }
 
 GROUP BY
 ?databaseiri
+?databaseName
 ?jdbcURL
 ?databaseServer
 ?databasePort
-?databaseName

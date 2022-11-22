@@ -20,16 +20,14 @@ import java.time.temporal.ChronoUnit;
 public class DataDotWorldModelProcessor {
 
     /************************************************  INPUTS  ********************************************************/
-    private static final String OWNER = "FL-DMS";
-    //private static final String OWNER = "FL-DCF";
+    private static final String OWNER = "FL-AHCA";
 
-    private static final String FULL_GRAPH_TTL_FILE_PATH = "fl-dms-full-graph.ttl";
-    //private static final String FULL_GRAPH_TTL_FILE_PATH = "fl-dcf-full-graph.ttl";
+    private static final String FULL_GRAPH_TTL_FILE_PATH = "fl-ahca-full-graph.ttl";
 
     /******************************************************************************************************************/
 
     private static final Logger logger = LogManager.getLogger(DataDotWorldModelProcessor.class);
-    private static final int MAX_ROW_SIZE = 500000;
+    private static final int MAX_ROW_SIZE = 1000000;
     private static final String SHEET_MAX_ROWS_EXCEEDED_MSG;
 
     static {
@@ -114,49 +112,55 @@ public class DataDotWorldModelProcessor {
         SXSSFWorkbook workbook = new SXSSFWorkbook();
         Model model = loadModel(FULL_GRAPH_TTL_FILE_PATH);
 
-        // Columns
+        // Data sources
         processSheet(
-            workbook,
-            model,
-            COLUMNS_QUERY_FILE_PATH,
-            COLUMNS_SHEET_NAME,
-            COLUMN_PROPERTIES,
-            10000,
-            ChronoUnit.MINUTES
+                workbook,
+                model,
+                DATA_SOURCES_QUERY_FILE_PATH,
+                DATA_SOURCES_SHEET_NAME,
+                DATA_SOURCE_PROPERTIES,
+                1,
+                ChronoUnit.SECONDS
         );
 
         // Tables
+/*
         processSheet(
-            workbook,
-            model,
-            TABLES_QUERY_FILE_PATH,
-            TABLES_SHEET_NAME,
-            TABLE_PROPERTIES,
-            1000,
-            ChronoUnit.SECONDS
+                workbook,
+                model,
+                TABLES_QUERY_FILE_PATH,
+                TABLES_SHEET_NAME,
+                TABLE_PROPERTIES,
+                1000,
+                ChronoUnit.SECONDS
         );
+*/
 
-        // Data sources
+        // Columns
+/*
         processSheet(
-            workbook,
-            model,
-            DATA_SOURCES_QUERY_FILE_PATH,
-            DATA_SOURCES_SHEET_NAME,
-            DATA_SOURCE_PROPERTIES,
-            1,
-            ChronoUnit.SECONDS
+                workbook,
+                model,
+                COLUMNS_QUERY_FILE_PATH,
+                COLUMNS_SHEET_NAME,
+                COLUMN_PROPERTIES,
+                10000,
+                ChronoUnit.MINUTES
         );
+*/
 
         // Business glossary terms
+/*
         processSheet(
-            workbook,
-            model,
-            BUSINESS_TERMS_QUERY_FILE_PATH,
-            BUSINESS_TERMS_SHEET_NAME,
-            BUSINESS_TERM_PROPERTIES,
-            1,
-            ChronoUnit.SECONDS
+                workbook,
+                model,
+                BUSINESS_TERMS_QUERY_FILE_PATH,
+                BUSINESS_TERMS_SHEET_NAME,
+                BUSINESS_TERM_PROPERTIES,
+                1,
+                ChronoUnit.SECONDS
         );
+*/
 
         writeWorkbookToFileSystem(workbook);
 
@@ -249,16 +253,9 @@ public class DataDotWorldModelProcessor {
         cellStyle.setWrapText(true);
 
         int count = 0;
-        for(String cellProperty: propertyNames) {
-            setCellValue(cellProperty, count++, querySolution, row, cellStyle);
+        for(String propertyName: propertyNames) {
+            setCellValue(propertyName, count++, querySolution, row, cellStyle);
         }
-    }
-
-    private static void writeWorkbookToFileSystem(SXSSFWorkbook workbook) throws IOException {
-        FileOutputStream out = new FileOutputStream("Catalog_Metadata_" + OWNER + ".xlsx");
-        workbook.write(out);
-        out.close();
-        workbook.dispose();
     }
 
     private static void setCellValue(
@@ -273,35 +270,6 @@ public class DataDotWorldModelProcessor {
         cell.setCellValue(stringValueOf(cellValue));
         cell.setCellStyle(cellStyle);
     }
-
-    public static void cleanSheet(SXSSFSheet sheet) {
-        int numberOfRows = sheet.getPhysicalNumberOfRows();
-        if(numberOfRows > 0) {
-            for (int i = sheet.getFirstRowNum(); i <= sheet.getLastRowNum(); i++) {
-                if(sheet.getRow(i) != null) {
-                    sheet.removeRow( sheet.getRow(i));
-                } else {
-                    logger.info("Info: clean sheet='" + sheet.getSheetName() + "' ... skip line: " + i);
-                }
-            }
-        } else {
-            logger.info("Info: clean sheet='" + sheet.getSheetName() + "' ... is empty");
-        }
-    }
-
-    private static boolean sheetCleanedDueToExceedingMaxRowSize(int rowCount, SXSSFSheet sheet) {
-        boolean conditionMetOrNot = rowCount >= MAX_ROW_SIZE;
-        if(conditionMetOrNot) {
-            String errMsg = sheetExceededMaxSizeMsg(sheet.getSheetName());
-            logger.error(errMsg);
-            cleanSheet(sheet);
-            SXSSFRow row = sheet.createRow(0);
-            row.createCell(0, CellType.STRING).setCellValue(errMsg);
-        }
-        return conditionMetOrNot;
-    }
-
-    private static String sheetExceededMaxSizeMsg(String sheetName) { return sheetName + SHEET_MAX_ROWS_EXCEEDED_MSG; }
 
     private static String stringValueOf(RDFNode rdfNode) { return null == rdfNode ? "" : rdfNode.toString(); }
 
@@ -334,5 +302,41 @@ public class DataDotWorldModelProcessor {
             headerCellStyle.setFont(headerFont);
         }
         return headerCellStyle;
+    }
+
+    public static void cleanSheet(SXSSFSheet sheet) {
+        int numberOfRows = sheet.getPhysicalNumberOfRows();
+        if(numberOfRows > 0) {
+            for (int i = sheet.getFirstRowNum(); i <= sheet.getLastRowNum(); i++) {
+                if(sheet.getRow(i) != null) {
+                    sheet.removeRow( sheet.getRow(i));
+                } else {
+                    logger.info("Info: clean sheet='" + sheet.getSheetName() + "' ... skip line: " + i);
+                }
+            }
+        } else {
+            logger.info("Info: clean sheet='" + sheet.getSheetName() + "' ... is empty");
+        }
+    }
+
+    private static boolean sheetCleanedDueToExceedingMaxRowSize(int rowCount, SXSSFSheet sheet) {
+        boolean conditionMetOrNot = rowCount >= MAX_ROW_SIZE;
+        if(conditionMetOrNot) {
+            String errMsg = sheetExceededMaxSizeMsg(sheet.getSheetName());
+            logger.error(errMsg);
+            cleanSheet(sheet);
+            SXSSFRow row = sheet.createRow(0);
+            row.createCell(0, CellType.STRING).setCellValue(errMsg);
+        }
+        return conditionMetOrNot;
+    }
+
+    private static String sheetExceededMaxSizeMsg(String sheetName) { return sheetName + SHEET_MAX_ROWS_EXCEEDED_MSG; }
+
+    private static void writeWorkbookToFileSystem(SXSSFWorkbook workbook) throws IOException {
+        FileOutputStream out = new FileOutputStream("Catalog_Metadata_" + OWNER + ".xlsx");
+        workbook.write(out);
+        out.close();
+        workbook.dispose();
     }
 }
