@@ -1,47 +1,44 @@
+import gov.fl.digital.ddw2infa.Util;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.RDFNode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.streaming.SXSSFCell;
-import org.apache.poi.xssf.streaming.SXSSFRow;
-import org.apache.poi.xssf.streaming.SXSSFSheet;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
-import java.io.FileOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DataDotWorldModelProcessor {
 
     /************************************************  INPUTS  ********************************************************/
-    private static final String OWNER = "FL-AHCA";
+    private static final String OWNER = "DOT";
 
-    private static final String FULL_GRAPH_TTL_FILE_PATH = "fl-ahca-full-graph.ttl";
-
+    private static final String FULL_GRAPH_TTL_FILE_PATH = "fl-dot-full-graph.ttl";
     /******************************************************************************************************************/
 
     private static final Logger logger = LogManager.getLogger(DataDotWorldModelProcessor.class);
-    private static final int MAX_ROW_SIZE = 1000000;
-    private static final String SHEET_MAX_ROWS_EXCEEDED_MSG;
 
-    static {
-        SHEET_MAX_ROWS_EXCEEDED_MSG = " spreadsheet reached maximum row size: " + MAX_ROW_SIZE + ".  Aborting...";
-    }
+    public static final String OUTPUT_DIRECTORY_PATH = "./output/" + OWNER + "/ddw_dictionary_dump/";
 
-    private static final String BUSINESS_TERMS_SHEET_NAME = "Business Terms";
-    private static final String DATA_SOURCES_SHEET_NAME = "Data Sources";
+    // Names of the metadata objects for which the SPARQL queries retrieve information
+    private static final String BUSINESS_TERMS_SHEET_NAME = "BusinessTerms";
+    private static final String DATA_SOURCES_SHEET_NAME = "DataSources";
     private static final String TABLES_SHEET_NAME = "Tables";
     private static final String COLUMNS_SHEET_NAME = "Columns";
+
+    // SPARQL query files
     private static final String BUSINESS_TERMS_QUERY_FILE_PATH = "business-term-export.csv.rq";
     private static final String DATA_SOURCES_QUERY_FILE_PATH = "data-source-export.csv.rq";
     private static final String COLUMNS_QUERY_FILE_PATH = "columns-export.csv.rq";
     private static final String TABLES_QUERY_FILE_PATH = "table-export.csv.rq";
+
+    // SPARQL query field names
     private static final String[] BUSINESS_TERM_PROPERTIES = {
         "collections",
         "businesstermiri",
@@ -102,19 +99,13 @@ public class DataDotWorldModelProcessor {
             "status"
     };
 
-    // These two fields supports singleton design pattern for reusability.
-    private static CellStyle bodyCellStyle;
-    private static CellStyle headerCellStyle;
-
     public static void main(String[] args) throws IOException {
 
         LocalDateTime begin = LocalDateTime.now();
-        SXSSFWorkbook workbook = new SXSSFWorkbook();
-        Model model = loadModel(FULL_GRAPH_TTL_FILE_PATH);
+        Model model = Util.loadModelFrom(FULL_GRAPH_TTL_FILE_PATH);
 
         // Data sources
-        processSheet(
-                workbook,
+        generateSpreadsheet(
                 model,
                 DATA_SOURCES_QUERY_FILE_PATH,
                 DATA_SOURCES_SHEET_NAME,
@@ -124,9 +115,7 @@ public class DataDotWorldModelProcessor {
         );
 
         // Tables
-/*
-        processSheet(
-                workbook,
+        generateSpreadsheet(
                 model,
                 TABLES_QUERY_FILE_PATH,
                 TABLES_SHEET_NAME,
@@ -134,12 +123,9 @@ public class DataDotWorldModelProcessor {
                 1000,
                 ChronoUnit.SECONDS
         );
-*/
 
         // Columns
-/*
-        processSheet(
-                workbook,
+        generateSpreadsheet(
                 model,
                 COLUMNS_QUERY_FILE_PATH,
                 COLUMNS_SHEET_NAME,
@@ -147,12 +133,9 @@ public class DataDotWorldModelProcessor {
                 10000,
                 ChronoUnit.MINUTES
         );
-*/
 
         // Business glossary terms
-/*
-        processSheet(
-                workbook,
+        generateSpreadsheet(
                 model,
                 BUSINESS_TERMS_QUERY_FILE_PATH,
                 BUSINESS_TERMS_SHEET_NAME,
@@ -160,25 +143,11 @@ public class DataDotWorldModelProcessor {
                 1,
                 ChronoUnit.SECONDS
         );
-*/
 
-        writeWorkbookToFileSystem(workbook);
-
-        logger.info("Total processing time: " + begin.until(LocalDateTime.now(), ChronoUnit.MINUTES) +
-                " minutes).");
+        logger.info("Total processing time: " + begin.until(LocalDateTime.now(), ChronoUnit.MINUTES) + " minutes).");
     }
 
-    private static Model loadModel(String filePath) {
-        LocalDateTime begin = LocalDateTime.now();
-        Model model = ModelFactory.createDefaultModel();
-        logger.info("Begin loading " + filePath + " into model...");
-        model.read(filePath);
-        logger.info("Model loaded (" + begin.until(LocalDateTime.now(), ChronoUnit.SECONDS) + " seconds).");
-        return model;
-    }
-
-    private static void processSheet(
-        SXSSFWorkbook workbook,
+    private static void generateSpreadsheet(
         Model model,
         String queryFilePath,
         String sheetName,
@@ -186,157 +155,44 @@ public class DataDotWorldModelProcessor {
         int rowCountDisplayFrequency,
         ChronoUnit logEntryTimeUnit
     ) throws IOException {
-        String queryString;
-        queryString = Files.readString(Paths.get(queryFilePath));
+        URL url = Ddw2InfaCustomMetaModelProcessor.class.getClassLoader().getResource(queryFilePath);
+        if(null == url) { throw new IllegalArgumentException(queryFilePath + " is not found."); }
+        File file = new File(url.getFile());
+        String queryString = new String(Files.readAllBytes(file.toPath()));
         int rowCount = 1;
-        SXSSFSheet sheet = workbook.createSheet(sheetName);
-        configureSheet(sheet, propertyNames);
+        StringBuilder sb = new StringBuilder();
+
+        // Create CSV spreadsheet header
+        sb.append("\"");
+        sb.append(String.join("\",\"", propertyNames));
+        sb.append("\"");
+
         Query query = QueryFactory.create(queryString);
         try (QueryExecution queryExecution = QueryExecutionFactory.create(query, model)) {
-            ResultSet results = queryExecution.execSelect() ;
+            ResultSet results = queryExecution.execSelect();
             logger.info("Begin extracting " + sheetName.toLowerCase() + " results ...");
             LocalDateTime localDateTime = LocalDateTime.now();
             while (results.hasNext()) {
                 if(rowCount % rowCountDisplayFrequency == 0) {
-                    logger.info("Processing " + sheetName.toLowerCase() + " record: " + (rowCount + 1) + "(" +
-                            localDateTime.until(LocalDateTime.now(), logEntryTimeUnit) + " " +
-                                logEntryTimeUnit.name().toLowerCase() + ").");
+                    logger.info("Processing " + sheetName.toLowerCase() + " record: " + (rowCount++) + "(" +
+                        localDateTime.until(LocalDateTime.now(), logEntryTimeUnit) + " " +
+                            logEntryTimeUnit.name().toLowerCase() + ").");
                 }
                 QuerySolution querySolution = results.nextSolution();
-                if(sheetCleanedDueToExceedingMaxRowSize(rowCount, sheet)) {
-                    logger.error(sheetExceededMaxSizeMsg(sheetName));
-                    break;
-                }
-                else {
-                    installBodyRow(querySolution, sheet.createRow(rowCount++), propertyNames);
-                    if(rowCount % 100 == 0) {
-                        sheet.flushRows(100);
-                    }
-                }
+                // Create one row of metadata
+                sb.append("\n\"");
+                sb.append(Stream.of(propertyNames)
+                    .map(propertyName -> Util.stringValueOf(querySolution.get(propertyName)))
+                    .map(fieldValue -> { if (fieldValue.isBlank()) fieldValue = ""; return fieldValue; })
+                    // Escape double quotes for proper CSV see https://stackoverflow.com/a/17808731/984932,
+                    // and note that because data.world backslash-escapes double quotes, the backslashes are
+                    // removed as part of the replace operation. Example: \"foo\" gets replaced with ""foo""
+                    .map(fieldValue -> fieldValue.replace("\\\"", "\"\""))
+                    .collect(Collectors.joining("\",\"")));
+                sb.append("\"");
             }
+            logger.info("Total " + sheetName.toLowerCase() + " records: " + rowCount);
         }
-    }
-
-    private static void configureSheet(SXSSFSheet sheet, String[] propertyNames) {
-        sheet.setDisplayGridlines(false);
-        sheet.setPrintGridlines(false);
-        sheet.setFitToPage(true);
-        sheet.setHorizontallyCenter(true);
-        PrintSetup printSetup = sheet.getPrintSetup();
-        printSetup.setLandscape(true);
-        for(int i=0; i < propertyNames.length; i++) {
-            sheet.setColumnWidth(i, 20*256);
-        }
-        installHeaderRow(sheet, propertyNames);
-    }
-
-    private static void installHeaderRow(SXSSFSheet sheet, String[] propertyNames) {
-        sheet.createFreezePane(0, 1);
-        SXSSFWorkbook workbook = sheet.getWorkbook();
-        CellStyle cellStyle = getHeaderCellStyle(workbook);
-        int columnCount = 0;
-        SXSSFRow row = sheet.createRow(0);
-        for(String cellProperty: propertyNames) {
-            SXSSFCell cell = row.createCell(columnCount++, CellType.STRING);
-            cell.setCellValue(cellProperty);
-            cell.setCellStyle(cellStyle);
-        }
-    }
-
-    private static void installBodyRow(
-        QuerySolution querySolution,
-        SXSSFRow row,
-        String[] propertyNames
-    ) {
-        CellStyle cellStyle = getStandardCellStyle(row.getSheet().getWorkbook());
-        cellStyle.setAlignment(HorizontalAlignment.LEFT);
-        cellStyle.setWrapText(true);
-
-        int count = 0;
-        for(String propertyName: propertyNames) {
-            setCellValue(propertyName, count++, querySolution, row, cellStyle);
-        }
-    }
-
-    private static void setCellValue(
-        String columnName,
-        int columnCount,
-        QuerySolution querySolution,
-        SXSSFRow row,
-        CellStyle cellStyle
-    ) {
-        RDFNode cellValue = querySolution.get(columnName) ;
-        SXSSFCell cell = row.createCell(columnCount, CellType.STRING);
-        cell.setCellValue(stringValueOf(cellValue));
-        cell.setCellStyle(cellStyle);
-    }
-
-    private static String stringValueOf(RDFNode rdfNode) { return null == rdfNode ? "" : rdfNode.toString(); }
-
-    private static CellStyle getStandardCellStyle(SXSSFWorkbook workbook) {
-        if(null == bodyCellStyle) {
-            BorderStyle thin = BorderStyle.THIN;
-            short black = IndexedColors.BLACK.getIndex();
-            bodyCellStyle = workbook.createCellStyle();
-            bodyCellStyle.setBorderRight(thin);
-            bodyCellStyle.setRightBorderColor(black);
-            bodyCellStyle.setBorderBottom(thin);
-            bodyCellStyle.setBottomBorderColor(black);
-            bodyCellStyle.setBorderLeft(thin);
-            bodyCellStyle.setLeftBorderColor(black);
-            bodyCellStyle.setBorderTop(thin);
-            bodyCellStyle.setTopBorderColor(black);
-        }
-        return bodyCellStyle;
-    }
-
-    private static CellStyle getHeaderCellStyle(SXSSFWorkbook workbook) {
-        if(null == headerCellStyle) {
-            headerCellStyle = workbook.createCellStyle();
-            headerCellStyle.cloneStyleFrom(getStandardCellStyle(workbook));
-            Font headerFont = workbook.createFont();
-            headerFont.setBold(true);
-            headerCellStyle.setAlignment(HorizontalAlignment.CENTER);
-            headerCellStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
-            headerCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-            headerCellStyle.setFont(headerFont);
-        }
-        return headerCellStyle;
-    }
-
-    public static void cleanSheet(SXSSFSheet sheet) {
-        int numberOfRows = sheet.getPhysicalNumberOfRows();
-        if(numberOfRows > 0) {
-            for (int i = sheet.getFirstRowNum(); i <= sheet.getLastRowNum(); i++) {
-                if(sheet.getRow(i) != null) {
-                    sheet.removeRow( sheet.getRow(i));
-                } else {
-                    logger.info("Info: clean sheet='" + sheet.getSheetName() + "' ... skip line: " + i);
-                }
-            }
-        } else {
-            logger.info("Info: clean sheet='" + sheet.getSheetName() + "' ... is empty");
-        }
-    }
-
-    private static boolean sheetCleanedDueToExceedingMaxRowSize(int rowCount, SXSSFSheet sheet) {
-        boolean conditionMetOrNot = rowCount >= MAX_ROW_SIZE;
-        if(conditionMetOrNot) {
-            String errMsg = sheetExceededMaxSizeMsg(sheet.getSheetName());
-            logger.error(errMsg);
-            cleanSheet(sheet);
-            SXSSFRow row = sheet.createRow(0);
-            row.createCell(0, CellType.STRING).setCellValue(errMsg);
-        }
-        return conditionMetOrNot;
-    }
-
-    private static String sheetExceededMaxSizeMsg(String sheetName) { return sheetName + SHEET_MAX_ROWS_EXCEEDED_MSG; }
-
-    private static void writeWorkbookToFileSystem(SXSSFWorkbook workbook) throws IOException {
-        FileOutputStream out = new FileOutputStream("Catalog_Metadata_" + OWNER + ".xlsx");
-        workbook.write(out);
-        out.close();
-        workbook.dispose();
+        try (PrintWriter out = new PrintWriter(OUTPUT_DIRECTORY_PATH + sheetName + ".csv")) { out.println(sb); }
     }
 }
