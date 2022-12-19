@@ -42,4 +42,20 @@ public class DatabasesMetadata extends MetadataCache<DatabasePropertyMapper> {
         String dbName = DatabasePropertyMapper.name.getPropertyValueFrom(querySolution);
         linksMetadata.addDatabase(dbName, dbId);
     }
+
+    @Override protected void manageLinksAndSchemas(
+        QuerySolution querySolution,
+        SchemasMetadata schemasMetadata,
+        LinksMetadata linksMetadata
+    ) {
+        /*
+            Normally, metadata objects need to update schemas first because schemas are higher in the hierarchy
+            and must exist before adding this metadata object to the tree.
+
+            For databases, it's different.  Databases are higher than schemas in the tree hierarchy.  So
+            DatabasesMetadata overrides this method, updating links first and schemas second.
+         */
+        updateLinks(querySolution, linksMetadata);
+        updateSchemas(querySolution, schemasMetadata, linksMetadata);
+    }
 }

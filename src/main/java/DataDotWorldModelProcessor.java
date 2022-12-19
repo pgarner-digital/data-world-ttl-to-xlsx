@@ -18,7 +18,6 @@ public class DataDotWorldModelProcessor {
 
     /************************************************  INPUTS  ********************************************************/
     private static final String OWNER = "DOT";
-
     private static final String FULL_GRAPH_TTL_FILE_PATH = "fl-dot-full-graph.ttl";
     /******************************************************************************************************************/
 
@@ -174,7 +173,7 @@ public class DataDotWorldModelProcessor {
             LocalDateTime localDateTime = LocalDateTime.now();
             while (results.hasNext()) {
                 if(rowCount % rowCountDisplayFrequency == 0) {
-                    logger.info("Processing " + sheetName.toLowerCase() + " record: " + (rowCount++) + "(" +
+                    logger.info("Processing " + sheetName.toLowerCase() + " record: " + rowCount + "(" +
                         localDateTime.until(LocalDateTime.now(), logEntryTimeUnit) + " " +
                             logEntryTimeUnit.name().toLowerCase() + ").");
                 }
@@ -190,6 +189,7 @@ public class DataDotWorldModelProcessor {
                     .map(fieldValue -> fieldValue.replace("\\\"", "\"\""))
                     .collect(Collectors.joining("\",\"")));
                 sb.append("\"");
+                rowCount++;
             }
             logger.info("Total " + sheetName.toLowerCase() + " records: " + rowCount);
         }

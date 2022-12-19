@@ -38,6 +38,5 @@ public class TablesMetadata extends MetadataCache<TablePropertyMapper> {
         String tableName = TablePropertyMapper.name.getPropertyValueFrom(querySolution);
         String tableId = TablePropertyMapper.externalId.getPropertyValueFrom(querySolution);
         linksMetadata.addTable(dbName, schemaName, tableName, tableId);
-
     }
 }

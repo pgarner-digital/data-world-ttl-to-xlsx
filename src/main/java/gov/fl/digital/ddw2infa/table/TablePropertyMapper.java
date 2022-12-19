@@ -39,6 +39,9 @@ enum TablePropertyMapper implements MetadataMapper<TablePropertyMapper> {
             core.businessName
             custom.data.world.owner
             core.reference
+
+        NOTE: core.externalId and core.name are mandatory fields
+        https://onlinehelp.informatica.com/IICS/prod/MCC/en/index.htm#page/cloud-metadata-command-center-catalog-source-configuration/Example_Ingest_metadata_from_Microsoft_Access_database.html
      */
 
     externalId("core.externalId", "table_IRI") {
@@ -53,31 +56,27 @@ enum TablePropertyMapper implements MetadataMapper<TablePropertyMapper> {
     },
     name("core.name", "table_name"),
     description("core.description", "description"),
+    owner("custom.data.world.owner", "data_ownner"),
+    typePrefix("custom.data.world.typePrefix", "type_prefix"),
+    type("custom.data.world.tableType", "type"),
+    businessSummary("custom.data.world.businessSummary", "business_summary"),
+    restrictedToPublic("custom.data.world.restrictedToPublic", "restricted_to_public_disclosure_per_federal_or_state_law"),
+    sensitiveData("custom.data.world.sensitiveData", "sensitive_data"),
+    dataSharingAgreement("custom.data.world.dataSharingAgreement", "data_sharing_agreement"),
+    programOffice("custom.data.world.programOffice", "program_office"),
+    dataSteward("custom.data.world.dataSteward", "data_steward"),
+    technicalSteward("custom.data.world.technicalSteward", "technical_steward"),
+    contactEmail("custom.data.world.contactEmail", "contact_email"),
+    status("custom.data.world.status", "status"),
 
-    // TODO drop business description because we already have a description field
+    // The following DDW fields are used to link a table to its parent in the hierarchy
+    databaseName(null, "database_name"),
+    schema(null, "schema"),
+
+    // The following INFA fields are not used by DDW
     businessDescription("core.businessDescription", null),
     businessName("core.businessName", null),
-
-    // TODO: Steve Hill uses custom.data.world.dataOwner for Column
-    dataOwner("custom.data.world.owner", "data_ownner"),
-    reference("core.reference", null),
-
-    // TODO: The following DDW fields may be added to the INFA custom metamodel.
-    typePrefix(null, "type_prefix"),
-    type(null, "type"),
-    businessSummary(null, "business_summary"),
-    restrictedToPublic(null, "restricted_to_public_disclosure_per_federal_or_state_law"),
-    sensitiveData(null, "sensitive_data"),
-    dataSharingAgreement(null, "data_sharing_agreement"),
-    programOffice(null, "program_office"),
-    dataSteward(null, "data_steward"),
-    technicalSteward(null, "technical_steward"),
-    contactEmail(null, "contact_email"),
-    status(null, "status"),
-
-    // TODO: the following DDW fields are used to link a table to its parent in the hierarchy
-    databaseName(null, "database_name"),
-    schema(null, "schema");
+    reference("core.reference", null);
 
     static final List<TablePropertyMapper> MAPPERS;
     static final String CSV_HEADER;
@@ -89,11 +88,19 @@ enum TablePropertyMapper implements MetadataMapper<TablePropertyMapper> {
                 .filter(i -> null != i.infaColumnName)
                 .collect(Collectors.toList());
 
+        //TODO: header with quotes
         CSV_HEADER = "\"" +
                 MAPPERS.stream()
                         .map(mapper -> mapper.infaColumnName)
                         .collect(Collectors.joining("\",\"")) +
                 "\"";
+        // TODO: header without quotes
+        /*
+        CSV_HEADER = MAPPERS.stream()
+                        .map(mapper -> mapper.infaColumnName)
+                        .collect(Collectors.joining(","));
+        */
+
     }
 
     final String infaColumnName;

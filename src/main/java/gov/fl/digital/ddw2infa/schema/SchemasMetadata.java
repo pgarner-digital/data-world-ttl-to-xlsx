@@ -44,25 +44,44 @@ public class SchemasMetadata {
             for(Map.Entry<String,String> entry : schemaIdBySchemaName.entrySet()) {
                 String schemaName = entry.getKey();
                 String schemaId = entry.getValue();
+
+                //TODO: value with quotes
                 result.append("\n\"");
                 result.append(Stream.of(Infa2DdwSchemaMapper.values())
                         .map(mapper -> mapper.processExternalIdAndSchemaName(schemaId, schemaName))
                         .collect(Collectors.joining("\",\"")));
                 result.append("\"");
+
+/*
+                // TODO: value without quotes
+                result.append("\n");
+                result.append(Stream.of(Infa2DdwSchemaMapper.values())
+                        .map(mapper -> mapper.processExternalIdAndSchemaName(schemaId, schemaName))
+                        .collect(Collectors.joining(",")));
+*/
+
+
             }
         }
         return Infa2DdwSchemaMapper.CSV_HEADER + result;
     }
 
     private enum Infa2DdwSchemaMapper {
+
+        /*
+            NOTE: core.externalId and core.name are mandatory fields
+            https://onlinehelp.informatica.com/IICS/prod/MCC/en/index.htm#page/cloud-metadata-command-center-catalog-source-configuration/Example_Ingest_metadata_from_Microsoft_Access_database.html
+         */
         externalId("core.externalId") {
-            @Override public String processExternalIdAndSchemaName(String schemaId, String schemaName) {
+            @Override String processExternalIdAndSchemaName(String schemaId, String schemaName) {
                 return schemaId;
             }
         },
         name("core.name") {
-            @Override public String processExternalIdAndSchemaName(String schemaId, String schemaName) {
-                return schemaName;
+            @Override String processExternalIdAndSchemaName(String schemaId, String schemaName) {
+                return (null == schemaName || schemaName.isBlank())
+                ?   "(unavailable)"
+                :   schemaName;
             }
         },
         description("core.description"),
@@ -70,9 +89,7 @@ public class SchemasMetadata {
         businessDescription("core.businessDescription"),
         businessName("core.businessName"),
         reference("core.reference"),
-
-        // TODO: Steve Hill uses custom.data.world.dataOwner for Column
-        dataOwner("custom.data.world.owner");
+        owner("custom.data.world.owner");
 
         final String infaColumnName;
 
@@ -80,12 +97,17 @@ public class SchemasMetadata {
 
         private static final String CSV_HEADER;
 
-        public String processExternalIdAndSchemaName(String schemaId, String schemaName) { return ""; }
+        String processExternalIdAndSchemaName(String schemaId, String schemaName) { return ""; }
 
         static {
+            //TODO: header with quotes
             CSV_HEADER = "\"" +
                     Stream.of(values()).map(mapper -> mapper.infaColumnName).collect(Collectors.joining("\",\"")) +
                     "\"";
+/*
+            // TODO: header without quotes
+            CSV_HEADER = Stream.of(values()).map(mapper -> mapper.infaColumnName).collect(Collectors.joining(","));
+*/
         }
     }
 }

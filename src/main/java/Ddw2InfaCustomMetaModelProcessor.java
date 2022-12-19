@@ -86,6 +86,7 @@ public class Ddw2InfaCustomMetaModelProcessor {
                 }
                 QuerySolution querySolution = results.nextSolution();
                 metadataCache.addRecord(querySolution, schemasMetadata, linksMetadata);
+                rowCount++;
             }
         }
         try (PrintWriter out = new PrintWriter(OUTPUT_DIRECTORY_PATH + metadataCache.getOutputFileName())) {

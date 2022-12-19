@@ -1,0 +1,4 @@
+core.externalId,core.name,core.description,core.businessDescription,core.businessName,core.reference,custom.data.world.owner
+fl_tn1,table name 1,table name 1,,,,schema 1
+fl_tn2,table name 2,table name 2,,,,schema 2
+fl_tn3,table name 3,table name 3,,,,schema 3
