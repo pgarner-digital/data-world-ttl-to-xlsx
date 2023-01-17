@@ -5,7 +5,7 @@
       <driver-ref>snowflake</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>net.snowflake.client.jdbc.SnowflakeDriver</jdbc-driver>
-      <jdbc-url>jdbc:snowflake://ps68941.us-east-1-gov.aws.snowflakecomputing.com:443?warehouse=COMPUTE_WH&amp;db=DATA_WORLD_METADATA&amp;role=DATAWORLDANALYST</jdbc-url>
+      <jdbc-url>jdbc:snowflake://ps68941.us-east-1-gov.aws.snowflakecomputing.com:443?warehouse=COMPUTE_WH&amp;db=DATA_WORLD_METADATA&amp;role=DATAWORLDANALYST&amp;schema=PUBLIC</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

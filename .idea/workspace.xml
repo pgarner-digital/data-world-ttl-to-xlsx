@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f23f759c-479f-4240-b368-6cc6f4e98620" name="Changes" comment="Add new fields to Steve Hill's custom metamodel.">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/business_term.ddl.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/column.ddl.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/custom.data.world.steve.hill.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/datasource.ddl.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/table.ddl.sql" afterDir="false" />
+    <list default="true" id="f23f759c-479f-4240-b368-6cc6f4e98620" name="Changes" comment="Add DDLs for business term, column, table, and database metadata tables (to be used in Snowflake).">
+      <change afterPath="$PROJECT_DIR$/docs/OPS-140_Load_DDW_metadata_CSV_files_into_snowflake.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +60,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;database.query.execution&quot;,
     &quot;two.files.diff.last.used.file&quot;: &quot;C:/Workarea/data.world/data-world-ttl-to-xlsx/src/main/resources/custom.data.world.original.json&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -137,7 +132,8 @@
       <workItem from="1673273035063" duration="797000" />
       <workItem from="1673273863062" duration="2952000" />
       <workItem from="1673473155785" duration="3250000" />
-      <workItem from="1673476817079" duration="11635000" />
+      <workItem from="1673476817079" duration="33996000" />
+      <workItem from="1673960108939" duration="653000" />
     </task>
     <task id="LOCAL-00001" summary="Add custom meta model processor">
       <created>1669128495314</created>
@@ -188,7 +184,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671453038474</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Add DDLs for business term, column, table, and database metadata tables (to be used in Snowflake).">
+      <created>1673553300545</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1673553300545</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -222,6 +225,7 @@
     <MESSAGE value="Updated to export CSV instead of XLSX" />
     <MESSAGE value="Custom metamodel, written in JSON, used by Informatica." />
     <MESSAGE value="Add new fields to Steve Hill's custom metamodel." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add new fields to Steve Hill's custom metamodel." />
+    <MESSAGE value="Add DDLs for business term, column, table, and database metadata tables (to be used in Snowflake)." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add DDLs for business term, column, table, and database metadata tables (to be used in Snowflake)." />
   </component>
 </project>
