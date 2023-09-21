@@ -41,87 +41,40 @@ public class LinksMetadata {
             //String dbName = linkEntry.getKey();
             IdAndChildren<IdAndChildren<IdAndChildren<String>>> dbIdAndChildren = linkEntry.getValue();
             String dbId = dbIdAndChildren.id;
-            //TODO: wrapped double quote
-            // result.append("\n\"");
             result.append("\n");
             result.append("$resource"); // each database is a child of the root: $resource
-            //TODO: wrapped double quote
-            // result.append("\",\"");
-            // TODO: header without quotes
-            result.append(",");
+            result.append("|||");
             result.append(dbId);
-            //TODO: wrapped double quote
-            // result.append("\",\"");
-            // TODO: header without quotes
-            result.append(",");
+            result.append("|||");
             result.append(LinkAssociation.Root.association);
-            //TODO: wrapped double quote
-            // result.append("\"");
             for(Map.Entry<String,IdAndChildren<IdAndChildren<String>>> schemaEntry :
                     dbIdAndChildren.getChildrenByName().entrySet()) {
-                //String schemaName = schemaEntry.getKey();
                 IdAndChildren<IdAndChildren<String>> schemaIdAndChildren = schemaEntry.getValue();
                 String schemaId = schemaIdAndChildren.id;
-                //TODO: wrapped double quote
-                // result.append("\n\"");
-                // TODO: value without quotes
                 result.append("\n");
                 result.append(dbId);
-                //TODO: wrapped double quote
-                // result.append("\",\"");
-                // TODO: value without quotes
-                result.append(",");
+                result.append("|||");
                 result.append(schemaId);
-                //TODO: wrapped double quote
-                // result.append("\",\"");
-                // TODO: value without quotes
-                result.append(",");
+                result.append("|||");
                 result.append(LinkAssociation.DatabaseToSchema.association);
-                //TODO: wrapped double quote
-                // result.append("\"");
                 for(Map.Entry<String,IdAndChildren<String>> tableEntry :
                         schemaIdAndChildren.getChildrenByName().entrySet()) {
-                    //String tableName = tableEntry.getKey();
                     IdAndChildren<String> tableIdAndChildren = tableEntry.getValue();
                     String tableId = tableIdAndChildren.id;
-                    //TODO: wrapped double quote
-                    // result.append("\n\"");
-                    // TODO: value without quotes
                     result.append("\n");
                     result.append(schemaId);
-                    //TODO: wrapped double quote
-                    // result.append("\",\"");
-                    // TODO: value without quotes
-                    result.append(",");
+                    result.append("|||");
                     result.append(tableId);
-                    //TODO: wrapped double quote
-                    //result.append("\",\"");
-                    // TODO: value without quotes
-                    result.append(",");
+                    result.append("|||");
                     result.append(LinkAssociation.SchemaToTable.association);
-                    //TODO: wrapped double quote
-                    // result.append("\"");
-                    // TODO: value without quotes is an empty string; don't append anything
                     for(Map.Entry<String,String> columnEntry : tableIdAndChildren.getChildrenByName().entrySet()) {
-                        //String columnName = columnEntry.getKey();
                         String columnId = columnEntry.getValue();
-                        //TODO: wrapped double quote
-                        // result.append("\n\"");
-                        // TODO: header without quotes
                         result.append("\n");
                         result.append(tableId);
-                        //TODO: wrapped double quote
-                        // result.append("\",\"");
-                        // TODO: header without quotes
-                        result.append(",");
+                        result.append("|||");
                         result.append(columnId);
-                        //TODO: wrapped double quote
-                        // result.append("\",\"");
-                        // TODO: header without quotes
-                        result.append(",");
+                        result.append("|||");
                         result.append(LinkAssociation.TableToColumn.association);
-                        //TODO: wrapped double quote
-                        // result.append("\"");
                     }
                 }
             }
@@ -212,9 +165,7 @@ public class LinksMetadata {
 
         LinkAssociation(String association) { this.association = association; }
 
-        // TODO: With double quotes
-        // private static final String CSV_HEADER =  "\"Source\",\"Target\",\"Association\"";
-        private static final String CSV_HEADER =  "Source,Target,Association"; // Without double quotes
+        private static final String CSV_HEADER =  "Source|||Target|||Association"; // Without double quotes
     }
 
     private static class IdAndChildren<X> {

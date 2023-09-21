@@ -17,8 +17,8 @@ import java.util.stream.Stream;
 public class DataDotWorldModelProcessor {
 
     /************************************************  INPUTS  ********************************************************/
-    private static final String OWNER = "DOT";
-    private static final String FULL_GRAPH_TTL_FILE_PATH = "fl-dot-full-graph.ttl";
+    private static final String OWNER = "TEMPLATE";
+    private static final String FULL_GRAPH_TTL_FILE_PATH = "fl-template.ttl";
     /******************************************************************************************************************/
 
     private static final Logger logger = LogManager.getLogger(DataDotWorldModelProcessor.class);

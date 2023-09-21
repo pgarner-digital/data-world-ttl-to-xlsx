@@ -1,0 +1,163 @@
+{
+  "packageName": "string",
+  "packageLabel": "string",
+  "version": "string",
+  "packageDescription": "string",
+  "deprecated": true,
+  "requiredPackages": [
+    "string"
+  ],
+  "classes": [
+    {
+      "name": "string",
+      "label": "string",
+      "externalLabel": "string",
+      "description": "string",
+      "isFirstClass": true,
+      "isAbstract": true,
+      "superClasses": [
+        "string"
+      ],
+      "deprecated": true,
+      "indexable": true,
+      "appendOnly": true,
+      "extensions": [
+        "string"
+      ]
+    }
+  ],
+  "attributes": [
+    {
+      "name": "string",
+      "label": "string",
+      "dataType": "string",
+      "description": "string",
+      "multivalued": true,
+      "deprecated": true,
+      "derived": true,
+      "data": true,
+      "isCustom": true,
+      "defaultValues": [
+        "string"
+      ],
+      "isSystem": true,
+      "embedded": true,
+      "searchConfiguration": {
+        "attributeType": "SEARCHABLE",
+        "fieldMappingTemplate": "string",
+        "suggestable": true,
+        "aggregatable": true,
+        "sortable": true
+      }
+    }
+  ],
+  "associations": [
+    {
+      "name": "string",
+      "label": "string",
+      "description": "string",
+      "fromClass": "string",
+      "toLabel": "string",
+      "fromLabel": "string",
+      "toClass": "string",
+      "associationKinds": [
+        "string"
+      ],
+      "deprecated": true,
+      "unidirectional": true,
+      "aggregate": true
+    }
+  ],
+  "associationKinds": [
+    {
+      "name": "string",
+      "label": "string",
+      "deprecated": true
+    }
+  ],
+  "dataTypes": [
+    {
+      "constraint": {
+        "constraintType": "RANGE",
+        "values": [
+          "string"
+        ]
+      },
+      "coreType": "string",
+      "deprecated": true,
+      "name": "string"
+    }
+  ],
+  "classAttributes": [
+    {
+      "className": "string",
+      "name": "string",
+      "attributeName": "string",
+      "isRequired": true,
+      "isCuratable": true,
+      "deprecated": true,
+      "reference": "string",
+      "isHidden": true,
+      "cdc": true,
+      "extension": "string",
+      "followers": [
+        "string"
+      ]
+    }
+  ],
+  "associationAttributes": [
+    {
+      "associationName": "string",
+      "name": "string",
+      "attributeName": "string",
+      "isRequired": true,
+      "isCuratable": true,
+      "deprecated": true,
+      "timeDimensional": true,
+      "isHidden": true,
+      "cdc": true
+    }
+  ],
+  "associationKindAttributes": [
+    {
+      "associationKind": "string",
+      "name": "string",
+      "attributeName": "string",
+      "isRequired": true,
+      "isCuratable": true,
+      "deprecated": true,
+      "cdc": true
+    }
+  ],
+  "classUserKeys": [
+    {
+      "className": "string",
+      "classAttributes": [
+        "string"
+      ]
+    }
+  ],
+  "classPartitionKeys": [
+    {
+      "className": "string",
+      "classAttributes": [
+        "string"
+      ]
+    }
+  ],
+  "associationPartitionKeys": [
+    {
+      "associationName": "string",
+      "associationAttributes": [
+        "string"
+      ]
+    }
+  ],
+  "references": [
+    {
+      "name": "string",
+      "association": "string",
+      "deprecated": true
+    }
+  ]
+}

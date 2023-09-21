@@ -1,0 +1,1125 @@
+{
+  "packageName": "com.infa.odin.models.IICS.V2",
+  "packageDescription": "IICS CDI v2 model",
+  "packageLabel": "IICS CDI v2",
+  "deprecated": false,
+  "subsystem": false,
+  "classes": [
+    {
+      "name": "BusinessEntity",
+      "label": "Business Entity",
+      "description": "Business Entity",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataSet",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Calculation",
+      "label": "Calculation",
+      "description": "Calculation",
+      "isFirstClass": false,
+      "superClasses": [
+        "core.DataElement",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Field",
+      "label": "Field",
+      "description": "Field",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataElement",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Folder",
+      "label": "Folder",
+      "description": "Folder",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.IClassTechnical",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Mapping",
+      "label": "Mapping",
+      "description": "Mapping",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.IClassTechnical",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "MappingTask",
+      "label": "Mapping task",
+      "description": "Mapping task",
+      "isFirstClass": true,
+      "superClasses": [
+        "com.infa.odin.models.IICS.V2.Task",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "MappingTaskInstance",
+      "label": "Mapping task instance",
+      "description": "Mapping task execution representation",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataSet",
+        "com.infa.odin.models.IICS.V2.TaskInstance",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "PowerCenterTask",
+      "label": "PowerCenter task",
+      "description": "PowerCenter task",
+      "isFirstClass": true,
+      "superClasses": [
+        "com.infa.odin.models.IICS.V2.Task",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "PowerCenterTaskInstance",
+      "label": "PowerCenter task instance",
+      "description": "PowerCenter task execution representation",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataSet",
+        "com.infa.odin.models.IICS.V2.TaskInstance",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Project",
+      "label": "Project",
+      "description": "Project",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.IClassTechnical",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "SynchronizationTask",
+      "label": "Synchronization task",
+      "description": "Synchronization task",
+      "isFirstClass": true,
+      "superClasses": [
+        "com.infa.odin.models.IICS.V2.Task",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "SynchronizationTaskInstance",
+      "label": "Synchronization task instance",
+      "description": "Synchronization task execution representation",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataSet",
+        "com.infa.odin.models.IICS.V2.TaskInstance",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "SystemField",
+      "label": "System Field",
+      "description": "System Field",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataElement",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Task",
+      "label": "Task",
+      "description": "Task",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.IClassTechnical",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "TaskInstance",
+      "label": "Task instance",
+      "description": "Task execution representation",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataSet",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    }
+  ],
+  "requiredPackages": [
+    "com.infa.odin.models.relational",
+    "core"
+  ],
+  "associations": [
+    {
+      "name": "BusinessEntityToField",
+      "label": "BusinessEntityToField",
+      "fromClass": "com.infa.odin.models.IICS.V2.BusinessEntity",
+      "toClass": "com.infa.odin.models.IICS.V2.Field",
+      "fromLabel": "Business Entity",
+      "toLabel": "Field",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "BusinessEntityToSystemField",
+      "label": "BusinessEntityToSystemField",
+      "fromClass": "com.infa.odin.models.IICS.V2.BusinessEntity",
+      "toClass": "com.infa.odin.models.IICS.V2.SystemField",
+      "fromLabel": "Business Entity",
+      "toLabel": "System Field",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "FolderToBusinessEntity",
+      "label": "FolderToBusinessEntity",
+      "fromClass": "com.infa.odin.models.IICS.V2.Folder",
+      "toClass": "com.infa.odin.models.IICS.V2.BusinessEntity",
+      "fromLabel": "Folder",
+      "toLabel": "Business Entity",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "FolderToMapping",
+      "label": "FolderToMapping",
+      "fromClass": "com.infa.odin.models.IICS.V2.Folder",
+      "toClass": "com.infa.odin.models.IICS.V2.Mapping",
+      "fromLabel": "Folder",
+      "toLabel": "Mapping",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "FolderToTask",
+      "label": "FolderToTask",
+      "fromClass": "com.infa.odin.models.IICS.V2.Folder",
+      "toClass": "com.infa.odin.models.IICS.V2.Task",
+      "fromLabel": "Folder",
+      "toLabel": "Task",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "MappingTaskUsesMapping",
+      "label": "Uses",
+      "fromClass": "com.infa.odin.models.IICS.V2.MappingTask",
+      "toClass": "com.infa.odin.models.IICS.V2.Mapping",
+      "fromLabel": "Mapping task",
+      "toLabel": "Mapping",
+      "associationKinds": [
+        "core.RelatedKind",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "ProjectToBusinessEntity",
+      "label": "ProjectToBusinessEntity",
+      "fromClass": "com.infa.odin.models.IICS.V2.Project",
+      "toClass": "com.infa.odin.models.IICS.V2.BusinessEntity",
+      "fromLabel": "Project",
+      "toLabel": "Business Entity",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "ProjectToFolder",
+      "label": "ProjectToFolder",
+      "fromClass": "com.infa.odin.models.IICS.V2.Project",
+      "toClass": "com.infa.odin.models.IICS.V2.Folder",
+      "fromLabel": "Project",
+      "toLabel": "Folder",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "ProjectToMapping",
+      "label": "ProjectToMapping",
+      "fromClass": "com.infa.odin.models.IICS.V2.Project",
+      "toClass": "com.infa.odin.models.IICS.V2.Mapping",
+      "fromLabel": "Project",
+      "toLabel": "Mapping",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "ProjectToTask",
+      "label": "ProjectToTask",
+      "fromClass": "com.infa.odin.models.IICS.V2.Project",
+      "toClass": "com.infa.odin.models.IICS.V2.Task",
+      "fromLabel": "Project",
+      "toLabel": "Task",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "SourceColumnUsesCalculation",
+      "label": "Uses",
+      "fromClass": "com.infa.odin.models.relational.SourceColumn",
+      "toClass": "com.infa.odin.models.IICS.V2.Calculation",
+      "fromLabel": "Source Column",
+      "toLabel": "Calculation",
+      "associationKinds": [
+        "core.RelatedKind",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "TaskInstanceToCalculation",
+      "label": "TaskInstanceToCalculation",
+      "fromClass": "com.infa.odin.models.IICS.V2.TaskInstance",
+      "toClass": "com.infa.odin.models.IICS.V2.Calculation",
+      "fromLabel": "Task instance",
+      "toLabel": "Calculation",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "TaskToTaskInstance",
+      "label": "TaskToTaskInstance",
+      "fromClass": "com.infa.odin.models.IICS.V2.Task",
+      "toClass": "com.infa.odin.models.IICS.V2.TaskInstance",
+      "fromLabel": "Task",
+      "toLabel": "Task instance",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    }
+  ],
+  "attributes": [
+    {
+      "name": "autoSuggest",
+      "label": "Auto Suggest",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "calculationComplexity",
+      "label": "Calculation Complexity",
+      "dataType": "core.String",
+      "description": "Calculation complexity",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "controlConditions",
+      "label": "Control conditions",
+      "dataType": "core.String",
+      "description": "Control conditions",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "createdDate",
+      "label": "Created Date",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "description",
+      "label": "Source Description",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "enabled",
+      "label": "Enabled",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "expression",
+      "label": "Expression",
+      "dataType": "core.String",
+      "description": "Expression",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "facetable",
+      "label": "Facetable",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "fieldParent",
+      "label": "Parent Field",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "fieldType",
+      "label": "Field Type",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "internalId",
+      "label": "Internal Id",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "multiline",
+      "label": "Multiline",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "required",
+      "label": "Required",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "searchable",
+      "label": "Searchable",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "updatedDate",
+      "label": "Updated Date",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    }
+  ],
+  "classAttributes": [
+    {
+      "className": "com.infa.odin.models.IICS.V2.BusinessEntity",
+      "attributeName": "com.infa.odin.models.IICS.V2.description",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.IICS.V2.BusinessEntity",
+      "attributeName": "com.infa.odin.models.IICS.V2.internalId",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.IICS.V2.Calculation",
+      "attributeName": "com.infa.odin.models.IICS.V2.calculationComplexity",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.IICS.V2.Calculation",
+      "attributeName": "com.infa.odin.models.IICS.V2.controlConditions",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.IICS.V2.Calculation",
+      "attributeName": "com.infa.odin.models.IICS.V2.expression",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.IICS.V2.Field",
+      "attributeName": "com.infa.odin.models.IICS.V2.autoSuggest",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.IICS.V2.Field",
+      "attributeName": "com.infa.odin.models.IICS.V2.description",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.IICS.V2.Field",
+      "attributeName": "com.infa.odin.models.IICS.V2.enabled",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.IICS.V2.Field",
+      "attributeName": "com.infa.odin.models.IICS.V2.facetable",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.IICS.V2.Field",
+      "attributeName": "com.infa.odin.models.IICS.V2.fieldParent",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.IICS.V2.Field",
+      "attributeName": "com.infa.odin.models.IICS.V2.fieldType",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.IICS.V2.Field",
+      "attributeName": "com.infa.odin.models.IICS.V2.multiline",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.IICS.V2.Field",
+      "attributeName": "com.infa.odin.models.IICS.V2.required",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.IICS.V2.Field",
+      "attributeName": "com.infa.odin.models.IICS.V2.searchable",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.IICS.V2.Folder",
+      "attributeName": "com.infa.odin.models.IICS.V2.createdDate",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.IICS.V2.Folder",
+      "attributeName": "com.infa.odin.models.IICS.V2.description",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.IICS.V2.Folder",
+      "attributeName": "com.infa.odin.models.IICS.V2.updatedDate",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.IICS.V2.Project",
+      "attributeName": "com.infa.odin.models.IICS.V2.createdDate",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.IICS.V2.Project",
+      "attributeName": "com.infa.odin.models.IICS.V2.description",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.IICS.V2.Project",
+      "attributeName": "com.infa.odin.models.IICS.V2.updatedDate",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.IICS.V2.SystemField",
+      "attributeName": "com.infa.odin.models.IICS.V2.description",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.IICS.V2.SystemField",
+      "attributeName": "com.infa.odin.models.IICS.V2.fieldParent",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.IICS.V2.SystemField",
+      "attributeName": "com.infa.odin.models.IICS.V2.fieldType",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    }
+  ],
+  "dataTypes": [],
+  "associationKinds": [],
+  "associationAttributes": [],
+  "references": [],
+  "associationKindAttributes": [],
+  "classUserKeys": [],
+  "classPartitionKeys": [],
+  "associationPartitionKeys": [],
+  "identity": "",
+  "version": 8,
+  "modifiedBy": ""
+}

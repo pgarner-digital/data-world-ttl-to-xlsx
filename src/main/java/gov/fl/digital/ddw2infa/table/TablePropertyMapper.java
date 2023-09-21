@@ -88,19 +88,9 @@ enum TablePropertyMapper implements MetadataMapper<TablePropertyMapper> {
                 .filter(i -> null != i.infaColumnName)
                 .collect(Collectors.toList());
 
-        //TODO: header with quotes
-        CSV_HEADER = "\"" +
-                MAPPERS.stream()
-                        .map(mapper -> mapper.infaColumnName)
-                        .collect(Collectors.joining("\",\"")) +
-                "\"";
-        // TODO: header without quotes
-        /*
         CSV_HEADER = MAPPERS.stream()
                         .map(mapper -> mapper.infaColumnName)
-                        .collect(Collectors.joining(","));
-        */
-
+                        .collect(Collectors.joining("|||"));
     }
 
     final String infaColumnName;

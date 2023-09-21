@@ -19,25 +19,9 @@ public abstract class MetadataCache<X extends MetadataMapper<X>> {
         values += "\n" +
             getFieldMappers().stream()
                 .map(mapper -> mapper.getPropertyValueFrom(querySolution))
+                .map(fieldValue -> { if (fieldValue.isBlank()) fieldValue = ""; return fieldValue; })
 
-                .map(fieldValue -> { if (fieldValue.isBlank()) fieldValue = ""; return "\"" + fieldValue + "\""; })
-
-                // TODO: remove double quote "wrappers"
-                //.map(fieldValue -> { if (fieldValue.isBlank()) fieldValue = ""; return fieldValue; })
-
-                // Escape double quotes for proper CSV see https://stackoverflow.com/a/17808731/984932,
-                // and note that because data.world backslash-escapes double quotes, the backslashes are
-                // removed as part of the replace operation. Example: \"foo\" gets replaced with ""foo""
-                .map(fieldValue -> fieldValue.replace("\\\"", "\"\""))
-
-                // TODO: get rid of double quotes in metadata
-                //.map(fieldValue -> fieldValue.replaceAll("\\\"", ""))
-
-                // TODO: get rid of commas in metadata
-                //.map(fieldValue -> fieldValue.replaceAll(",", ""))
-
-                .collect(Collectors.joining(","));
-
+                .collect(Collectors.joining("|||"));
         manageLinksAndSchemas(querySolution, schemasMetadata, linksMetadata);
     }
 

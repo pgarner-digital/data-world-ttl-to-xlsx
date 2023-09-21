@@ -1,0 +1,3467 @@
+{
+  "packageName": "com.infa.odin.models.relational",
+  "packageDescription": "Database Objects model",
+  "packageLabel": "Database Objects",
+  "deprecated": false,
+  "subsystem": false,
+  "classes": [
+    {
+      "name": "Attribute",
+      "label": "Attribute",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataElement",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Calculation",
+      "label": "Calculation",
+      "description": "",
+      "isFirstClass": false,
+      "superClasses": [
+        "core.DataElement",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "CalculationView",
+      "label": "Calculation View",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataSet",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Column",
+      "label": "Column",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataElement",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Database",
+      "label": "Database",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataSource",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "ExternalColumn",
+      "label": "External Column",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataElement",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "ExternalTable",
+      "label": "External Table",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataSet",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "ForeignKey",
+      "label": "Foreign Key",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.IClassTechnical",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Package",
+      "label": "Package",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.IClassTechnical",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Parameter",
+      "label": "Parameter",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataElement",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Parameters",
+      "label": "Parameter Container",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataSet",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Pipe",
+      "label": "Pipe",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.IClassTechnical",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "PrimaryKey",
+      "label": "Primary Key",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.IClassTechnical",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "ProcedureDefinition",
+      "label": "Procedure Definition",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.IClassTechnical",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "ProcedureInstance",
+      "label": "Procedure Instance",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.IClassTechnical",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "ProcedureSource",
+      "label": "Procedure Source",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataSet",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "ResultSet",
+      "label": "Result Set",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataSet",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "ResultSetColumn",
+      "label": "Result Set Column",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataElement",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "SAPHanaPackage",
+      "label": "SAP Hana Package",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.IClassTechnical",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Schema",
+      "label": "Schema",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataSource",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Sequence",
+      "label": "Sequence",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataSet",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "SequenceColumn",
+      "label": "Sequence Column",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataElement",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "SourceColumn",
+      "label": "Source Column",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataElement",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Stage",
+      "label": "Stage",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataSet",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "StageColumn",
+      "label": "Stage Column",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataElement",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Statement",
+      "label": "Statement",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataSet",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Table",
+      "label": "Table",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataSet",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Tag",
+      "label": "Snowflake Tag",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.IClassTechnical",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Task",
+      "label": "Task",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.IClassTechnical",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Trigger",
+      "label": "Trigger",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.IClassTechnical",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "UnresolvedProcedureDefinition",
+      "label": "Unresolved Procedure Definition - Deprecated",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.IClassTechnical",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "UnresolvedStatement",
+      "label": "Unresolved Statement - Deprecated",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataSet",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "UnresolvedView",
+      "label": "Unresolved View - Deprecated",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataSet",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "View",
+      "label": "View",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataSet",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "ViewColumn",
+      "label": "View Column",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataElement",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    }
+  ],
+  "requiredPackages": [
+    "core"
+  ],
+  "associations": [
+    {
+      "name": "CalculationViewToAttribute",
+      "label": "CalculationViewToAttribute",
+      "fromClass": "com.infa.odin.models.relational.CalculationView",
+      "toClass": "com.infa.odin.models.relational.Attribute",
+      "fromLabel": "Calculation View",
+      "toLabel": "Attribute",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "DataSetForeignKey",
+      "label": "DataSetForeignKey",
+      "fromClass": "core.DataSet",
+      "toClass": "com.infa.odin.models.relational.ForeignKey",
+      "fromLabel": "Data Set",
+      "toLabel": "ForeignKey",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "DataSetPrimaryKey",
+      "label": "DataSetPrimaryKey",
+      "fromClass": "core.DataSet",
+      "toClass": "com.infa.odin.models.relational.PrimaryKey",
+      "fromLabel": "Data Set",
+      "toLabel": "PrimaryKey",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "DatabaseToSAPHanaPackage",
+      "label": "DatabaseToSAPHanaPackage",
+      "fromClass": "com.infa.odin.models.relational.Database",
+      "toClass": "com.infa.odin.models.relational.SAPHanaPackage",
+      "fromLabel": "Database",
+      "toLabel": "SAP Hana Package",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "DatabaseToSchema",
+      "label": "DatabaseToSchema",
+      "fromClass": "com.infa.odin.models.relational.Database",
+      "toClass": "com.infa.odin.models.relational.Schema",
+      "fromLabel": "Database",
+      "toLabel": "Schema",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "ExternalTableToCalculation",
+      "label": "ExternalTableToCalculation",
+      "fromClass": "com.infa.odin.models.relational.ExternalTable",
+      "toClass": "com.infa.odin.models.relational.Calculation",
+      "fromLabel": "External Table",
+      "toLabel": "Calculation",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "ExternalTableToExternalColumn",
+      "label": "ExternalTableToExternalColumn",
+      "fromClass": "com.infa.odin.models.relational.ExternalTable",
+      "toClass": "com.infa.odin.models.relational.ExternalColumn",
+      "fromLabel": "External Table",
+      "toLabel": "External Column",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "ForeignKeyChildDataSet",
+      "label": "ForeignKeyChildDataSet",
+      "fromClass": "com.infa.odin.models.relational.ForeignKey",
+      "toClass": "core.DataSet",
+      "fromLabel": "ForeignKey",
+      "toLabel": "Data Set",
+      "associationKinds": [
+        "core.PKFK",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "ForeignKeyForeignKeyDataElement",
+      "label": "ForeignKeyForeignKeyDataElement",
+      "fromClass": "com.infa.odin.models.relational.ForeignKey",
+      "toClass": "core.DataElement",
+      "fromLabel": "ForeignKey",
+      "toLabel": "DataElement",
+      "associationKinds": [
+        "core.PKFK",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "ForeignKeyPrimaryKeyDataElement",
+      "label": "ForeignKeyPrimaryKeyDataElement",
+      "fromClass": "com.infa.odin.models.relational.ForeignKey",
+      "toClass": "core.DataElement",
+      "fromLabel": "ForeignKey",
+      "toLabel": "DataElement",
+      "associationKinds": [
+        "core.PKFK",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "PackageToProcedureDefinition",
+      "label": "PackageToProcedureDefinition",
+      "fromClass": "com.infa.odin.models.relational.Package",
+      "toClass": "com.infa.odin.models.relational.ProcedureDefinition",
+      "fromLabel": "Package",
+      "toLabel": "Procedure Definition",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "PackageToUnresolvedProcedureDefinition",
+      "label": "PackageToUnresolvedProcedureDefinition",
+      "fromClass": "com.infa.odin.models.relational.Package",
+      "toClass": "com.infa.odin.models.relational.UnresolvedProcedureDefinition",
+      "fromLabel": "Package",
+      "toLabel": "Unresolved Procedure Definition",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "ParametersToParameter",
+      "label": "ParametersToParameter",
+      "fromClass": "com.infa.odin.models.relational.Parameters",
+      "toClass": "com.infa.odin.models.relational.Parameter",
+      "fromLabel": "Parameter Container",
+      "toLabel": "Parameter",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "PipeToStatement",
+      "label": "PipeToStatement",
+      "fromClass": "com.infa.odin.models.relational.Pipe",
+      "toClass": "com.infa.odin.models.relational.Statement",
+      "fromLabel": "Pipe",
+      "toLabel": "Statement",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "PipeToUnresolvedStatement",
+      "label": "PipeToUnresolvedStatement",
+      "fromClass": "com.infa.odin.models.relational.Pipe",
+      "toClass": "com.infa.odin.models.relational.UnresolvedStatement",
+      "fromLabel": "Pipe",
+      "toLabel": "Unresolved Statement",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "PkFkRelatedDataSets",
+      "label": "PkFkRelatedDataSets",
+      "fromClass": "core.DataSet",
+      "toClass": "core.DataSet",
+      "fromLabel": "Data Set",
+      "toLabel": "Data Set",
+      "associationKinds": [
+        "core.PKFK",
+        "core.RelatedKind",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "PrimaryKeyDataElement",
+      "label": "PrimaryKeyDataElement",
+      "fromClass": "com.infa.odin.models.relational.PrimaryKey",
+      "toClass": "core.DataElement",
+      "fromLabel": "PrimaryKey",
+      "toLabel": "DataElement",
+      "associationKinds": [
+        "core.PKFK",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "ProcedureDefinitionToProcedureInstance",
+      "label": "ProcedureDefinitionToProcedureInstance",
+      "fromClass": "com.infa.odin.models.relational.ProcedureDefinition",
+      "toClass": "com.infa.odin.models.relational.ProcedureInstance",
+      "fromLabel": "Procedure Definition",
+      "toLabel": "Procedure Instance",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "ProcedureInstanceToParameters",
+      "label": "ProcedureInstanceToParameters",
+      "fromClass": "com.infa.odin.models.relational.ProcedureInstance",
+      "toClass": "com.infa.odin.models.relational.Parameters",
+      "fromLabel": "Procedure Instance",
+      "toLabel": "Parameter Container",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "ProcedureInstanceToProcedureSource",
+      "label": "ProcedureInstanceToProcedureSource",
+      "fromClass": "com.infa.odin.models.relational.ProcedureInstance",
+      "toClass": "com.infa.odin.models.relational.ProcedureSource",
+      "fromLabel": "Procedure Instance",
+      "toLabel": "Procedure Source",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "ProcedureInstanceToResultSet",
+      "label": "ProcedureInstanceToResultSet",
+      "fromClass": "com.infa.odin.models.relational.ProcedureInstance",
+      "toClass": "com.infa.odin.models.relational.ResultSet",
+      "fromLabel": "Procedure Instance",
+      "toLabel": "Result Set",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "ProcedureInstanceToStatement",
+      "label": "ProcedureInstanceToStatement",
+      "fromClass": "com.infa.odin.models.relational.ProcedureInstance",
+      "toClass": "com.infa.odin.models.relational.Statement",
+      "fromLabel": "Procedure Instance",
+      "toLabel": "Statement",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "ProcedureInstanceToUnresolvedStatement",
+      "label": "ProcedureInstanceToUnresolvedStatement",
+      "fromClass": "com.infa.odin.models.relational.ProcedureInstance",
+      "toClass": "com.infa.odin.models.relational.UnresolvedStatement",
+      "fromLabel": "Procedure Instance",
+      "toLabel": "Unresolved Statement",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "ProcedureSourceToSourceColumn",
+      "label": "ProcedureSourceToSourceColumn",
+      "fromClass": "com.infa.odin.models.relational.ProcedureSource",
+      "toClass": "com.infa.odin.models.relational.SourceColumn",
+      "fromLabel": "Procedure Source",
+      "toLabel": "Source Column",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "ResultSetToResultSetColumn",
+      "label": "ResultSetToResultSetColumn",
+      "fromClass": "com.infa.odin.models.relational.ResultSet",
+      "toClass": "com.infa.odin.models.relational.ResultSetColumn",
+      "fromLabel": "Result Set",
+      "toLabel": "Result Set Column",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "SAPHanaPackageToCalculationView",
+      "label": "SAPHanaPackageToCalculationView",
+      "fromClass": "com.infa.odin.models.relational.SAPHanaPackage",
+      "toClass": "com.infa.odin.models.relational.CalculationView",
+      "fromLabel": "SAP Hana Package",
+      "toLabel": "Calculation View",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "SAPHanaPackageToSAPHanaPackage",
+      "label": "SAPHanaPackageToSAPHanaPackage",
+      "fromClass": "com.infa.odin.models.relational.SAPHanaPackage",
+      "toClass": "com.infa.odin.models.relational.SAPHanaPackage",
+      "fromLabel": "SAP Hana Package",
+      "toLabel": "SAP Hana Package",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "SchemaToExternalTable",
+      "label": "SchemaToExternalTable",
+      "fromClass": "com.infa.odin.models.relational.Schema",
+      "toClass": "com.infa.odin.models.relational.ExternalTable",
+      "fromLabel": "Schema",
+      "toLabel": "External Table",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "SchemaToPackage",
+      "label": "SchemaToPackage",
+      "fromClass": "com.infa.odin.models.relational.Schema",
+      "toClass": "com.infa.odin.models.relational.Package",
+      "fromLabel": "Schema",
+      "toLabel": "Package",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "SchemaToPipe",
+      "label": "SchemaToPipe",
+      "fromClass": "com.infa.odin.models.relational.Schema",
+      "toClass": "com.infa.odin.models.relational.Pipe",
+      "fromLabel": "Schema",
+      "toLabel": "Pipe",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "SchemaToProcedureDefinition",
+      "label": "SchemaToProcedureDefinition",
+      "fromClass": "com.infa.odin.models.relational.Schema",
+      "toClass": "com.infa.odin.models.relational.ProcedureDefinition",
+      "fromLabel": "Schema",
+      "toLabel": "Procedure Definition",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "SchemaToSequence",
+      "label": "SchemaToSequence",
+      "fromClass": "com.infa.odin.models.relational.Schema",
+      "toClass": "com.infa.odin.models.relational.Sequence",
+      "fromLabel": "Schema",
+      "toLabel": "Sequence",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "SchemaToStage",
+      "label": "SchemaToStage",
+      "fromClass": "com.infa.odin.models.relational.Schema",
+      "toClass": "com.infa.odin.models.relational.Stage",
+      "fromLabel": "Schema",
+      "toLabel": "Stage",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "SchemaToTable",
+      "label": "SchemaToTable",
+      "fromClass": "com.infa.odin.models.relational.Schema",
+      "toClass": "com.infa.odin.models.relational.Table",
+      "fromLabel": "Schema",
+      "toLabel": "Table",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "SchemaToTag",
+      "label": "SchemaToTag",
+      "fromClass": "com.infa.odin.models.relational.Schema",
+      "toClass": "com.infa.odin.models.relational.Tag",
+      "fromLabel": "Schema",
+      "toLabel": "Snowflake Tag",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "SchemaToTask",
+      "label": "SchemaToTask",
+      "fromClass": "com.infa.odin.models.relational.Schema",
+      "toClass": "com.infa.odin.models.relational.Task",
+      "fromLabel": "Schema",
+      "toLabel": "Task",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "SchemaToTrigger",
+      "label": "SchemaToTrigger",
+      "fromClass": "com.infa.odin.models.relational.Schema",
+      "toClass": "com.infa.odin.models.relational.Trigger",
+      "fromLabel": "Schema",
+      "toLabel": "Trigger",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "SchemaToUnresolvedProcedureDefinition",
+      "label": "SchemaToUnresolvedProcedureDefinition",
+      "fromClass": "com.infa.odin.models.relational.Schema",
+      "toClass": "com.infa.odin.models.relational.UnresolvedProcedureDefinition",
+      "fromLabel": "Schema",
+      "toLabel": "Unresolved Procedure Definition",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "SchemaToUnresolvedView",
+      "label": "SchemaToUnresolvedView",
+      "fromClass": "com.infa.odin.models.relational.Schema",
+      "toClass": "com.infa.odin.models.relational.UnresolvedView",
+      "fromLabel": "Schema",
+      "toLabel": "Unresolved View",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "SchemaToView",
+      "label": "SchemaToView",
+      "fromClass": "com.infa.odin.models.relational.Schema",
+      "toClass": "com.infa.odin.models.relational.View",
+      "fromLabel": "Schema",
+      "toLabel": "View",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "SequenceToSequenceColumn",
+      "label": "SequenceToSequenceColumn",
+      "fromClass": "com.infa.odin.models.relational.Sequence",
+      "toClass": "com.infa.odin.models.relational.SequenceColumn",
+      "fromLabel": "Sequence",
+      "toLabel": "Sequence Column",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "SourceColumnUsesCalculation",
+      "label": "Uses",
+      "fromClass": "com.infa.odin.models.relational.SourceColumn",
+      "toClass": "com.infa.odin.models.relational.Calculation",
+      "fromLabel": "Source Column",
+      "toLabel": "Calculation",
+      "associationKinds": [
+        "core.RelatedKind",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "SourceColumnUsesSourceColumn",
+      "label": "Uses",
+      "fromClass": "com.infa.odin.models.relational.SourceColumn",
+      "toClass": "com.infa.odin.models.relational.SourceColumn",
+      "fromLabel": "Source Column",
+      "toLabel": "Source Column",
+      "associationKinds": [
+        "core.RelatedKind",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "StageToStageColumn",
+      "label": "StageToStageColumn",
+      "fromClass": "com.infa.odin.models.relational.Stage",
+      "toClass": "com.infa.odin.models.relational.StageColumn",
+      "fromLabel": "Stage",
+      "toLabel": "Stage Column",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "StatementToCalculation",
+      "label": "StatementToCalculation",
+      "fromClass": "com.infa.odin.models.relational.Statement",
+      "toClass": "com.infa.odin.models.relational.Calculation",
+      "fromLabel": "Statement",
+      "toLabel": "Calculation",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "TableToColumn",
+      "label": "TableToColumn",
+      "fromClass": "com.infa.odin.models.relational.Table",
+      "toClass": "com.infa.odin.models.relational.Column",
+      "fromLabel": "Table",
+      "toLabel": "Column",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "TagIsAppliedToIClassTechnical",
+      "label": "Applies To",
+      "fromClass": "com.infa.odin.models.relational.Tag",
+      "toClass": "core.IClassTechnical",
+      "fromLabel": "Snowflake Tag",
+      "toLabel": "IClassTechnical",
+      "associationKinds": [
+        "core.RelatedKind",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "TaskToStatement",
+      "label": "TaskToStatement",
+      "fromClass": "com.infa.odin.models.relational.Task",
+      "toClass": "com.infa.odin.models.relational.Statement",
+      "fromLabel": "Task",
+      "toLabel": "Statement",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "TaskToUnresolvedStatement",
+      "label": "TaskToUnresolvedStatement",
+      "fromClass": "com.infa.odin.models.relational.Task",
+      "toClass": "com.infa.odin.models.relational.UnresolvedStatement",
+      "fromLabel": "Task",
+      "toLabel": "Unresolved Statement",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "TriggerToStatement",
+      "label": "TriggerToStatement",
+      "fromClass": "com.infa.odin.models.relational.Trigger",
+      "toClass": "com.infa.odin.models.relational.Statement",
+      "fromLabel": "Trigger",
+      "toLabel": "Statement",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "TriggerToUnresolvedStatement",
+      "label": "TriggerToUnresolvedStatement",
+      "fromClass": "com.infa.odin.models.relational.Trigger",
+      "toClass": "com.infa.odin.models.relational.UnresolvedStatement",
+      "fromLabel": "Trigger",
+      "toLabel": "Unresolved Statement",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "UnresolvedProcedureDefinitionToProcedureInstance",
+      "label": "UnresolvedProcedureDefinitionToProcedureInstance",
+      "fromClass": "com.infa.odin.models.relational.UnresolvedProcedureDefinition",
+      "toClass": "com.infa.odin.models.relational.ProcedureInstance",
+      "fromLabel": "Unresolved Procedure Definition",
+      "toLabel": "Procedure Instance",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "UnresolvedStatementToCalculation",
+      "label": "UnresolvedStatementToCalculation",
+      "fromClass": "com.infa.odin.models.relational.UnresolvedStatement",
+      "toClass": "com.infa.odin.models.relational.Calculation",
+      "fromLabel": "Unresolved Statement",
+      "toLabel": "Calculation",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "UnresolvedViewToCalculation",
+      "label": "UnresolvedViewToCalculation",
+      "fromClass": "com.infa.odin.models.relational.UnresolvedView",
+      "toClass": "com.infa.odin.models.relational.Calculation",
+      "fromLabel": "Unresolved View",
+      "toLabel": "Calculation",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "ViewToViewColumn",
+      "label": "ViewToViewColumn",
+      "fromClass": "com.infa.odin.models.relational.View",
+      "toClass": "com.infa.odin.models.relational.ViewColumn",
+      "fromLabel": "View",
+      "toLabel": "View Column",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    }
+  ],
+  "attributes": [
+    {
+      "name": "Comment",
+      "label": "Comment",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "Datatype",
+      "label": "Data type",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "DatatypeLength",
+      "label": "Data type Length",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "DatatypeScale",
+      "label": "Data type Scale",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "Location",
+      "label": "Location",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "Nullable",
+      "label": "Nullable",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "NumberOfRows",
+      "label": "Number of rows",
+      "dataType": "core.Integer",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "Owner",
+      "label": "Schema",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "PartitionBy",
+      "label": "Partition By",
+      "dataType": "core.Boolean",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "Partitioned",
+      "label": "Partitioned",
+      "dataType": "core.Boolean",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "Position",
+      "label": "Position",
+      "dataType": "core.Integer",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": true,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "PrimaryKeyColumn",
+      "label": "Primary Key Column",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "ProductName",
+      "label": "Product Name",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "ProductVersion",
+      "label": "Product Version",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "Provider",
+      "label": "Provider",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "TableType",
+      "label": "TableType",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "TagAllowedValues",
+      "label": "Tag allowed values",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "TagValue",
+      "label": "Tag value",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "ViewType",
+      "label": "ViewType",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "calculationComplexity",
+      "label": "Calculation Complexity",
+      "dataType": "core.String",
+      "description": "Calculation complexity",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "callComment",
+      "label": "Call Comment",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "callId",
+      "label": "Call ID",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "callStackTrace",
+      "label": "Call stack trace",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "controlConditions",
+      "label": "Control conditions",
+      "dataType": "core.String",
+      "description": "Control conditions",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "errorMessage",
+      "label": "Error message",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "expression",
+      "label": "Expression",
+      "dataType": "core.String",
+      "description": "Expression",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "htmlLink",
+      "label": "Visualization",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "sourceCommentText",
+      "label": "Source comment text",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "sourceCompleteText",
+      "label": "Source complete text",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "sourceStatementText",
+      "label": "Source statement text",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "statementCommentText",
+      "label": "Statement comment text",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    }
+  ],
+  "classAttributes": [
+    {
+      "className": "com.infa.odin.models.relational.Attribute",
+      "attributeName": "com.infa.odin.models.relational.Comment",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Attribute",
+      "attributeName": "com.infa.odin.models.relational.Datatype",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Attribute",
+      "attributeName": "com.infa.odin.models.relational.DatatypeLength",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Attribute",
+      "attributeName": "com.infa.odin.models.relational.DatatypeScale",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Attribute",
+      "attributeName": "com.infa.odin.models.relational.Nullable",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Attribute",
+      "attributeName": "com.infa.odin.models.relational.Position",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Attribute",
+      "attributeName": "com.infa.odin.models.relational.calculationComplexity",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Attribute",
+      "attributeName": "com.infa.odin.models.relational.controlConditions",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Attribute",
+      "attributeName": "com.infa.odin.models.relational.expression",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Calculation",
+      "attributeName": "com.infa.odin.models.relational.calculationComplexity",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Calculation",
+      "attributeName": "com.infa.odin.models.relational.controlConditions",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Calculation",
+      "attributeName": "com.infa.odin.models.relational.expression",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.CalculationView",
+      "attributeName": "com.infa.odin.models.relational.Comment",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.CalculationView",
+      "attributeName": "com.infa.odin.models.relational.Owner",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.CalculationView",
+      "attributeName": "com.infa.odin.models.relational.htmlLink",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.CalculationView",
+      "attributeName": "com.infa.odin.models.relational.sourceStatementText",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Column",
+      "attributeName": "com.infa.odin.models.relational.Comment",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Column",
+      "attributeName": "com.infa.odin.models.relational.Datatype",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Column",
+      "attributeName": "com.infa.odin.models.relational.DatatypeLength",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Column",
+      "attributeName": "com.infa.odin.models.relational.DatatypeScale",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Column",
+      "attributeName": "com.infa.odin.models.relational.Nullable",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Column",
+      "attributeName": "com.infa.odin.models.relational.PartitionBy",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Column",
+      "attributeName": "com.infa.odin.models.relational.Position",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Column",
+      "attributeName": "com.infa.odin.models.relational.PrimaryKeyColumn",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Database",
+      "attributeName": "com.infa.odin.models.relational.Comment",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Database",
+      "attributeName": "com.infa.odin.models.relational.Owner",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Database",
+      "attributeName": "com.infa.odin.models.relational.ProductName",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Database",
+      "attributeName": "com.infa.odin.models.relational.ProductVersion",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ExternalColumn",
+      "attributeName": "com.infa.odin.models.relational.Comment",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ExternalColumn",
+      "attributeName": "com.infa.odin.models.relational.Datatype",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ExternalColumn",
+      "attributeName": "com.infa.odin.models.relational.DatatypeLength",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ExternalColumn",
+      "attributeName": "com.infa.odin.models.relational.DatatypeScale",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ExternalColumn",
+      "attributeName": "com.infa.odin.models.relational.Nullable",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ExternalColumn",
+      "attributeName": "com.infa.odin.models.relational.Position",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ExternalColumn",
+      "attributeName": "com.infa.odin.models.relational.calculationComplexity",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ExternalColumn",
+      "attributeName": "com.infa.odin.models.relational.controlConditions",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ExternalColumn",
+      "attributeName": "com.infa.odin.models.relational.expression",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ExternalTable",
+      "attributeName": "com.infa.odin.models.relational.Comment",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ExternalTable",
+      "attributeName": "com.infa.odin.models.relational.Location",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ExternalTable",
+      "attributeName": "com.infa.odin.models.relational.Owner",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ExternalTable",
+      "attributeName": "com.infa.odin.models.relational.Provider",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ExternalTable",
+      "attributeName": "com.infa.odin.models.relational.htmlLink",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ExternalTable",
+      "attributeName": "com.infa.odin.models.relational.sourceStatementText",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Pipe",
+      "attributeName": "com.infa.odin.models.relational.htmlLink",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Pipe",
+      "attributeName": "com.infa.odin.models.relational.sourceCompleteText",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ProcedureDefinition",
+      "attributeName": "com.infa.odin.models.relational.errorMessage",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ProcedureDefinition",
+      "attributeName": "com.infa.odin.models.relational.sourceCommentText",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ProcedureDefinition",
+      "attributeName": "com.infa.odin.models.relational.sourceCompleteText",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ProcedureInstance",
+      "attributeName": "com.infa.odin.models.relational.callComment",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ProcedureInstance",
+      "attributeName": "com.infa.odin.models.relational.callId",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Schema",
+      "attributeName": "com.infa.odin.models.relational.Comment",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Schema",
+      "attributeName": "com.infa.odin.models.relational.Owner",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Statement",
+      "attributeName": "com.infa.odin.models.relational.callStackTrace",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Statement",
+      "attributeName": "com.infa.odin.models.relational.errorMessage",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Statement",
+      "attributeName": "com.infa.odin.models.relational.htmlLink",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Statement",
+      "attributeName": "com.infa.odin.models.relational.sourceStatementText",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Statement",
+      "attributeName": "com.infa.odin.models.relational.statementCommentText",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Table",
+      "attributeName": "com.infa.odin.models.relational.Comment",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Table",
+      "attributeName": "com.infa.odin.models.relational.Location",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Table",
+      "attributeName": "com.infa.odin.models.relational.NumberOfRows",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Table",
+      "attributeName": "com.infa.odin.models.relational.Owner",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Table",
+      "attributeName": "com.infa.odin.models.relational.Partitioned",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Table",
+      "attributeName": "com.infa.odin.models.relational.Provider",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Table",
+      "attributeName": "com.infa.odin.models.relational.TableType",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Tag",
+      "attributeName": "com.infa.odin.models.relational.Comment",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Tag",
+      "attributeName": "com.infa.odin.models.relational.TagAllowedValues",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Task",
+      "attributeName": "com.infa.odin.models.relational.htmlLink",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Task",
+      "attributeName": "com.infa.odin.models.relational.sourceCompleteText",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Trigger",
+      "attributeName": "com.infa.odin.models.relational.sourceCommentText",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.Trigger",
+      "attributeName": "com.infa.odin.models.relational.sourceCompleteText",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.UnresolvedProcedureDefinition",
+      "attributeName": "com.infa.odin.models.relational.errorMessage",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.UnresolvedProcedureDefinition",
+      "attributeName": "com.infa.odin.models.relational.sourceCommentText",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.UnresolvedProcedureDefinition",
+      "attributeName": "com.infa.odin.models.relational.sourceCompleteText",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.UnresolvedStatement",
+      "attributeName": "com.infa.odin.models.relational.callStackTrace",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.UnresolvedStatement",
+      "attributeName": "com.infa.odin.models.relational.errorMessage",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.UnresolvedStatement",
+      "attributeName": "com.infa.odin.models.relational.htmlLink",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.UnresolvedStatement",
+      "attributeName": "com.infa.odin.models.relational.sourceStatementText",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.UnresolvedStatement",
+      "attributeName": "com.infa.odin.models.relational.statementCommentText",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.UnresolvedView",
+      "attributeName": "com.infa.odin.models.relational.Comment",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.UnresolvedView",
+      "attributeName": "com.infa.odin.models.relational.Owner",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.UnresolvedView",
+      "attributeName": "com.infa.odin.models.relational.errorMessage",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.UnresolvedView",
+      "attributeName": "com.infa.odin.models.relational.htmlLink",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.UnresolvedView",
+      "attributeName": "com.infa.odin.models.relational.sourceStatementText",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.View",
+      "attributeName": "com.infa.odin.models.relational.Comment",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.View",
+      "attributeName": "com.infa.odin.models.relational.Owner",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.View",
+      "attributeName": "com.infa.odin.models.relational.ViewType",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.View",
+      "attributeName": "com.infa.odin.models.relational.errorMessage",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.View",
+      "attributeName": "com.infa.odin.models.relational.htmlLink",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.View",
+      "attributeName": "com.infa.odin.models.relational.sourceStatementText",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ViewColumn",
+      "attributeName": "com.infa.odin.models.relational.Comment",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ViewColumn",
+      "attributeName": "com.infa.odin.models.relational.Datatype",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ViewColumn",
+      "attributeName": "com.infa.odin.models.relational.DatatypeLength",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ViewColumn",
+      "attributeName": "com.infa.odin.models.relational.DatatypeScale",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ViewColumn",
+      "attributeName": "com.infa.odin.models.relational.Nullable",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ViewColumn",
+      "attributeName": "com.infa.odin.models.relational.Position",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ViewColumn",
+      "attributeName": "com.infa.odin.models.relational.calculationComplexity",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ViewColumn",
+      "attributeName": "com.infa.odin.models.relational.controlConditions",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.ViewColumn",
+      "attributeName": "com.infa.odin.models.relational.expression",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    }
+  ],
+  "dataTypes": [],
+  "associationKinds": [],
+  "associationAttributes": [
+    {
+      "associationName": "com.infa.odin.models.relational.TagIsAppliedToIClassTechnical",
+      "attributeName": "com.infa.odin.models.relational.TagValue",
+      "deprecated": false,
+      "isRequired": false,
+      "isCuratable": false,
+      "isHidden": false,
+      "cdc": true
+    }
+  ],
+  "references": [],
+  "associationKindAttributes": [],
+  "classUserKeys": [],
+  "classPartitionKeys": [],
+  "associationPartitionKeys": [],
+  "identity": "",
+  "version": 32,
+  "modifiedBy": ""
+}

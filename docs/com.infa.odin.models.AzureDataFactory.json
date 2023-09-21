@@ -1,0 +1,700 @@
+{
+  "packageName": "com.infa.odin.models.AzureDataFactory",
+  "packageDescription": "Azure Data Factory model",
+  "packageLabel": "Azure Data Factory",
+  "deprecated": false,
+  "subsystem": false,
+  "classes": [
+    {
+      "name": "Activity",
+      "label": "Activity",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataSet",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Calculation",
+      "label": "Calculation",
+      "description": "",
+      "isFirstClass": false,
+      "superClasses": [
+        "core.DataElement",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Dataflow",
+      "label": "Dataflow",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.IClassTechnical",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Dataset",
+      "label": "Dataset",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.DataSet",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Factory",
+      "label": "Factory",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.IClassTechnical",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Folder",
+      "label": "Folder",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.IClassTechnical",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "Pipeline",
+      "label": "Pipeline",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.IClassTechnical",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    },
+    {
+      "name": "PipelineInstance",
+      "label": "Pipeline Instance",
+      "description": "",
+      "isFirstClass": true,
+      "superClasses": [
+        "core.IClassTechnical",
+        "core.IClass"
+      ],
+      "deprecated": false,
+      "isAbstract": false,
+      "indexType": "FULL",
+      "appendOnly": false,
+      "extensions": [],
+      "softDeleted": false
+    }
+  ],
+  "requiredPackages": [
+    "com.infa.odin.models.relational",
+    "com.infa.odin.models.SSIS",
+    "com.infa.odin.models.Databricks",
+    "core"
+  ],
+  "associations": [
+    {
+      "name": "ActivityToCalculation",
+      "label": "ActivityToCalculation",
+      "fromClass": "com.infa.odin.models.AzureDataFactory.Activity",
+      "toClass": "com.infa.odin.models.AzureDataFactory.Calculation",
+      "fromLabel": "Activity",
+      "toLabel": "Calculation",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "ActivityUsesDataflow",
+      "label": "Uses",
+      "fromClass": "com.infa.odin.models.AzureDataFactory.Activity",
+      "toClass": "com.infa.odin.models.AzureDataFactory.Dataflow",
+      "fromLabel": "Activity",
+      "toLabel": "Dataflow",
+      "associationKinds": [
+        "core.RelatedKind",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "ActivityUsesNotebookInstance",
+      "label": "Uses",
+      "fromClass": "com.infa.odin.models.AzureDataFactory.Activity",
+      "toClass": "com.infa.odin.models.Databricks.NotebookInstance",
+      "fromLabel": "Activity",
+      "toLabel": "Notebook Instance",
+      "associationKinds": [
+        "core.RelatedKind",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "ActivityUsesPackage",
+      "label": "Uses",
+      "fromClass": "com.infa.odin.models.AzureDataFactory.Activity",
+      "toClass": "com.infa.odin.models.SSIS.Package",
+      "fromLabel": "Activity",
+      "toLabel": "Package",
+      "associationKinds": [
+        "core.RelatedKind",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "ActivityUsesProcedureInstance",
+      "label": "Uses",
+      "fromClass": "com.infa.odin.models.AzureDataFactory.Activity",
+      "toClass": "com.infa.odin.models.relational.ProcedureInstance",
+      "fromLabel": "Activity",
+      "toLabel": "Procedure Instance",
+      "associationKinds": [
+        "core.RelatedKind",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "DatasetToCalculation",
+      "label": "DatasetToCalculation",
+      "fromClass": "com.infa.odin.models.AzureDataFactory.Dataset",
+      "toClass": "com.infa.odin.models.AzureDataFactory.Calculation",
+      "fromLabel": "Dataset",
+      "toLabel": "Calculation",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "FactoryToDataflow",
+      "label": "FactoryToDataflow",
+      "fromClass": "com.infa.odin.models.AzureDataFactory.Factory",
+      "toClass": "com.infa.odin.models.AzureDataFactory.Dataflow",
+      "fromLabel": "Factory",
+      "toLabel": "Dataflow",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "FactoryToDataset",
+      "label": "FactoryToDataset",
+      "fromClass": "com.infa.odin.models.AzureDataFactory.Factory",
+      "toClass": "com.infa.odin.models.AzureDataFactory.Dataset",
+      "fromLabel": "Factory",
+      "toLabel": "Dataset",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "FactoryToFolder",
+      "label": "FactoryToFolder",
+      "fromClass": "com.infa.odin.models.AzureDataFactory.Factory",
+      "toClass": "com.infa.odin.models.AzureDataFactory.Folder",
+      "fromLabel": "Factory",
+      "toLabel": "Folder",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "FactoryToPipeline",
+      "label": "FactoryToPipeline",
+      "fromClass": "com.infa.odin.models.AzureDataFactory.Factory",
+      "toClass": "com.infa.odin.models.AzureDataFactory.Pipeline",
+      "fromLabel": "Factory",
+      "toLabel": "Pipeline",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "FolderToDataflow",
+      "label": "FolderToDataflow",
+      "fromClass": "com.infa.odin.models.AzureDataFactory.Folder",
+      "toClass": "com.infa.odin.models.AzureDataFactory.Dataflow",
+      "fromLabel": "Folder",
+      "toLabel": "Dataflow",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "FolderToDataset",
+      "label": "FolderToDataset",
+      "fromClass": "com.infa.odin.models.AzureDataFactory.Folder",
+      "toClass": "com.infa.odin.models.AzureDataFactory.Dataset",
+      "fromLabel": "Folder",
+      "toLabel": "Dataset",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "FolderToFolder",
+      "label": "FolderToFolder",
+      "fromClass": "com.infa.odin.models.AzureDataFactory.Folder",
+      "toClass": "com.infa.odin.models.AzureDataFactory.Folder",
+      "fromLabel": "Folder",
+      "toLabel": "Folder",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "FolderToPipeline",
+      "label": "FolderToPipeline",
+      "fromClass": "com.infa.odin.models.AzureDataFactory.Folder",
+      "toClass": "com.infa.odin.models.AzureDataFactory.Pipeline",
+      "fromLabel": "Folder",
+      "toLabel": "Pipeline",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "PipelineInstanceToActivity",
+      "label": "PipelineInstanceToActivity",
+      "fromClass": "com.infa.odin.models.AzureDataFactory.PipelineInstance",
+      "toClass": "com.infa.odin.models.AzureDataFactory.Activity",
+      "fromLabel": "Pipeline Instance",
+      "toLabel": "Activity",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "PipelineToActivity",
+      "label": "PipelineToActivity",
+      "fromClass": "com.infa.odin.models.AzureDataFactory.Pipeline",
+      "toClass": "com.infa.odin.models.AzureDataFactory.Activity",
+      "fromLabel": "Pipeline",
+      "toLabel": "Activity",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "PipelineToPipelineInstance",
+      "label": "PipelineToPipelineInstance",
+      "fromClass": "com.infa.odin.models.AzureDataFactory.Pipeline",
+      "toClass": "com.infa.odin.models.AzureDataFactory.PipelineInstance",
+      "fromLabel": "Pipeline",
+      "toLabel": "Pipeline Instance",
+      "associationKinds": [
+        "core.ParentChild",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    },
+    {
+      "name": "SourceColumnUsesCalculation",
+      "label": "Uses",
+      "fromClass": "com.infa.odin.models.relational.SourceColumn",
+      "toClass": "com.infa.odin.models.AzureDataFactory.Calculation",
+      "fromLabel": "Source Column",
+      "toLabel": "Calculation",
+      "associationKinds": [
+        "core.RelatedKind",
+        "core.IAssociation"
+      ],
+      "deprecated": false,
+      "unidirectional": false,
+      "aggregate": false,
+      "description": ""
+    }
+  ],
+  "attributes": [
+    {
+      "name": "calculationComplexity",
+      "label": "Calculation Complexity",
+      "dataType": "core.String",
+      "description": "Calculation complexity",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "controlConditions",
+      "label": "Control conditions",
+      "dataType": "core.String",
+      "description": "Control conditions",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "description",
+      "label": "Description_new",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "expression",
+      "label": "Expression",
+      "dataType": "core.String",
+      "description": "Expression",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "folder",
+      "label": "Folder",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "htmlLink",
+      "label": "Visualization",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "type",
+      "label": "Type",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    }
+  ],
+  "classAttributes": [
+    {
+      "className": "com.infa.odin.models.AzureDataFactory.Activity",
+      "attributeName": "com.infa.odin.models.AzureDataFactory.description",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.AzureDataFactory.Activity",
+      "attributeName": "com.infa.odin.models.AzureDataFactory.htmlLink",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.AzureDataFactory.Activity",
+      "attributeName": "com.infa.odin.models.AzureDataFactory.type",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.AzureDataFactory.Calculation",
+      "attributeName": "com.infa.odin.models.AzureDataFactory.calculationComplexity",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.AzureDataFactory.Calculation",
+      "attributeName": "com.infa.odin.models.AzureDataFactory.controlConditions",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.AzureDataFactory.Calculation",
+      "attributeName": "com.infa.odin.models.AzureDataFactory.expression",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.AzureDataFactory.Pipeline",
+      "attributeName": "com.infa.odin.models.AzureDataFactory.folder",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": false,
+      "materialized": false,
+      "conditions": []
+    }
+  ],
+  "dataTypes": [],
+  "associationKinds": [],
+  "associationAttributes": [],
+  "references": [],
+  "associationKindAttributes": [],
+  "classUserKeys": [],
+  "classPartitionKeys": [],
+  "associationPartitionKeys": [],
+  "identity": "",
+  "version": 10,
+  "modifiedBy": ""
+}

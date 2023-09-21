@@ -22,8 +22,8 @@ import java.time.temporal.ChronoUnit;
 public class Ddw2InfaCustomMetaModelProcessor {
 
     /************************************************  INPUTS  ********************************************************/
-    private static final String OWNER = "APD";
-    private static final String FULL_GRAPH_TTL_FILE_PATH = "fl-apd-full-graph.ttl";
+    private static final String OWNER = "DOH";
+    private static final String FULL_GRAPH_TTL_FILE_PATH = "fl-doh-full-graph.ttl";
     /******************************************************************************************************************/
 
     private static final Logger logger = LogManager.getLogger(Ddw2InfaCustomMetaModelProcessor.class);
@@ -56,8 +56,7 @@ public class Ddw2InfaCustomMetaModelProcessor {
         schemasMetadata.generateCsvFile(OUTPUT_DIRECTORY_PATH);
         linksMetadata.generateCsvFile(OUTPUT_DIRECTORY_PATH);
 
-        logger.info("Total processing time: " + begin.until(LocalDateTime.now(), ChronoUnit.MINUTES) +
-                " minutes).");
+        logger.info("Total processing time: " + begin.until(LocalDateTime.now(), ChronoUnit.MINUTES) + " minutes).");
     }
 
     private static <X extends MetadataMapper<X>> void executeQueryAndGenerateCSV(

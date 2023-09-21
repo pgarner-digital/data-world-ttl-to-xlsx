@@ -63,26 +63,13 @@ enum DatabasePropertyMapper implements MetadataMapper<DatabasePropertyMapper> {
     static final String CSV_HEADER;
 
     static {
-
         MAPPERS = Arrays.stream(DatabasePropertyMapper.values())
-                // Remove DW columns that don't have matching INFA columns because they aren't used
-                .filter(databasePropertyMapper -> null != databasePropertyMapper.infaColumnName)
-                .collect(Collectors.toList());
-
-        // TODO: header with quotes
-        CSV_HEADER = "\"" +
-                MAPPERS.stream()
-                        .map(mapper -> mapper.infaColumnName)
-                        .collect(Collectors.joining("\",\"")) +
-                "\"";
-
-        // TODO: header without quotes
-/*
+            // Remove DW columns that don't have matching INFA columns because they aren't used
+            .filter(databasePropertyMapper -> null != databasePropertyMapper.infaColumnName)
+            .collect(Collectors.toList());
         CSV_HEADER = MAPPERS.stream()
-                        .map(mapper -> mapper.infaColumnName)
-                        .collect(Collectors.joining(","));
-*/
-
+            .map(mapper -> mapper.infaColumnName)
+            .collect(Collectors.joining("|||"));
     }
 
     final String infaColumnName;

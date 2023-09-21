@@ -3,23 +3,23 @@ grant usage on database data_world_metadata to role dataworldanalyst;
 grant usage on schema data_world_metadata.public to role dataworldanalyst;
 grant usage on warehouse compute_wh to role dataworldanalyst;
 grant UPDATE on table DDW_BUSINESS_TERM to role dataworldanalyst;
-grant UPDATE on table DDW_COLUMN to role dataworldanalyst;
+grant UPDATE on table DDW_DATASOURCE to role dataworldanalyst;
 grant UPDATE on table DDW_TABLE to role dataworldanalyst;
 grant UPDATE on table DDW_DATASOURCE to role dataworldanalyst;
 grant SELECT on table DDW_BUSINESS_TERM to role dataworldanalyst;
-grant SELECT on table DDW_COLUMN to role dataworldanalyst;
+grant SELECT on table DDW_DATASOURCE to role dataworldanalyst;
 grant SELECT on table DDW_TABLE to role dataworldanalyst;
 grant SELECT on table DDW_DATASOURCE to role dataworldanalyst;
 grant INSERT on table DDW_BUSINESS_TERM to role dataworldanalyst;
-grant INSERT on table DDW_COLUMN to role dataworldanalyst;
+grant INSERT on table DDW_DATASOURCE to role dataworldanalyst;
 grant INSERT on table DDW_TABLE to role dataworldanalyst;
 grant INSERT on table DDW_DATASOURCE to role dataworldanalyst;
 grant TRUNCATE on table DDW_BUSINESS_TERM to role dataworldanalyst;
-grant TRUNCATE on table DDW_COLUMN to role dataworldanalyst;
+grant TRUNCATE on table DDW_DATASOURCE to role dataworldanalyst;
 grant TRUNCATE on table DDW_TABLE to role dataworldanalyst;
 grant TRUNCATE on table DDW_DATASOURCE to role dataworldanalyst;
 -- Regarding internal stages:
---   1. READ must come before WRITE
+--   1. READ permission must come before WRITE
 --   2. Also, operating on a stage also requires the USAGE privilege on the parent database and schema (I did this already, see above)
 --   See https://docs.snowflake.com/en/user-guide/security-access-control-privileges.html#stage-privileges
 grant READ on stage dwcsv2sfdb_stage to role dataworldanalyst;
@@ -31,6 +31,7 @@ use database data_world_metadata;
 use schema data_world_metadata.public;
 create or replace stage dwcsv2sfdb_stage directory = (enable = true) encryption = (type = 'snowflake_sse');
 ls @dwcsv2sfdb_stage;
+
 create or replace table  "DATA_WORLD_METADATA"."PUBLIC"."DDW_BUSINESS_TERM"
 (
     org text,
@@ -175,7 +176,6 @@ PUT file://C:\Workarea\data.world\data-world-ttl-to-xlsx\output\DOR\ddw_dictiona
 PUT file://C:\Workarea\data.world\data-world-ttl-to-xlsx\output\DOT\ddw_dictionary_dump\Tables.csv @dwcsv2sfdb_stage/DOT;
 PUT file://C:\Workarea\data.world\data-world-ttl-to-xlsx\output\VR\ddw_dictionary_dump\Tables.csv @dwcsv2sfdb_stage/VR;
 
--- COPY INTO appends by default, which is nice.
 COPY INTO DDW_COLUMN(org, collections, type_prefix, database_name, table_name, schema, type, column_name, column_iri, description, business_summary, restricted_to_public_disclosure_per_federal_or_state_law, sensitive_data, data_ownner, data_steward, technical_steward, status)
     FROM (SELECT 'AHCA' org, t.$1, t.$2, t.$3, t.$4, t.$5, t.$6, t.$7, t.$8, t.$9, t.$10, t.$11, t.$12, t.$13, t.$14, t.$15, t.$16 from @dwcsv2sfdb_stage/AHCA/Columns.csv.gz t)
     FILE_FORMAT = (TYPE = CSV, SKIP_HEADER = 1, FIELD_OPTIONALLY_ENCLOSED_BY='"')
@@ -500,9 +500,90 @@ COPY INTO DDW_BUSINESS_TERM(org, collections, businesstermiri, business_term, de
     ON_ERROR = 'ABORT_STATEMENT'
     PURGE = FALSE;
 
-select count(*) FROM DDW_COLUMN;        -- 5293618
-select count(*) FROM DDW_TABLE;         --  610682
-select count(*) FROM DDW_DATASOURCE;    --     793
-select count(*) FROM DDW_BUSINESS_TERM; --       1
+
+select ORG, count(ORG) from DDW_COLUMN group by ORG order by ORG;
+select ORG, count(ORG) from DDW_TABLE group by ORG order by ORG;
+select ORG, count(ORG) from DDW_DATASOURCE group by ORG order by ORG;
+
+
+select
+    org,
+    collections,
+    businesstermiri,
+    business_term,
+    description,
+    summary,
+    data_ownner,
+    data_steward,
+    program_officer,
+    technical_steward,
+    status
+from DDW_BUSINESS_TERM;
+
+select
+    org,
+    collections,
+    type_prefix,
+    database_name,
+    table_name,
+    schema,
+    type,
+    column_name,
+    column_IRI,
+    description,
+    business_summary,
+    restricted_to_public_disclosure_per_federal_or_state_law,
+    sensitive_data,
+    data_ownner,
+    data_steward,
+    technical_steward,
+    status
+from DDW_COLUMN;
+
+select
+    org,
+    collections,
+    type_prefix,
+    database_name,
+    schema,
+    type,
+    table_name,
+    table_IRI,
+    description,
+    business_summary,
+    restricted_to_public_disclosure_per_federal_or_state_law,
+    sensitive_data,
+    data_sharing_agreement,
+    program_office,
+    data_steward,
+    data_ownner,
+    technical_steward,
+    contact_email,
+    status
+FROM DDW_TABLE;
+
+SELECT
+    org,
+    collections,
+    databaseiri,
+    databaseName,
+    jdbcURL,
+    databaseServer,
+    databasePort,
+    schemas
+FROM DDW_DATASOURCE;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

@@ -44,23 +44,10 @@ public class SchemasMetadata {
             for(Map.Entry<String,String> entry : schemaIdBySchemaName.entrySet()) {
                 String schemaName = entry.getKey();
                 String schemaId = entry.getValue();
-
-                //TODO: value with quotes
-                result.append("\n\"");
-                result.append(Stream.of(Infa2DdwSchemaMapper.values())
-                        .map(mapper -> mapper.processExternalIdAndSchemaName(schemaId, schemaName))
-                        .collect(Collectors.joining("\",\"")));
-                result.append("\"");
-
-/*
-                // TODO: value without quotes
                 result.append("\n");
                 result.append(Stream.of(Infa2DdwSchemaMapper.values())
                         .map(mapper -> mapper.processExternalIdAndSchemaName(schemaId, schemaName))
-                        .collect(Collectors.joining(",")));
-*/
-
-
+                        .collect(Collectors.joining("|||")));
             }
         }
         return Infa2DdwSchemaMapper.CSV_HEADER + result;
@@ -100,14 +87,7 @@ public class SchemasMetadata {
         String processExternalIdAndSchemaName(String schemaId, String schemaName) { return ""; }
 
         static {
-            //TODO: header with quotes
-            CSV_HEADER = "\"" +
-                    Stream.of(values()).map(mapper -> mapper.infaColumnName).collect(Collectors.joining("\",\"")) +
-                    "\"";
-/*
-            // TODO: header without quotes
-            CSV_HEADER = Stream.of(values()).map(mapper -> mapper.infaColumnName).collect(Collectors.joining(","));
-*/
+            CSV_HEADER = Stream.of(values()).map(mapper -> mapper.infaColumnName).collect(Collectors.joining("|||"));
         }
     }
 }
