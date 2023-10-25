@@ -1,0 +1,567 @@
+{
+  "packageName": "com.infa.odin.models.custom",
+  "packageDescription": "Contain Custom Attributes",
+  "packageLabel": "Informatica Custom Package",
+  "deprecated": false,
+  "subsystem": false,
+  "classes": [],
+  "requiredPackages": [
+    "core"
+  ],
+  "associations": [],
+  "attributes": [
+    {
+      "name": "ca_3128334752888824653",
+      "label": "Additional Application Compliance",
+      "dataType": "com.infa.odin.models.custom.ca_3128334752888824653_data_type",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": true,
+      "isSystem": false,
+      "embedded": false,
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "ca_8501053609333441357",
+      "label": "Primary Compliance",
+      "dataType": "com.infa.odin.models.custom.ca_8501053609333441357_data_type",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": true,
+      "isSystem": false,
+      "embedded": false,
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "ca_869905921822656812",
+      "label": "Snowflake Primary Key",
+      "dataType": "com.infa.odin.models.custom.ca_869905921822656812_data_type",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [
+        "false"
+      ],
+      "custom": true,
+      "isSystem": false,
+      "embedded": false,
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "SEARCHABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "ca_2606934059249853122",
+      "label": "Sample Domain",
+      "dataType": "com.infa.odin.models.custom.ca_2606934059249853122_data_type",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": true,
+      "isSystem": false,
+      "embedded": false,
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "ca_3607192961131215083",
+      "label": "Contains Sensitive Data",
+      "dataType": "com.infa.odin.models.custom.ca_3607192961131215083_data_type",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": true,
+      "isSystem": false,
+      "embedded": false,
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "fieldMappingTemplate": "KEYWORD",
+        "attributeType": "SEARCHABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "ca_3985392693637114206",
+      "label": "SQL Server Primary Key",
+      "dataType": "com.infa.odin.models.custom.ca_3985392693637114206_data_type",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [
+        "false"
+      ],
+      "custom": true,
+      "isSystem": false,
+      "embedded": false,
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "SEARCHABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "ca_5097079746246293831",
+      "label": "Restricted from Public Disclosure",
+      "dataType": "com.infa.odin.models.custom.ca_5097079746246293831_data_type",
+      "description": "Restricted from Public Disclosure per Federal or State Law",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": true,
+      "isSystem": false,
+      "embedded": false,
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "fieldMappingTemplate": "KEYWORD",
+        "attributeType": "SEARCHABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "ca_7775552022884733479",
+      "label": "Business Function/Area",
+      "dataType": "com.infa.odin.models.custom.ca_7775552022884733479_data_type",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": true,
+      "isSystem": false,
+      "embedded": false,
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "fieldMappingTemplate": "TEXT",
+        "attributeType": "SEARCHABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "ca_2631444555127701765",
+      "label": "Data Sharing Agreement Required",
+      "dataType": "com.infa.odin.models.custom.ca_2631444555127701765_data_type",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": true,
+      "isSystem": false,
+      "embedded": false,
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "fieldMappingTemplate": "KEYWORD",
+        "attributeType": "SEARCHABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "ca_996270464170406948",
+      "label": "Business Summary",
+      "dataType": "com.infa.odin.models.custom.ca_996270464170406948_data_type",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": true,
+      "isSystem": false,
+      "embedded": false,
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    },
+    {
+      "name": "ca_6453250957252806638",
+      "label": "Major Entities in the Data Set",
+      "dataType": "com.infa.odin.models.custom.ca_6453250957252806638_data_type",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": true,
+      "isSystem": false,
+      "embedded": false,
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
+    }
+  ],
+  "classAttributes": [
+    {
+      "className": "com.infa.ccgf.models.governance.DataSet",
+      "attributeName": "com.infa.odin.models.custom.ca_3128334752888824653",
+      "isRequired": false,
+      "isCuratable": true,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": true,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.ccgf.models.governance.DataSet",
+      "attributeName": "com.infa.odin.models.custom.ca_8501053609333441357",
+      "isRequired": false,
+      "isCuratable": true,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": true,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.PrimaryKey",
+      "attributeName": "com.infa.odin.models.custom.ca_869905921822656812",
+      "isRequired": false,
+      "isCuratable": true,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": true,
+      "materialized": false,
+      "conditions": [
+        {
+          "attributeName": "core.resourceType",
+          "values": [
+            "Snowflake"
+          ]
+        }
+      ]
+    },
+    {
+      "className": "com.infa.ccgf.models.governance.Domain",
+      "attributeName": "com.infa.odin.models.custom.ca_2606934059249853122",
+      "isRequired": false,
+      "isCuratable": true,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": true,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.ccgf.models.governance.DataSet",
+      "attributeName": "com.infa.odin.models.custom.ca_3607192961131215083",
+      "isRequired": false,
+      "isCuratable": true,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": true,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.ccgf.models.governance.BusinessTerm",
+      "attributeName": "com.infa.odin.models.custom.ca_3607192961131215083",
+      "isRequired": false,
+      "isCuratable": true,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": true,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.odin.models.relational.PrimaryKey",
+      "attributeName": "com.infa.odin.models.custom.ca_3985392693637114206",
+      "isRequired": false,
+      "isCuratable": true,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": true,
+      "materialized": false,
+      "conditions": [
+        {
+          "attributeName": "core.resourceType",
+          "values": [
+            "Microsoft SQL Server"
+          ]
+        }
+      ]
+    },
+    {
+      "className": "com.infa.ccgf.models.governance.DataSet",
+      "attributeName": "com.infa.odin.models.custom.ca_5097079746246293831",
+      "isRequired": false,
+      "isCuratable": true,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": true,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.ccgf.models.governance.BusinessTerm",
+      "attributeName": "com.infa.odin.models.custom.ca_5097079746246293831",
+      "isRequired": false,
+      "isCuratable": true,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": true,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.ccgf.models.governance.Domain",
+      "attributeName": "com.infa.odin.models.custom.ca_5097079746246293831",
+      "isRequired": false,
+      "isCuratable": true,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": true,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.ccgf.models.governance.System",
+      "attributeName": "com.infa.odin.models.custom.ca_7775552022884733479",
+      "isRequired": false,
+      "isCuratable": true,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": true,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.ccgf.models.governance.DataSet",
+      "attributeName": "com.infa.odin.models.custom.ca_2631444555127701765",
+      "isRequired": false,
+      "isCuratable": true,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": true,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.ccgf.models.governance.System",
+      "attributeName": "com.infa.odin.models.custom.ca_996270464170406948",
+      "isRequired": false,
+      "isCuratable": true,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": true,
+      "materialized": false,
+      "conditions": []
+    },
+    {
+      "className": "com.infa.ccgf.models.governance.DataSet",
+      "attributeName": "com.infa.odin.models.custom.ca_6453250957252806638",
+      "isRequired": false,
+      "isCuratable": true,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": true,
+      "custom": true,
+      "materialized": false,
+      "conditions": []
+    }
+  ],
+  "dataTypes": [
+    {
+      "name": "ca_3128334752888824653_data_type",
+      "coreType": "RICHTEXT",
+      "deprecated": false
+    },
+    {
+      "name": "ca_8501053609333441357_data_type",
+      "coreType": "STRING",
+      "deprecated": false
+    },
+    {
+      "name": "ca_869905921822656812_data_type",
+      "coreType": "BOOLEAN",
+      "deprecated": false
+    },
+    {
+      "name": "ca_2606934059249853122_data_type",
+      "coreType": "STRING",
+      "deprecated": false
+    },
+    {
+      "name": "ca_3607192961131215083_data_type",
+      "constraint": {
+        "constraintType": "LIST_OF_VALUES",
+        "values": [],
+        "enums": [
+          {
+            "code": "YES",
+            "label": "YES"
+          },
+          {
+            "code": "NO",
+            "label": "NO"
+          }
+        ]
+      },
+      "coreType": "STRING",
+      "deprecated": false
+    },
+    {
+      "name": "ca_3985392693637114206_data_type",
+      "coreType": "BOOLEAN",
+      "deprecated": false
+    },
+    {
+      "name": "ca_5097079746246293831_data_type",
+      "constraint": {
+        "constraintType": "LIST_OF_VALUES",
+        "values": [],
+        "enums": [
+          {
+            "code": "YES",
+            "label": "YES"
+          },
+          {
+            "code": "NO",
+            "label": "NO"
+          }
+        ]
+      },
+      "coreType": "STRING",
+      "deprecated": false
+    },
+    {
+      "name": "ca_7775552022884733479_data_type",
+      "coreType": "STRING",
+      "deprecated": false
+    },
+    {
+      "name": "ca_2631444555127701765_data_type",
+      "constraint": {
+        "constraintType": "LIST_OF_VALUES",
+        "values": [],
+        "enums": [
+          {
+            "code": "YES",
+            "label": "YES"
+          },
+          {
+            "code": "NO",
+            "label": "NO"
+          }
+        ]
+      },
+      "coreType": "STRING",
+      "deprecated": false
+    },
+    {
+      "name": "ca_996270464170406948_data_type",
+      "coreType": "RICHTEXT",
+      "deprecated": false
+    },
+    {
+      "name": "ca_6453250957252806638_data_type",
+      "coreType": "RICHTEXT",
+      "deprecated": false
+    }
+  ],
+  "associationKinds": [],
+  "associationAttributes": [],
+  "references": [],
+  "associationKindAttributes": [],
+  "classUserKeys": [],
+  "classPartitionKeys": [],
+  "associationPartitionKeys": [],
+  "identity": "",
+  "version": 1,
+  "modifiedBy": ""
+}

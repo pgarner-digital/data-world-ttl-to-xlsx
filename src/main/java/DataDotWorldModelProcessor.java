@@ -17,8 +17,8 @@ import java.util.stream.Stream;
 public class DataDotWorldModelProcessor {
 
     /************************************************  INPUTS  ********************************************************/
-    private static final String OWNER = "TEMPLATE";
-    private static final String FULL_GRAPH_TTL_FILE_PATH = "fl-template.ttl";
+    private static final String OWNER = "DEO";
+    private static final String FULL_GRAPH_TTL_FILE_PATH = "fl-deo-full-graph.ttl";
     /******************************************************************************************************************/
 
     private static final Logger logger = LogManager.getLogger(DataDotWorldModelProcessor.class);
@@ -26,29 +26,31 @@ public class DataDotWorldModelProcessor {
     public static final String OUTPUT_DIRECTORY_PATH = "./output/" + OWNER + "/ddw_dictionary_dump/";
 
     // Names of the metadata objects for which the SPARQL queries retrieve information
-    private static final String BUSINESS_TERMS_SHEET_NAME = "BusinessTerms";
+    private static final String BUSINESS_TERMS_SHEET_NAME = "Enrichment";
     private static final String DATA_SOURCES_SHEET_NAME = "DataSources";
     private static final String TABLES_SHEET_NAME = "Tables";
     private static final String COLUMNS_SHEET_NAME = "Columns";
 
     // SPARQL query files
-    private static final String BUSINESS_TERMS_QUERY_FILE_PATH = "business-term-export.csv.rq";
+    private static final String BUSINESS_TERMS_QUERY_FILE_PATH = "business-metadata-export.rq";
     private static final String DATA_SOURCES_QUERY_FILE_PATH = "data-source-export.csv.rq";
     private static final String COLUMNS_QUERY_FILE_PATH = "columns-export.csv.rq";
     private static final String TABLES_QUERY_FILE_PATH = "table-export.csv.rq";
 
     // SPARQL query field names
     private static final String[] BUSINESS_TERM_PROPERTIES = {
-        "collections",
-        "businesstermiri",
-        "business_term",
+        "iri",
+        "rdf_type",
         "description",
-        "summary",
-        "data_ownner",
+        "business_summary",
+        "data_owner",
         "data_steward",
-        "program_officer",
+        "program_office",
         "technical_steward",
-        "status"
+        "status",
+        "restricted_to_public_disclosure",
+        "data_sharing_agreement_required",
+        "contains_sensitive_data"
     };
     private static final String[] DATA_SOURCE_PROPERTIES = {
         "collections",
@@ -102,6 +104,7 @@ public class DataDotWorldModelProcessor {
 
         LocalDateTime begin = LocalDateTime.now();
         Model model = Util.loadModelFrom(FULL_GRAPH_TTL_FILE_PATH);
+/*
 
         // Data sources
         generateSpreadsheet(
@@ -132,6 +135,7 @@ public class DataDotWorldModelProcessor {
                 10000,
                 ChronoUnit.MINUTES
         );
+*/
 
         // Business glossary terms
         generateSpreadsheet(

@@ -1,153 +1,16 @@
 {
-  "packageName": "custom.data.world",
+  "packageName": "custom.data.world.import",
   "packageDescription": "Data Dot World Model",
   "packageLabel": "Data Dot World Objects",
   "deprecated": false,
   "subsystem": false,
-  "classes": [
-    {
-      "name": "TableName",
-      "label": "Table",
-      "description": "",
-      "isFirstClass": true,
-      "superClasses": [
-        "core.DataSet",
-        "core.IClass"
-      ],
-      "deprecated": false,
-      "isAbstract": false,
-      "indexType": "FULL",
-      "appendOnly": false,
-      "extensions": [],
-      "softDeleted": false
-    },
-    {
-      "name": "ColumnName",
-      "label": "Column",
-      "description": "",
-      "isFirstClass": true,
-      "superClasses": [
-        "core.DataElement",
-        "core.IClass"
-      ],
-      "deprecated": false,
-      "isAbstract": false,
-      "indexType": "FULL",
-      "appendOnly": false,
-      "extensions": [],
-      "softDeleted": false
-    },
-    {
-      "name": "SchemaName",
-      "label": "Schema",
-      "description": "",
-      "isFirstClass": true,
-      "superClasses": [
-        "core.DataSource",
-        "core.IClass"
-      ],
-      "deprecated": false,
-      "isAbstract": false,
-      "indexType": "FULL",
-      "appendOnly": false,
-      "extensions": [],
-      "softDeleted": false
-    },
-    {
-      "name": "DatabaseName",
-      "label": "Database",
-      "description": "",
-      "isFirstClass": true,
-      "superClasses": [
-        "core.DataSource",
-        "core.IClass"
-      ],
-      "deprecated": false,
-      "isAbstract": false,
-      "indexType": "FULL",
-      "appendOnly": false,
-      "extensions": [],
-      "softDeleted": false
-    }
-  ],
+  "classes": [],
   "requiredPackages": [
+    "com.infa.odin.models.relational",
     "core"
   ],
-  "associations": [
-    {
-      "name": "TableToColumn",
-      "label": "TableToColumn",
-      "fromClass": "custom.data.world.TableName",
-      "toClass": "custom.data.world.ColumnName",
-      "fromLabel": "Table",
-      "toLabel": "Column",
-      "associationKinds": [
-        "core.ParentChild",
-        "core.IAssociation"
-      ],
-      "deprecated": false,
-      "unidirectional": false,
-      "aggregate": false,
-      "description": ""
-    },
-    {
-      "name": "SchemaToTable",
-      "label": "SchemaToTable",
-      "fromClass": "custom.data.world.SchemaName",
-      "toClass": "custom.data.world.TableName",
-      "fromLabel": "Schema",
-      "toLabel": "Table",
-      "associationKinds": [
-        "core.ParentChild",
-        "core.IAssociation"
-      ],
-      "deprecated": false,
-      "unidirectional": false,
-      "aggregate": false,
-      "description": ""
-    },
-    {
-      "name": "DatabaseToSchema",
-      "label": "DatabaseToSchema",
-      "fromClass": "custom.data.world.DatabaseName",
-      "toClass": "custom.data.world.SchemaName",
-      "fromLabel": "Database",
-      "toLabel": "Schema",
-      "associationKinds": [
-        "core.ParentChild",
-        "core.IAssociation"
-      ],
-      "deprecated": false,
-      "unidirectional": false,
-      "aggregate": false,
-      "description": ""
-    }
-  ],
+  "associations": [],
   "attributes": [
-    {
-      "name": "owner",
-      "label": "Owner",
-      "dataType": "core.String",
-      "description": "",
-      "multivalued": false,
-      "deprecated": false,
-      "derived": false,
-      "data": false,
-      "defaultValues": [],
-      "custom": false,
-      "isSystem": false,
-      "embedded": false,
-      "reference": "",
-      "referencedAttributes": [],
-      "searchConfiguration": {
-        "suggestable": false,
-        "aggregatable": false,
-        "sortable": false,
-        "fuzzy": true,
-        "attributeType": "VIEWABLE"
-      },
-      "projectionExpressions": []
-    },
     {
       "name": "businessSummary",
       "label": "Business Summary",
@@ -175,55 +38,7 @@
     {
       "name": "sensitiveData",
       "label": "Sensitive Data",
-      "dataType": "core.String",
-      "description": "",
-      "multivalued": false,
-      "deprecated": false,
-      "derived": false,
-      "data": false,
-      "defaultValues": [],
-      "custom": false,
-      "isSystem": false,
-      "embedded": false,
-      "reference": "",
-      "referencedAttributes": [],
-      "searchConfiguration": {
-        "suggestable": false,
-        "aggregatable": false,
-        "sortable": false,
-        "fuzzy": true,
-        "attributeType": "VIEWABLE"
-      },
-      "projectionExpressions": []
-    },
-    {
-      "name": "typePrefix",
-      "label": "Type Prefix",
-      "dataType": "core.String",
-      "description": "",
-      "multivalued": false,
-      "deprecated": false,
-      "derived": false,
-      "data": false,
-      "defaultValues": [],
-      "custom": false,
-      "isSystem": false,
-      "embedded": false,
-      "reference": "",
-      "referencedAttributes": [],
-      "searchConfiguration": {
-        "suggestable": false,
-        "aggregatable": false,
-        "sortable": false,
-        "fuzzy": true,
-        "attributeType": "VIEWABLE"
-      },
-      "projectionExpressions": []
-    },
-    {
-      "name": "tableType",
-      "label": "Table Type",
-      "dataType": "core.String",
+      "dataType": "core.Boolean",
       "description": "",
       "multivalued": false,
       "deprecated": false,
@@ -247,30 +62,6 @@
     {
       "name": "dataSteward",
       "label": "Data Steward",
-      "dataType": "core.String",
-      "description": "",
-      "multivalued": false,
-      "deprecated": false,
-      "derived": false,
-      "data": false,
-      "defaultValues": [],
-      "custom": false,
-      "isSystem": false,
-      "embedded": false,
-      "reference": "",
-      "referencedAttributes": [],
-      "searchConfiguration": {
-        "suggestable": false,
-        "aggregatable": false,
-        "sortable": false,
-        "fuzzy": true,
-        "attributeType": "VIEWABLE"
-      },
-      "projectionExpressions": []
-    },
-    {
-      "name": "columnTypeName",
-      "label": "Column Type Name",
       "dataType": "core.String",
       "description": "",
       "multivalued": false,
@@ -317,33 +108,9 @@
       "projectionExpressions": []
     },
     {
-      "name": "iri",
-      "label": "Column IRI",
-      "dataType": "core.String",
-      "description": "",
-      "multivalued": false,
-      "deprecated": false,
-      "derived": false,
-      "data": false,
-      "defaultValues": [],
-      "custom": false,
-      "isSystem": false,
-      "embedded": false,
-      "reference": "",
-      "referencedAttributes": [],
-      "searchConfiguration": {
-        "suggestable": false,
-        "aggregatable": false,
-        "sortable": false,
-        "fuzzy": true,
-        "attributeType": "VIEWABLE"
-      },
-      "projectionExpressions": []
-    },
-    {
       "name": "restrictedToPublic",
       "label": "Restricted To Public",
-      "dataType": "core.String",
+      "dataType": "core.Boolean",
       "description": "",
       "multivalued": false,
       "deprecated": false,
@@ -535,8 +302,8 @@
   ],
   "classAttributes": [
     {
-      "className": "custom.data.world.ColumnName",
-      "attributeName": "custom.data.world.owner",
+      "className": "com.infa.odin.models.relational.Database",
+      "attributeName": "custom.data.world.import.jdbcURL",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -547,8 +314,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.ColumnName",
-      "attributeName": "custom.data.world.businessSummary",
+      "className": "com.infa.odin.models.relational.Database",
+      "attributeName": "custom.data.world.import.databaseServer",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -559,8 +326,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.ColumnName",
-      "attributeName": "custom.data.world.sensitiveData",
+      "className": "com.infa.odin.models.relational.Database",
+      "attributeName": "custom.data.world.import.databasePort",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -571,8 +338,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.ColumnName",
-      "attributeName": "custom.data.world.typePrefix",
+      "className": "com.infa.odin.models.relational.Table",
+      "attributeName": "custom.data.world.import.businessSummary",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -583,8 +350,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.ColumnName",
-      "attributeName": "custom.data.world.dataSteward",
+      "className": "com.infa.odin.models.relational.Table",
+      "attributeName": "custom.data.world.import.restrictedToPublic",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -595,8 +362,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.ColumnName",
-      "attributeName": "custom.data.world.columnTypeName",
+      "className": "com.infa.odin.models.relational.Table",
+      "attributeName": "custom.data.world.import.sensitiveData",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -607,8 +374,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.ColumnName",
-      "attributeName": "custom.data.world.status",
+      "className": "com.infa.odin.models.relational.Table",
+      "attributeName": "custom.data.world.import.dataSharingAgreement",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -619,8 +386,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.ColumnName",
-      "attributeName": "custom.data.world.iri",
+      "className": "com.infa.odin.models.relational.Table",
+      "attributeName": "custom.data.world.import.programOffice",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -631,8 +398,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.ColumnName",
-      "attributeName": "custom.data.world.restrictedToPublic",
+      "className": "com.infa.odin.models.relational.Table",
+      "attributeName": "custom.data.world.import.dataSteward",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -643,8 +410,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.ColumnName",
-      "attributeName": "custom.data.world.technicalSteward",
+      "className": "com.infa.odin.models.relational.Table",
+      "attributeName": "custom.data.world.import.technicalSteward",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -655,8 +422,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.DatabaseName",
-      "attributeName": "custom.data.world.owner",
+      "className": "com.infa.odin.models.relational.Table",
+      "attributeName": "custom.data.world.import.contactEmail",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -667,8 +434,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.DatabaseName",
-      "attributeName": "custom.data.world.jdbcURL",
+      "className": "com.infa.odin.models.relational.Table",
+      "attributeName": "custom.data.world.import.status",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -679,8 +446,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.DatabaseName",
-      "attributeName": "custom.data.world.databaseServer",
+      "className": "com.infa.odin.models.relational.View",
+      "attributeName": "custom.data.world.import.businessSummary",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -691,8 +458,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.DatabaseName",
-      "attributeName": "custom.data.world.databasePort",
+      "className": "com.infa.odin.models.relational.View",
+      "attributeName": "custom.data.world.import.restrictedToPublic",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -703,8 +470,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.SchemaName",
-      "attributeName": "custom.data.world.owner",
+      "className": "com.infa.odin.models.relational.View",
+      "attributeName": "custom.data.world.import.sensitiveData",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -715,8 +482,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.TableName",
-      "attributeName": "custom.data.world.owner",
+      "className": "com.infa.odin.models.relational.View",
+      "attributeName": "custom.data.world.import.dataSharingAgreement",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -727,8 +494,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.TableName",
-      "attributeName": "custom.data.world.typePrefix",
+      "className": "com.infa.odin.models.relational.View",
+      "attributeName": "custom.data.world.import.programOffice",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -739,8 +506,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.TableName",
-      "attributeName": "custom.data.world.tableType",
+      "className": "com.infa.odin.models.relational.View",
+      "attributeName": "custom.data.world.import.dataSteward",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -751,8 +518,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.TableName",
-      "attributeName": "custom.data.world.businessSummary",
+      "className": "com.infa.odin.models.relational.View",
+      "attributeName": "custom.data.world.import.technicalSteward",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -763,8 +530,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.TableName",
-      "attributeName": "custom.data.world.restrictedToPublic",
+      "className": "com.infa.odin.models.relational.View",
+      "attributeName": "custom.data.world.import.contactEmail",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -775,8 +542,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.TableName",
-      "attributeName": "custom.data.world.sensitiveData",
+      "className": "com.infa.odin.models.relational.View",
+      "attributeName": "custom.data.world.import.status",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -787,8 +554,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.TableName",
-      "attributeName": "custom.data.world.dataSharingAgreement",
+      "className": "com.infa.odin.models.relational.Column",
+      "attributeName": "custom.data.world.import.businessSummary",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -799,8 +566,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.TableName",
-      "attributeName": "custom.data.world.programOffice",
+      "className": "com.infa.odin.models.relational.Column",
+      "attributeName": "custom.data.world.import.sensitiveData",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -811,8 +578,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.TableName",
-      "attributeName": "custom.data.world.dataSteward",
+      "className": "com.infa.odin.models.relational.Column",
+      "attributeName": "custom.data.world.import.dataSteward",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -823,8 +590,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.TableName",
-      "attributeName": "custom.data.world.technicalSteward",
+      "className": "com.infa.odin.models.relational.Column",
+      "attributeName": "custom.data.world.import.status",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -835,8 +602,8 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.TableName",
-      "attributeName": "custom.data.world.contactEmail",
+      "className": "com.infa.odin.models.relational.Column",
+      "attributeName": "custom.data.world.import.restrictedToPublic",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -847,8 +614,80 @@
       "materialized": false
     },
     {
-      "className": "custom.data.world.TableName",
-      "attributeName": "custom.data.world.status",
+      "className": "com.infa.odin.models.relational.Column",
+      "attributeName": "custom.data.world.import.technicalSteward",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": false,
+      "custom": false,
+      "materialized": false
+    },
+    {
+      "className": "com.infa.odin.models.relational.ViewColumn",
+      "attributeName": "custom.data.world.import.businessSummary",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": false,
+      "custom": false,
+      "materialized": false
+    },
+    {
+      "className": "com.infa.odin.models.relational.ViewColumn",
+      "attributeName": "custom.data.world.import.sensitiveData",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": false,
+      "custom": false,
+      "materialized": false
+    },
+    {
+      "className": "com.infa.odin.models.relational.ViewColumn",
+      "attributeName": "custom.data.world.import.dataSteward",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": false,
+      "custom": false,
+      "materialized": false
+    },
+    {
+      "className": "com.infa.odin.models.relational.ViewColumn",
+      "attributeName": "custom.data.world.import.status",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": false,
+      "custom": false,
+      "materialized": false
+    },
+    {
+      "className": "com.infa.odin.models.relational.ViewColumn",
+      "attributeName": "custom.data.world.import.restrictedToPublic",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": false,
+      "custom": false,
+      "materialized": false
+    },
+    {
+      "className": "com.infa.odin.models.relational.ViewColumn",
+      "attributeName": "custom.data.world.import.technicalSteward",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,

@@ -1,33 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="DATA_WORLD_METADATA@ps68941.us-east-1-gov.aws.snowflakecomputing.com" uuid="3e19847a-6d04-45fa-a1af-6297fc5dfad5">
+    <data-source source="LOCAL" name="Snowflake cw33570" uuid="0c6f4908-d164-4655-8853-21638d60e01c">
       <driver-ref>snowflake</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>net.snowflake.client.jdbc.SnowflakeDriver</jdbc-driver>
-      <jdbc-url>jdbc:snowflake://ps68941.us-east-1-gov.aws.snowflakecomputing.com:443?warehouse=COMPUTE_WH&amp;db=DATA_WORLD_METADATA&amp;role=DATAWORLDANALYST&amp;schema=PUBLIC</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="PeopleFirst" uuid="9b388336-3618-47e5-911e-7d8f5551ace8">
-      <driver-ref>oracle.19</driver-ref>
-      <synchronize>true</synchronize>
-      <auto-commit>false</auto-commit>
-      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
-      <jdbc-url>jdbc:oracle:thin:@173.245.164.135:1527:PF3</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="Alteryx Server &quot;AlteryxService&quot; Database" uuid="992733e1-edd7-4b0a-bb6f-5bc1dc736153">
-      <driver-ref>mongo</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
-      <jdbc-url>mongodb://205.143.243.21:27018/AlteryxService</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="Alteryx Server &quot;AlteryxGallery&quot; Database" uuid="d1f0af11-ec74-4b7f-8cdf-4894f3ed0142">
-      <driver-ref>mongo</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
-      <jdbc-url>mongodb://205.143.243.21:27018/AlteryxGallery</jdbc-url>
+      <jdbc-url>jdbc:snowflake://cw33570.us-east-1-gov.aws.snowflakecomputing.com:443?warehouse=COMPUTE_WH&amp;db=INFA_METRICS&amp;schema=PUBLIC&amp;role=INFORMATICA_METRICS_ANALYST</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

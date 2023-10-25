@@ -1,4 +1,4 @@
-package gov.fl.digital.ddw2infa.column;
+package gov.fl.digital.ddw2infa.viewcolumn;
 
 import gov.fl.digital.ddw2infa.MetadataMapper;
 import gov.fl.digital.ddw2infa.Util;
@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-enum ColumnPropertyMapper implements MetadataMapper {
+enum ViewColumnPropertyMapper implements MetadataMapper {
 
 /*
     DDW:
@@ -38,20 +38,15 @@ enum ColumnPropertyMapper implements MetadataMapper {
         com.infa.odin.models.relational.DatatypeLength
         com.infa.odin.models.relational.DatatypeScale
         com.infa.odin.models.relational.Nullable
-        com.infa.odin.models.relational.PartitionBy
         com.infa.odin.models.relational.Position
-        com.infa.odin.models.relational.PrimaryKeyColumn
+        com.infa.odin.models.relational.calculationComplexity
+        com.infa.odin.models.relational.controlConditions
+        com.infa.odin.models.relational.expression
         custom.data.world.import.businessSummary
-        custom.data.world.import.contactEmail
-        custom.data.world.import.databasePort
-        custom.data.world.import.databaseServer
-        custom.data.world.import.dataSharingAgreement
-        custom.data.world.import.dataSteward
-        custom.data.world.import.jdbcURL
-        custom.data.world.import.programOffice
-        custom.data.world.import.restrictedToPublic
         custom.data.world.import.sensitiveData
+        custom.data.world.import.dataSteward
         custom.data.world.import.status
+        custom.data.world.import.restrictedToPublic
         custom.data.world.import.technicalSteward
 
         NOTE: core.externalId and core.name are mandatory fields
@@ -68,8 +63,8 @@ enum ColumnPropertyMapper implements MetadataMapper {
             return result;
         }
     },
-    businessSummary("custom.data.world.import.businessSummary", "business_summary"),
-    dataSteward("custom.data.world.import.dataSteward", "data_steward"),
+    name("core.name", "column_name"),
+    description("core.description", "description"),
     dataType("com.infa.odin.models.relational.Datatype", "columnTypeName"),
     dataTypeLength("com.infa.odin.models.relational.DatatypeLength", "columnSize") {
         @Override public String getPropertyValueFrom(QuerySolution querySolution) {
@@ -81,9 +76,6 @@ enum ColumnPropertyMapper implements MetadataMapper {
             return result;
         }
     },
-    description("core.description", "description"),
-    name("core.name", "column_name"),
-    isPrimaryKey("com.infa.odin.models.relational.PrimaryKeyColumn", "isPrimaryKey"),
     nullable("com.infa.odin.models.relational.Nullable", "columnIsNullable") {
         @Override public String getPropertyValueFrom(QuerySolution querySolution) {
             String result = "";
@@ -104,20 +96,19 @@ enum ColumnPropertyMapper implements MetadataMapper {
             return result;
         }
     },
-    restrictedToPublic("custom.data.world.import.restrictedToPublic", "restricted_to_public_disclosure_per_federal_or_state_law"),
+    businessSummary("custom.data.world.import.businessSummary", "business_summary"),
     sensitiveData("custom.data.world.import.sensitiveData", "sensitive_data"),
+    dataSteward("custom.data.world.import.dataSteward", "data_steward"),
     status("custom.data.world.import.status", "status"),
+    restrictedToPublic("custom.data.world.import.restrictedToPublic", "restricted_to_public_disclosure_per_federal_or_state_law"),
     technicalSteward("custom.data.world.import.technicalSteward", "technical_steward"),
 
     // The following INFA fields are not used by DDW,
-    businessDescription("core.businessDescription", null),
-    businessName("core.businessName", null),
-    calculationComplexity("com.infa.odin.models.relational.calculationComplexity", null),
     comment("com.infa.odin.models.relational.Comment", null),
-    controlConditions("com.infa.odin.models.relational.controlConditions", null),
     dataTypeScale("com.infa.odin.models.relational.DatatypeScale", null),
+    calculationComplexity("com.infa.odin.models.relational.calculationComplexity", null),
+    controlConditions("com.infa.odin.models.relational.controlConditions", null),
     expression("com.infa.odin.models.relational.expression", null),
-    reference("core.reference", null),
 
     // The following fields are displayed in DDW but are not displayed as attributes in INFA.  INFA's
     // hierarchy view documents the attributes by displaying the progression from database to schema
@@ -128,11 +119,11 @@ enum ColumnPropertyMapper implements MetadataMapper {
     tableName(null, "table_name"),
     typePrefix(null, "type_prefix");
 
-    static final List<ColumnPropertyMapper> MAPPERS;
+    static final List<ViewColumnPropertyMapper> MAPPERS;
     static final String CSV_HEADER;
 
     static {
-        MAPPERS = Arrays.stream(ColumnPropertyMapper.values())
+        MAPPERS = Arrays.stream(ViewColumnPropertyMapper.values())
             // Remove DW columns that don't have matching INFA columns and vice versa because they aren't used
             .filter(i -> null != i.infaColumnName)
             .collect(Collectors.toList());
@@ -144,7 +135,7 @@ enum ColumnPropertyMapper implements MetadataMapper {
     final String infaColumnName;
     final String ddwColumnName;
 
-    ColumnPropertyMapper(String infaColumnName, String ddwColumnName) {
+    ViewColumnPropertyMapper(String infaColumnName, String ddwColumnName) {
         this.infaColumnName = infaColumnName;
         this.ddwColumnName = ddwColumnName;
     }

@@ -1,0 +1,99 @@
+PREFIX apf: <http://jena.apache.org/ARQ/property#>
+PREFIX dwec: <https://dwec.data.world/v0/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT
+#    ("fl-deo" AS ?agency)
+#    (GROUP_CONCAT(?collection_name;SEPARATOR=", ") as ?collections)
+    ?iri
+    ?rdf_type
+    ?name_id
+    ?description
+    ?business_summary
+    ?data_owner
+    ?data_steward
+    ?contact_email
+    ?program_office
+    ?technical_steward
+    ?status
+    ?restricted_to_public_disclosure
+    ?data_sharing_agreement_required
+    ?contains_sensitive_data
+WHERE
+{
+    #RDF Type
+    OPTIONAL {
+        ?iri rdf:type ?rdf_type .
+    }
+    OPTIONAL {
+        ?iri dct:identifier ?name_id .
+    }
+    #description
+    OPTIONAL {
+        ?iri dct:description ?description .
+    }
+    # program office
+    OPTIONAL {
+        ?iri orgprofile:business_summary ?business_summary .
+    }
+    # data owner
+    OPTIONAL {
+        ?iri orgprofile:data_ownner ?data_owner .
+    }
+    # data steward
+    OPTIONAL {
+        ?iri orgprofile:data_steward ?data_steward .
+    }
+    # contact_email
+    OPTIONAL {
+        ?iri orgprofile:contact_email ?contact_email .
+    }
+    # program office
+    OPTIONAL {
+        ?iri orgprofile:program_office ?program_office .
+    }
+    # technical steward
+    OPTIONAL {
+        ?iri orgprofile:technical_steward ?technical_steward .
+    }
+    # Status
+    OPTIONAL {
+        ?iri dwec:hasAssetStatus ?status_label .
+        ?status_label rdfs:label ?status .
+    }
+    # Restricted to public disclosure
+    OPTIONAL {
+        ?iri orgprofile:restricted_to_public_disclosure ?restricted_to_public_disclosure_label .
+        ?restricted_to_public_disclosure_label skos:prefLabel ?restricted_to_public_disclosure .
+    }
+    # Data sharing agreement required
+    OPTIONAL {
+        ?iri orgprofile:data_sharing_agreement_required ?data_sharing_agreement_required_label .
+        ?data_sharing_agreement_required_label skos:prefLabel ?data_sharing_agreement_required .
+    }
+    # Contains sensitive data
+    OPTIONAL {
+        ?iri orgprofile:contains_sensitive_data ?contains_sensitive_data_label .
+        ?contains_sensitive_data_label skos:prefLabel ?contains_sensitive_data .
+    }
+}
+GROUP BY
+    ?iri
+    ?rdf_type
+    ?name_id
+    ?description
+    ?business_summary
+    ?data_owner
+    ?data_steward
+    ?contact_email
+    ?program_office
+    ?technical_steward
+    ?status
+    ?restricted_to_public_disclosure
+    ?data_sharing_agreement_required
+    ?contains_sensitive_data

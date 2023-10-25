@@ -43,7 +43,7 @@ WHERE
 
     ?typeRaw apf:splitIRI (?type_prefix  ?type) .
 
-    FILTER (?type IN ( "DatabaseTable" ) ) .
+    FILTER (?type IN ( "DatabaseView" ) ) .
 
     ?tableCatalogRecord foaf:primaryTopic ?table_IRI .
 

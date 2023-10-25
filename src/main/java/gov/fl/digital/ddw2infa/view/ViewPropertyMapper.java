@@ -1,4 +1,4 @@
-package gov.fl.digital.ddw2infa.table;
+package gov.fl.digital.ddw2infa.view;
 
 import gov.fl.digital.ddw2infa.MetadataMapper;
 import gov.fl.digital.ddw2infa.Util;
@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-enum TablePropertyMapper implements MetadataMapper {
+enum ViewPropertyMapper implements MetadataMapper {
     /*
         DDW:
             table_IRI
@@ -34,21 +34,20 @@ enum TablePropertyMapper implements MetadataMapper {
             core.name
             core.description
             com.infa.odin.models.relational.Comment
-            com.infa.odin.models.relational.Location
-            com.infa.odin.models.relational.NumberOfRows
             com.infa.odin.models.relational.Owner
-            com.infa.odin.models.relational.Partitioned
-            com.infa.odin.models.relational.Provider
-            com.infa.odin.models.relational.TableType
-            custom.data.world.import.businessSummary
-            custom.data.world.import.restrictedToPublic
-            custom.data.world.import.sensitiveData
-            custom.data.world.import.dataSharingAgreement
-            custom.data.world.import.programOffice
-            custom.data.world.import.dataSteward
-            custom.data.world.import.technicalSteward
-            custom.data.world.import.contactEmail
-            custom.data.world.import.status
+            com.infa.odin.models.relational.ViewType
+            com.infa.odin.models.relational.errorMessage
+            com.infa.odin.models.relational.htmlLink
+            com.infa.odin.models.relational.sourceStatementText
+            custom.data.world.test.businessSummary
+            custom.data.world.test.restrictedToPublic
+            custom.data.world.test.sensitiveData
+            custom.data.world.test.dataSharingAgreement
+            custom.data.world.test.programOffice
+            custom.data.world.test.dataSteward
+            custom.data.world.test.technicalSteward
+            custom.data.world.test.contactEmail
+            custom.data.world.test.status
 
         NOTE: core.externalId and core.name are mandatory fields
         https://onlinehelp.informatica.com/IICS/prod/MCC/en/index.htm#page/cloud-metadata-command-center-catalog-source-configuration/Example_Ingest_metadata_from_Microsoft_Access_database.html
@@ -67,16 +66,16 @@ enum TablePropertyMapper implements MetadataMapper {
     name("core.name", "table_name"),
     description("core.description", "description"),
     owner("com.infa.odin.models.relational.Owner", "data_ownner"),
+    viewType("com.infa.odin.models.relational.ViewType", "type"),
     businessSummary("custom.data.world.import.businessSummary", "business_summary"),
-    contactEmail("custom.data.world.import.contactEmail", "contact_email"),
-    dataSharingAgreement("custom.data.world.import.dataSharingAgreement", "data_sharing_agreement"),
-    dataSteward("custom.data.world.import.dataSteward", "data_steward"),
-    programOffice("custom.data.world.import.programOffice", "program_office"),
     restrictedToPublic("custom.data.world.import.restrictedToPublic", "restricted_to_public_disclosure_per_federal_or_state_law"),
     sensitiveData("custom.data.world.import.sensitiveData", "sensitive_data"),
-    status("custom.data.world.import.status", "status"),
-    tableType("com.infa.odin.models.relational.TableType", "type"),
+    dataSharingAgreement("custom.data.world.import.dataSharingAgreement", "data_sharing_agreement"),
+    programOffice("custom.data.world.import.programOffice", "program_office"),
+    dataSteward("custom.data.world.import.dataSteward", "data_steward"),
     technicalSteward("custom.data.world.import.technicalSteward", "technical_steward"),
+    contactEmail("custom.data.world.import.contactEmail", "contact_email"),
+    status("custom.data.world.import.status", "status"),
 
     // The following DDW fields are used to link a table to its parent in the hierarchy
     databaseName(null, "database_name"),
@@ -89,11 +88,11 @@ enum TablePropertyMapper implements MetadataMapper {
     partitioned("com.infa.odin.models.relational.Partitioned", null),
     provider("com.infa.odin.models.relational.Provider", null);
 
-    static final List<TablePropertyMapper> MAPPERS;
+    static final List<ViewPropertyMapper> MAPPERS;
 
     static {
 
-        MAPPERS = Arrays.stream(TablePropertyMapper.values())
+        MAPPERS = Arrays.stream(ViewPropertyMapper.values())
                 // Remove DW columns that don't have matching INFA columns because they aren't used
                 .filter(i -> null != i.infaColumnName)
                 .collect(Collectors.toList());
@@ -102,7 +101,7 @@ enum TablePropertyMapper implements MetadataMapper {
     final String infaColumnName;
     final String ddwColumnName;
 
-    TablePropertyMapper(String infaColumnName, String ddwColumnName) {
+    ViewPropertyMapper(String infaColumnName, String ddwColumnName) {
         this.infaColumnName = infaColumnName;
         this.ddwColumnName = ddwColumnName;
     }

@@ -1,95 +1,176 @@
-import gov.fl.digital.ddw2infa.MetadataCache;
+import gov.fl.digital.ddw2infa.AgencyAndTtlFileName;
+import gov.fl.digital.ddw2infa.DdwMetadata;
 import gov.fl.digital.ddw2infa.MetadataMapper;
 import gov.fl.digital.ddw2infa.Util;
-import gov.fl.digital.ddw2infa.column.ColumnsMetadata;
-import gov.fl.digital.ddw2infa.database.DatabasesMetadata;
-import gov.fl.digital.ddw2infa.link.LinksMetadata;
-import gov.fl.digital.ddw2infa.schema.SchemasMetadata;
-import gov.fl.digital.ddw2infa.table.TablesMetadata;
+import gov.fl.digital.ddw2infa.column.ColumnsDdwMetadata;
+import gov.fl.digital.ddw2infa.database.DatabaseDdwMetadata;
+import gov.fl.digital.ddw2infa.link.LinksMetadataCache;
+import gov.fl.digital.ddw2infa.schema.SchemasMetadataCache;
+import gov.fl.digital.ddw2infa.table.TablesDdwMetadata;
+import gov.fl.digital.ddw2infa.view.ViewsDdwMetadata;
+import gov.fl.digital.ddw2infa.viewcolumn.ViewColumnsDdwMetadata;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.Model;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.URL;
-import java.nio.file.Files;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 public class Ddw2InfaCustomMetaModelProcessor {
 
-    /************************************************  INPUTS  ********************************************************/
-    private static final String OWNER = "DOH";
-    private static final String FULL_GRAPH_TTL_FILE_PATH = "fl-doh-full-graph.ttl";
-    /******************************************************************************************************************/
-
     private static final Logger logger = LogManager.getLogger(Ddw2InfaCustomMetaModelProcessor.class);
-    public static final String OUTPUT_DIRECTORY_PATH = "./output/" + OWNER + "/informatica_import/";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, SQLException {
 
         LocalDateTime begin = LocalDateTime.now();
-        Model model = Util.loadModelFrom(FULL_GRAPH_TTL_FILE_PATH);
 
-        DatabasesMetadata databasesMetadata = new DatabasesMetadata();
-        SchemasMetadata schemasMetadata = new SchemasMetadata();
-        TablesMetadata tablesMetadata = new TablesMetadata();
-        ColumnsMetadata columnsMetadata = new ColumnsMetadata();
-        LinksMetadata linksMetadata = new LinksMetadata();
+        // Note: try with resources auto closes connection, so no need to explicitly close it.
+        try (Connection connection = Util.getConnection(args[0], args[1])) {
 
-        logger.info("Extracting database metadata");
-        executeQueryAndGenerateCSV(model, databasesMetadata, schemasMetadata, linksMetadata, 100, ChronoUnit.SECONDS);
-        logger.info("Extracting table metadata");
-        executeQueryAndGenerateCSV(model, tablesMetadata, schemasMetadata, linksMetadata, 100, ChronoUnit.SECONDS);
-        logger.info("Extracting column metadata");
-        executeQueryAndGenerateCSV(model, columnsMetadata, schemasMetadata, linksMetadata, 10000, ChronoUnit.MINUTES);
+            truncateTables(connection);
 
-        // TODO: Future work: to implement business glossary term, the INFA custom metamodel needs to be updated.
-        /*
-        BusinessGlossaryTermMetadata businessGlossaryTermMetadata = new BusinessGlossaryTermMetadata();
-        executeQueryAndGenerateCSV(model, businessGlossaryTermMetadata, schemasMetadata, linksMetadata, 100, ChronoUnit.SECONDS);
-        */
+            for (AgencyAndTtlFileName agencyAndTtlFileName : AgencyAndTtlFileName.values()) {
 
-        schemasMetadata.generateCsvFile(OUTPUT_DIRECTORY_PATH);
-        linksMetadata.generateCsvFile(OUTPUT_DIRECTORY_PATH);
 
-        logger.info("Total processing time: " + begin.until(LocalDateTime.now(), ChronoUnit.MINUTES) + " minutes).");
+
+
+                if(agencyAndTtlFileName == AgencyAndTtlFileName.DMS) {
+
+
+
+
+                    Model model = Util.loadModelFrom(agencyAndTtlFileName.getFileName());
+                    SchemasMetadataCache schemasMetadataCache = new SchemasMetadataCache();
+                    LinksMetadataCache linksMetadataCache = new LinksMetadataCache();
+                    String orgId = agencyAndTtlFileName.getOrgId();
+                    try {
+                        logger.info("Extracting database metadata");
+                        pushToSnowflake(
+                            model,
+                            new DatabaseDdwMetadata(),
+                            schemasMetadataCache,
+                            linksMetadataCache,
+                            1,
+                            ChronoUnit.SECONDS,
+                            connection,
+                            orgId
+                        );
+
+                        logger.info("Extracting schema metadata");
+                        schemasMetadataCache.pushToSnowflake(connection, begin, ChronoUnit.SECONDS, orgId);
+
+                        logger.info("Extracting table metadata");
+                        pushToSnowflake(
+                            model,
+                            new TablesDdwMetadata(),
+                            schemasMetadataCache,
+                            linksMetadataCache,
+                            100,
+                            ChronoUnit.SECONDS,
+                            connection,
+                            orgId
+                        );
+
+                        logger.info("Extracting column metadata");
+                        pushToSnowflake(
+                            model,
+                            new ColumnsDdwMetadata(),
+                            schemasMetadataCache,
+                            linksMetadataCache,
+                            10000,
+                            ChronoUnit.MINUTES,
+                            connection,
+                            orgId
+                        );
+
+                        logger.info("Extracting view metadata");
+                        pushToSnowflake(
+                            model,
+                            new ViewsDdwMetadata(),
+                            schemasMetadataCache,
+                            linksMetadataCache,
+                            100,
+                            ChronoUnit.SECONDS,
+                            connection,
+                            orgId
+                        );
+
+                        logger.info("Extracting view-column metadata");
+                        pushToSnowflake(
+                            model,
+                            new ViewColumnsDdwMetadata(),
+                            schemasMetadataCache,
+                            linksMetadataCache,
+                            10000,
+                            ChronoUnit.MINUTES,
+                            connection,
+                            orgId
+                        );
+
+                        linksMetadataCache.pushToSnowflake(connection, begin, ChronoUnit.SECONDS, orgId);
+                    } catch (SQLException e) {
+                        System.err.println("Unable to execute SQL. Rolling back snowflake import.");
+                        connection.rollback();
+                        throw e;
+                    }
+                    logger.info("Total processing time: " + begin.until(LocalDateTime.now(), ChronoUnit.MINUTES) + " minutes.");
+
+
+
+                } // delete this when removing IF statement
+
+
+
+            }
+        }
     }
 
-    private static <X extends MetadataMapper<X>> void executeQueryAndGenerateCSV(
+    private static <X extends MetadataMapper> void pushToSnowflake(
         Model model,
-        MetadataCache<X> metadataCache,
-        SchemasMetadata schemasMetadata,
-        LinksMetadata linksMetadata,
+        DdwMetadata<X> ddwMetadata,
+        SchemasMetadataCache schemasMetadataCache,
+        LinksMetadataCache linksMetadataCache,
         int rowCountDisplayFrequency,
-        ChronoUnit logEntryTimeUnit
-    ) throws IOException {
-
-        URL url = Ddw2InfaCustomMetaModelProcessor.class.getClassLoader().getResource(metadataCache.getQueryFilePath());
-        if(null == url) { throw new IllegalArgumentException(metadataCache.getQueryFilePath() + " is not found."); }
-        File file = new File(url.getFile());
-        String queryString = new String(Files.readAllBytes(file.toPath()));
+        ChronoUnit logEntryTimeUnit,
+        Connection connection,
+        String orgId
+    ) throws IOException, SQLException {
+        String queryString = Util.getSparqlQueryForOrg(orgId, ddwMetadata.getQueryFilePath());
         int rowCount = 1;
+        LocalDateTime localDateTime = LocalDateTime.now();
         Query query = QueryFactory.create(queryString);
         try (QueryExecution queryExecution = QueryExecutionFactory.create(query, model)) {
             ResultSet results = queryExecution.execSelect() ;
-            LocalDateTime localDateTime = LocalDateTime.now();
             while (results.hasNext()) {
                 if(rowCount % rowCountDisplayFrequency == 0) {
-                    logger.info("Processing " + metadataCache.getLabel() + " record: " + (rowCount + 1) +
+                    logger.info("Obtaining " + ddwMetadata.getLabel() + " record from TTL: " + (rowCount + 1) +
                             "(" + localDateTime.until(LocalDateTime.now(), logEntryTimeUnit) + " " +
                             logEntryTimeUnit.name().toLowerCase() + ").");
                 }
                 QuerySolution querySolution = results.nextSolution();
-                metadataCache.addRecord(querySolution, schemasMetadata, linksMetadata);
+                ddwMetadata.obtainAndCacheRecord(querySolution, schemasMetadataCache, linksMetadataCache);
                 rowCount++;
             }
         }
-        try (PrintWriter out = new PrintWriter(OUTPUT_DIRECTORY_PATH + metadataCache.getOutputFileName())) {
-            out.println(metadataCache.getCSV());
+        ddwMetadata.insertRecords(connection, orgId, localDateTime);
+    }
+
+    private static void truncateTables(Connection connection) throws SQLException {
+        String truncateStatementText = "truncate table %s";
+        try (Statement truncateStatement = connection.createStatement()) {
+            truncateStatement.execute(String.format(truncateStatementText, DatabaseDdwMetadata.INFA_TABLE_NAME));
+            truncateStatement.execute(String.format(truncateStatementText, SchemasMetadataCache.INFA_TABLE_NAME));
+            truncateStatement.execute(String.format(truncateStatementText, TablesDdwMetadata.INFA_TABLE_NAME));
+            truncateStatement.execute(String.format(truncateStatementText, ColumnsDdwMetadata.INFA_TABLE_NAME));
+            truncateStatement.execute(String.format(truncateStatementText, ViewsDdwMetadata.INFA_TABLE_NAME));
+            truncateStatement.execute(String.format(truncateStatementText, ViewColumnsDdwMetadata.INFA_TABLE_NAME));
+            truncateStatement.execute(String.format(truncateStatementText, LinksMetadataCache.INFA_TABLE_NAME));
         }
+
     }
 }

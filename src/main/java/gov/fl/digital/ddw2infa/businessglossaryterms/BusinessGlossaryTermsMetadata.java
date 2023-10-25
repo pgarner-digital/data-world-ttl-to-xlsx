@@ -2,7 +2,7 @@ package gov.fl.digital.ddw2infa.businessglossaryterms;
 
 public class BusinessGlossaryTermsMetadata {
 
-    private static final String BUSINESS_TERMS_QUERY_FILE_PATH = "business-term-export.csv.rq";
+    private static final String BUSINESS_TERMS_QUERY_FILE_PATH = "business-metadata-export.rq";
 
     // TODO: implement business glossary functionality
 

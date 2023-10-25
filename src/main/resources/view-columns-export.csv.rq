@@ -52,7 +52,7 @@ WHERE
         ?table_rdf_type apf:splitIRI (?table_type_prefix  ?table_type) .
     }
 
-    FILTER (?table_type IN ( "DatabaseTable" ) ) .
+    FILTER (?table_type IN ( "DatabaseView" ) ) .
 
     ?table_IRI dct:isPartOf ?databaseIRI ;
     dct:identifier ?table_name .

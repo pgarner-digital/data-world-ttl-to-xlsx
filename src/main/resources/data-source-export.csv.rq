@@ -1,4 +1,3 @@
-PREFIX : <https://fl-dms.linked.data.world/d/ddw-catalogs/>
 PREFIX apf: <http://jena.apache.org/ARQ/property#>
 PREFIX dwec: <https://dwec.data.world/v0/>
 PREFIX dcat: <http://www.w3.org/ns/dcat#>

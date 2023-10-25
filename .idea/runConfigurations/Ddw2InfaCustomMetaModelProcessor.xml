@@ -2,6 +2,7 @@
   <configuration default="false" name="Ddw2InfaCustomMetaModelProcessor" type="Application" factoryName="Application" nameIsGenerated="true">
     <option name="MAIN_CLASS_NAME" value="Ddw2InfaCustomMetaModelProcessor" />
     <module name="data-world-ttl-to-csv" />
+    <option name="PROGRAM_PARAMETERS" value="PatrickGarner Tell.Jeff67" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
