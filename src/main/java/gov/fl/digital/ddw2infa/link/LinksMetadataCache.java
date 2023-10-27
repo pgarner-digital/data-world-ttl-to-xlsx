@@ -19,9 +19,9 @@ public class LinksMetadataCache {
     private final Map<
         String,                     // database name. TTL result sets have names -- not IDs -- so key by database name.
         IdAndChildren<              // database (contains database ID and the database's child schemas).
-            IdAndChildren<          // schema (contains schema ID and the schema's two children: "tables" and "views").
-                Map<
-                    String,         // TableOrView enum name e.g., the word "table" or "view"
+            IdAndChildren<          // schema (contains schema ID and the two child maps, named "tables" and "views").
+                Map<                // tableOrViewMap
+                    String,         // Table name or view name
                     IdAndChildren<  // table or view (contains table- or view ID and the table's or view's child columns).
                         String      // column or view-column (which has no children, therefore just the column's or view's ID)
                     >
@@ -48,16 +48,18 @@ public class LinksMetadataCache {
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertStatement)) {
             int rowCount = 1;
             logger.info("Begin extracting table results ...");
-            for(IdAndChildren<              // database (contains database ID and the database's child schemas).
-                    IdAndChildren<          // schema (contains schema ID and the schema's two children: "tables" and "views").
-                        Map<
-                            String,         // TableOrView enum name e.g., the word "table" or "view"
-                            IdAndChildren<  // table or view (contains table- or view ID and the table's or view's child columns).
-                                String      // column or view-column (which has no children, therefore just the column's or view's ID)
+            for(
+                IdAndChildren<              // database (contains database ID and the database's child schemas).
+                    IdAndChildren<          // schema (contains schema ID and the two child maps, named "tables" and "views").
+                        Map<                // tableOrViewMap
+                            String,         // Table name or view name
+                            IdAndChildren<  // table or view (contains table- or view ID and the child columns or view-columns).
+                                String      // the columns' or view-columns' IDs
                             >
                         >
                     >
-                > dbIdAndChildren :
+                >
+                dbIdAndChildren :
                 links.values()
             ) {
                 String dbId = dbIdAndChildren.id;
@@ -76,39 +78,57 @@ public class LinksMetadataCache {
                     dbIdAndChildren.getChildrenByName().values()
                 ) {
                     String schemaId = schemaIdAndChildren.id;
+                    // First, batch the database-to-schema association
+                    batchRow(
+                        preparedStatement,
+                        orgId,
+                        dbId,
+                        schemaId,
+                        LinkAssociation.DatabaseToSchema.association,
+                        rowCount++,
+                        localDateTime,
+                        chronoUnit
+                    );
+                    // Unlike other nodes in the datastructure, schemaIdAndChildren has
+                    // 2 maps as children: one for tables and one for views.
                     for(
-                        Map.Entry<String, Map<String, IdAndChildren<String>>> tableOrViewEntry :
+                        Map.Entry<String,Map<String,IdAndChildren<String>>> tableOrViewClassificationEntry :
                         schemaIdAndChildren.getChildrenByName().entrySet()
                     ) {
-                        TableOrView tableOrView = TableOrView.valueOf(tableOrViewEntry.getKey());
-                        batchRow(
-                            preparedStatement,
-                            orgId,
-                            dbId,
-                            schemaId,
-                            LinkAssociation.DatabaseToSchema.association,
-                            rowCount++,
-                            localDateTime,
-                            chronoUnit
-                        );
-                        for(IdAndChildren<String> tableOrViewIdAndChildren : tableOrViewEntry.getValue().values()) {
-                            String tableId = tableOrViewIdAndChildren.id;
+                        // NOTE:  Recall that there are only two table-to-view-classification entries.
+                        // Next, navigate across the map, tableOrViewEntryMap, to access another map,
+                        // which is either the tables map or views map, each of which hashes tables
+                        // IdAndChildren or views IdAndChildren.
+                        // tableOrView is used to provide the correct association to make
+                        // between schema and child e.g., schema-to-table or schema-to-view.
+                        TableOrView tableOrView = TableOrView.valueOf(tableOrViewClassificationEntry.getKey());
+                        Map<String,IdAndChildren<String>> tableOrViewEntryMap =
+                            tableOrViewClassificationEntry.getValue();
+                        for(IdAndChildren<String> tableOrViewIdAndChildren: tableOrViewEntryMap.values()) {
+
+                            // Next, iterate over the schema-to-table and schema-to-view associations
+                            // and batch their table- and view association records.
+                            String tableOrViewId = tableOrViewIdAndChildren.id;
                             batchRow(
                                 preparedStatement,
                                 orgId,
                                 schemaId,
-                                tableId,
+                                tableOrViewId,
                                 tableOrView.getSchemaChildLinkAssociation().association,
                                 rowCount++,
                                 localDateTime,
                                 chronoUnit
                             );
-                            for(String columnId : tableOrViewIdAndChildren.getChildrenByName().values()) {
+
+                            // Next, iterate over table-to-column and/or view-to-view-column associations
+                            // and batch column and view-column records.
+                            for(String columnIdOrViewId : tableOrViewIdAndChildren.getChildrenByName().values())
+                            {
                                 batchRow(
                                     preparedStatement,
                                     orgId,
-                                    tableId,
-                                    columnId,
+                                    tableOrViewId,
+                                    columnIdOrViewId,
                                     tableOrView.getTableOrViewChildLinkAssociation().association,
                                     rowCount++,
                                     localDateTime,
@@ -140,9 +160,11 @@ public class LinksMetadataCache {
         preparedStatement.setString(3, target);
         preparedStatement.setString(4, association);
         preparedStatement.addBatch();
+/*
         logger.info("Processing link record: " + rowCount + "(" +
                 localDateTime.until(LocalDateTime.now(), chronoUnit) + " " +
                 chronoUnit.name().toLowerCase() + ").");
+*/
     }
 
     // This design assumes there are no duplicate database names within an organization.
@@ -160,7 +182,7 @@ public class LinksMetadataCache {
         if(!links.containsKey(dbName)) {
             throw new IllegalStateException("Attempting to add schema to database that does not exist.");
         }
-        IdAndChildren<IdAndChildren<Map<String,IdAndChildren<String>>>> dbIdAndChildren = links.get(dbName);
+        IdAndChildren<IdAndChildren<Map<String, IdAndChildren<String>>>> dbIdAndChildren = links.get(dbName);
         if(dbIdAndChildren.doesNotContainChild(schemaName)) {
             dbIdAndChildren.addChild(schemaName, new IdAndChildren<>(schemaId));
         }
@@ -170,72 +192,101 @@ public class LinksMetadataCache {
         TableOrView tableOrView,
         String dbName,
         String schemaName,
-        String tableOrViewName,
-        String tableOrViewId
+        String tableNameOrViewName,
+        String tableIdOrViewId
     ) {
         Util.checkNullOrEmpty("dbName", dbName);
-        // Some schema info is redacted, such as the schema for People First (PF3) database in DMS.
+
+        // Some schema info is redacted by agency customers, such as the schema for People First (PF3) database in DMS.
         //Util.checkNullOrEmpty("schemaName", schemaName);
-        Util.checkNullOrEmpty("tableOrViewName", tableOrViewName);
-        Util.checkNullOrEmpty("tableOrViewId", tableOrViewId);
+
+        Util.checkNullOrEmpty("tableNameOrViewName", tableNameOrViewName);
+        Util.checkNullOrEmpty("tableIdOrViewId", tableIdOrViewId);
+
         if(!links.containsKey(dbName)) {
-            throw new IllegalStateException("Attempting to add " + tableOrView.name() + " '"+ tableOrViewName +
-                    "' to schema '"+ schemaName + "' but schema's database '" + dbName + "' does not exist.");
+            // Method LinksMetadataCache#addDatabase must be called before this method is invoked.
+            throw new IllegalStateException("Attempting to add " + tableOrView.name() + " '"+ tableNameOrViewName +
+                "' to schema '"+ schemaName + "' but schema's database '" + dbName + "' does not exist.");
         }
-        IdAndChildren<IdAndChildren<Map<String,IdAndChildren<String>>>> dbIdAndChildren = links.get(dbName);
+        IdAndChildren<IdAndChildren<Map<String, IdAndChildren<String>>>> dbIdAndChildren = links.get(dbName);
         if(dbIdAndChildren.doesNotContainChild(schemaName)) {
-            throw new IllegalStateException("Attempting to add " + tableOrView.name() + " '"+ tableOrViewName +
-                    "' to schema '"+ schemaName + "', which does not exist in database '"+ dbName + "'.");
+            // Method LinksMetadataCache#addSchema must be called before this method is invoked.
+            throw new IllegalStateException("Attempting to add " + tableOrView.name() + " '"+ tableNameOrViewName +
+                "' to schema '"+ schemaName + "', which does not exist in database '"+ dbName + "'.");
         }
-        IdAndChildren<Map<String,IdAndChildren<String>>> schemaIdAndChildren = dbIdAndChildren.getChild(schemaName);
-        Map<String, IdAndChildren<String>> tablesOrViews;
-        if(schemaIdAndChildren.doesNotContainChild(tableOrView.name())) {
-            tablesOrViews = new HashMap<>();
-            schemaIdAndChildren.addChild(tableOrView.name(), tablesOrViews);
+        IdAndChildren<Map<String, IdAndChildren<String>>> schemaIdAndChildren = dbIdAndChildren.getChild(schemaName);
+        Map<String,IdAndChildren<String>> tableOrViewMap;
+        if(schemaIdAndChildren.containsChild(tableOrView.name())) {
+            tableOrViewMap = schemaIdAndChildren.getChild(tableOrView.name());
         }
         else {
-            tablesOrViews = schemaIdAndChildren.getChild(tableOrView.name());
+            tableOrViewMap = new HashMap<>();
+            schemaIdAndChildren.addChild(tableOrView.name(),tableOrViewMap);
         }
-        tablesOrViews.put(tableOrViewName, new IdAndChildren<>(tableOrViewId));
+
+        if(!tableOrViewMap.containsKey(tableNameOrViewName)) {
+            tableOrViewMap.put(tableNameOrViewName, new IdAndChildren<>(tableIdOrViewId));
+        }
     }
 
     public void addColumnOrViewColumn(
         TableOrView tableOrView,
         String dbName,
         String schemaName,
-        String tableOrViewName,
-        String columnOrViewColumnName,
-        String columnId
+        String tableNameOrViewName,
+        String columnNameOrViewColumnName,
+        String columnIdOrViewId
     ) {
         Util.checkNullOrEmpty("dbName", dbName);
         // Some schema info is redacted, such as the schema for People First (PF3) database in DMS.
         //Util.checkNullOrEmpty("schemaName", schemaName);
-        Util.checkNullOrEmpty("tableOrViewName", tableOrViewName);
-        Util.checkNullOrEmpty("columnOrViewColumnName", columnOrViewColumnName);
-        Util.checkNullOrEmpty("columnId", columnId);
+        Util.checkNullOrEmpty("tableNameOrViewName", tableNameOrViewName);
+        Util.checkNullOrEmpty("columnNameOrViewColumnName", columnNameOrViewColumnName);
+        Util.checkNullOrEmpty("columnIdOrViewId", columnIdOrViewId);
         if(!links.containsKey(dbName)) {
-            throw new IllegalStateException("Attempting to add "+ tableOrView.getColumnLabel() + " '"+
-                columnOrViewColumnName + "' to table '" + tableOrViewName + "' in schema '"+ schemaName +
-                    "' but database '" + dbName + "' does not exist.");
+            // Method LinksMetadataCache#addDatabase must be called before this method is invoked.
+            throw new IllegalStateException(
+                "Attempting to add "+ tableOrView.getColumnLabel() + " '"+
+                    columnNameOrViewColumnName + "' to table '" + tableNameOrViewName + "' in schema '"+ schemaName +
+                        "' but database '" + dbName + "' does not exist."
+            );
         }
-        IdAndChildren<IdAndChildren<Map<String,IdAndChildren<String>>>> dbIdAndChildren = links.get(dbName);
+        IdAndChildren<IdAndChildren<Map<String, IdAndChildren<String>>>> dbIdAndChildren = links.get(dbName);
         if(dbIdAndChildren.doesNotContainChild(schemaName)) {
+            // Method LinksMetadataCache#addSchema must be called before this method is invoked.
             throw new IllegalStateException("Attempting to add "+ tableOrView.getColumnLabel() + " '"+
-                columnOrViewColumnName + "' to table '" + tableOrViewName + "' in schema '"+ schemaName +
+                columnNameOrViewColumnName + "' to table '" + tableNameOrViewName + "' in schema '"+ schemaName +
                     "' and in database '" + dbName + "' but schema does not exist.");
         }
-        IdAndChildren<Map<String,IdAndChildren<String>>> schemaIdAndChildren = dbIdAndChildren.getChild(schemaName);
+        IdAndChildren<Map<String, IdAndChildren<String>>> schemaIdAndChildren = dbIdAndChildren.getChild(schemaName);
         if(schemaIdAndChildren.doesNotContainChild(tableOrView.name())) {
+            // Method LinksMetadataCache#addTableOrView, which puts the classification of view or label
+            // into the data structure, must be called before this method is invoked.
             throw new IllegalStateException("Attempting to add "+ tableOrView.getColumnLabel() + " '"+
-                columnOrViewColumnName + "' to table '" + tableOrViewName + "' in schema '"+ schemaName +
-                    "' and in database '" + dbName + "' but the " + tableOrView.name() + " filter does not exist.");
+                columnNameOrViewColumnName + "' to table '" + tableNameOrViewName + "' in schema '"+ schemaName +
+                    "' and in database '" + dbName + "' but the '" + tableOrView.name() + "' filter does not exist.");
         }
-        Map<String, IdAndChildren<String>> tablesOrViews = schemaIdAndChildren.getChild(tableOrView.name());
-        IdAndChildren<String> tableIdAndChildren = tablesOrViews.get(tableOrViewName);
-        if(tableIdAndChildren.doesNotContainChild(columnOrViewColumnName)) {
-            tableIdAndChildren.addChild(columnOrViewColumnName, columnId);
+        Map<String,IdAndChildren<String>> tableOrViewMap = schemaIdAndChildren.getChild(tableOrView.name());
+        if(tableOrViewMap.containsKey(tableNameOrViewName)) {
+            IdAndChildren<String> tableOrViewIdAndChildren = tableOrViewMap.get(tableNameOrViewName);
+            if(tableOrViewIdAndChildren.containsChild(columnNameOrViewColumnName)) {
+                throw new IllegalStateException(
+                    "Attempting to add " + tableOrView.getColumnLabel() + " '" +
+                        columnNameOrViewColumnName + "' to table '" + tableNameOrViewName + "' in schema '" +
+                            schemaName + "' and in database '" + dbName + "' but the column already exists."
+                );
+            }
+            else {
+                tableOrViewIdAndChildren.addChild(columnNameOrViewColumnName, columnIdOrViewId);
+            }
         }
-    }
+        else {
+            throw new IllegalStateException("Attempting to add "+ tableOrView.getColumnLabel() + " '"+
+                columnNameOrViewColumnName + "' to table '" + tableNameOrViewName + "' in schema '"+ schemaName +
+                    "' and in database '" + dbName + "' in the '" + tableOrView.name() + "' filter but the " +
+                        "table or view named '" + tableNameOrViewName + "' does not exist.");
+        }
+   }
 
     private enum LinkAssociation {
         Root("core.ResourceParentChild"),
@@ -256,8 +307,14 @@ public class LinksMetadataCache {
 
         private IdAndChildren(String id) { this.id = id; }
 
-        private void addChild(String name, X child) { childrenByName.put(name, child); }
-        private boolean doesNotContainChild(String name) { return !childrenByName.containsKey(name); }
+        private void addChild(String name, X child) {
+            if(childrenByName.containsKey(name)) {
+                throw new IllegalStateException("Can't add child '" + name + "' to children.  It already exists.");
+            }
+            childrenByName.put(name, child);
+        }
+        private boolean doesNotContainChild(String name) { return !containsChild(name); }
+        private boolean containsChild(String name) { return childrenByName.containsKey(name); }
         private X getChild(String name) { return childrenByName.get(name); }
         private Map<String,X> getChildrenByName() { return childrenByName; }
     }
