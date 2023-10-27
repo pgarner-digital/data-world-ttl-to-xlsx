@@ -27,6 +27,9 @@ public class Util {
 
     public static String stringValueOf(RDFNode rdfNode) { return null == rdfNode ? "" : rdfNode.toString().trim(); }
 
+    public static String encapsulateDoubleQuotes(String value) { return null == value ? "" : "\"" + value + "\""; }
+
+    public static String removeCommasAndDoubleQuotes(String value) { return null == value ? "" : value.replaceAll("[,|\"]", ""); }
     public static void checkNullOrEmpty(String name, String id) {
         if(id == null || id.trim().isBlank()) throw new IllegalArgumentException(name + " is blank.");
     }
@@ -34,7 +37,7 @@ public class Util {
     public static Model loadModelFrom(String ttlFilePath) {
         LocalDateTime begin = LocalDateTime.now();
         Model model = ModelFactory.createDefaultModel();
-        logger.info("Begin loading " + ttlFilePath + " into model...");
+        logger.info("Begin loading " + ttlFilePath + " into model ...");
         model.read("./src/main/resources/" + ttlFilePath);
         logger.info("Model loaded (" + begin.until(LocalDateTime.now(), ChronoUnit.SECONDS) + " seconds).");
         return model;

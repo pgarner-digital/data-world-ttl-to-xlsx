@@ -49,7 +49,8 @@ public class Ddw2InfaCustomMetaModelProcessor {
                     LinksMetadataCache linksMetadataCache = new LinksMetadataCache();
                     String orgId = agencyAndTtlFileName.getOrgId();
                     try {
-                        logger.info("Extracting database metadata");
+
+                        logger.info("\nExtracting database metadata");
                         pushToSnowflake(
                             model,
                             new DatabaseDdwMetadata(),
@@ -61,13 +62,22 @@ public class Ddw2InfaCustomMetaModelProcessor {
                             orgId
                         );
 
-                        logger.info("Extracting schema metadata");
-                        schemasMetadataCache.pushToSnowflake(connection, begin, ChronoUnit.SECONDS, orgId);
-
                         logger.info("Extracting table metadata");
                         pushToSnowflake(
                             model,
                             new TablesDdwMetadata(),
+                            schemasMetadataCache,
+                            linksMetadataCache,
+                            100,
+                            ChronoUnit.SECONDS,
+                            connection,
+                            orgId
+                        );
+
+                        logger.info("Extracting view metadata");
+                        pushToSnowflake(
+                            model,
+                            new ViewsDdwMetadata(),
                             schemasMetadataCache,
                             linksMetadataCache,
                             100,
@@ -88,18 +98,6 @@ public class Ddw2InfaCustomMetaModelProcessor {
                             orgId
                         );
 
-                        logger.info("Extracting view metadata");
-                        pushToSnowflake(
-                            model,
-                            new ViewsDdwMetadata(),
-                            schemasMetadataCache,
-                            linksMetadataCache,
-                            100,
-                            ChronoUnit.SECONDS,
-                            connection,
-                            orgId
-                        );
-
                         logger.info("Extracting view-column metadata");
                         pushToSnowflake(
                             model,
@@ -112,7 +110,12 @@ public class Ddw2InfaCustomMetaModelProcessor {
                             orgId
                         );
 
+                        logger.info("Extracting schema metadata");
+                        schemasMetadataCache.pushToSnowflake(connection, begin, ChronoUnit.SECONDS, orgId);
+
+                        logger.info("Extracting links metadata");
                         linksMetadataCache.pushToSnowflake(connection, begin, ChronoUnit.SECONDS, orgId);
+
                     } catch (SQLException e) {
                         System.err.println("Unable to execute SQL. Rolling back snowflake import.");
                         connection.rollback();

@@ -26,8 +26,9 @@ public abstract class DdwMetadata<X extends MetadataMapper> {
         LinksMetadataCache linksMetadataCache
     ) {
         fieldRecords.add(
-            getPropertyMappers().stream().map(mapper -> mapper.getPropertyValueFrom(querySolution))
-                .toArray(String[]::new)
+            getPropertyMappers().stream()
+                .map(mapper -> mapper.getPropertyValueNoEmbeddedQuotesOrCommasFrom(querySolution))
+                    .toArray(String[]::new)
         );
         manageLinksAndSchemas(querySolution, schemasMetadataCache, linksMetadataCache);
     }
@@ -47,10 +48,10 @@ public abstract class DdwMetadata<X extends MetadataMapper> {
             getPropertyMappers().stream().filter(MetadataMapper::hasDdwColumnName).map(mapper -> ", \"" + mapper.getInfaColumnName() + "\"").collect(Collectors.joining()),
             getPropertyMappers().stream().filter(MetadataMapper::hasDdwColumnName).map(mapper -> ", ?").collect(Collectors.joining())
         );
-        //logger.info(insertStatement);
+        logger.info(insertStatement);
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertStatement)) {
             int rowCount = 1, colCount;
-            logger.info("Begin extracting results ...");
+            logger.info("Begin extracting " + getLabel() + " results ...");
             for (String[] values : fieldRecords) {
                 logger.info("Adding " + getLabel() + " record batch to prepared statement: " + rowCount++ + "(" +
                         localDateTime.until(LocalDateTime.now(), ChronoUnit.SECONDS) + " " +
@@ -63,7 +64,7 @@ public abstract class DdwMetadata<X extends MetadataMapper> {
                 preparedStatement.addBatch();
             }
             preparedStatement.executeBatch();
-            logger.info("Committing " + getLabel() + " changes to snowflake.\n");
+            logger.info("Committing " + getLabel() + " metadata changes to snowflake.\n");
             connection.commit();
         }
     }

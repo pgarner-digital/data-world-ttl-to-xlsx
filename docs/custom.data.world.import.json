@@ -38,7 +38,7 @@
     {
       "name": "sensitiveData",
       "label": "Sensitive Data",
-      "dataType": "core.Boolean",
+      "dataType": "core.String",
       "description": "",
       "multivalued": false,
       "deprecated": false,
@@ -110,7 +110,7 @@
     {
       "name": "restrictedToPublic",
       "label": "Restricted To Public",
-      "dataType": "core.Boolean",
+      "dataType": "core.String",
       "description": "",
       "multivalued": false,
       "deprecated": false,

@@ -125,21 +125,54 @@ select * from VIEW_METADATA;
 select * from VIEW_COLUMN_METADATA;
 select * from LINKS_METADATA;
 
-select distinct "com.infa.odin.models.relational.Datatype" from VIEW_COLUMN_METADATA;
+select * from TABLE_METADATA where "core.name" = 'TMP_20200918_LOAD_DOB';
+select * from COLUMN_METADATA where "core.description" like '%,%';
+select * from LINKS_METADATA where Source = 'sch.72624a0ca14946ee918a4f916f435b09';
+select distinct OrgId from LINKS_METADATA;
 
--- create or replace table DATABASE_METADATA_BAK as SELECT * FROM DATABASE_METADATA;
--- create or replace table SCHEMA_METADATA_BAK as SELECT * FROM SCHEMA_METADATA;
--- create or replace table TABLE_METADATA_BAK as SELECT * FROM TABLE_METADATA;
--- create or replace table COLUMN_METADATA_BAK as SELECT * FROM COLUMN_METADATA;
--- create or replace table LINKS_METADATA_BAK as SELECT * FROM LINKS_METADATA;
--- create or replace table VIEW_METADATA_BAK as SELECT * FROM VIEW_METADATA;
--- create or replace table VIEW_COLUMN_METADATA_BAK as SELECT * FROM VIEW_COLUMN_METADATA;
+select COUNT(DISTINCT SOURCE) from LINKS_METADATA_BAK WHERE orgId = 'DMS' and ASSOCIATION = 'com.infa.odin.models.relational.ViewToViewColumn';
+-- 4118
+
+-- SELECT COUNT(DISTINCT t1.SOURCE)
+-- FROM LINKS_METADATA_BAK t1
+--          INNER JOIN VIEW_METADATA_BAK t2
+--                     ON t1.SOURCE = t2."core.externalId";
+-- 4118
+
+-- SELECT COUNT(DISTINCT t1.TARGET)
+-- FROM LINKS_METADATA_BAK t1
+--          INNER JOIN VIEW_COLUMN_METADATA_BAK t2
+--                     ON t1.TARGET = t2."core.externalId";
+--65012
+
+select * from TABLE_METADATA WHERE "core.description" like '%,%';
+
+
+
+select distinct "custom.data.world.import.sensitiveData" from VIEW_METADATA_BAK;
+select distinct "custom.data.world.import.sensitiveData" from VIEW_COLUMN_METADATA_BAK;
+select distinct "custom.data.world.import.restrictedToPublic" from VIEW_METADATA_BAK;
+select distinct "custom.data.world.import.restrictedToPublic" from VIEW_COLUMN_METADATA_BAK;
+
+desc table VIEW_COLUMN_METADATA;
+desc table VIEW_METADATA;
+
+
+create or replace table DATABASE_METADATA_BAK as SELECT * FROM DATABASE_METADATA;
+create or replace table SCHEMA_METADATA_BAK as SELECT * FROM SCHEMA_METADATA;
+create or replace table TABLE_METADATA_BAK as SELECT * FROM TABLE_METADATA;
+create or replace table COLUMN_METADATA_BAK as SELECT * FROM COLUMN_METADATA;
+create or replace table LINKS_METADATA_BAK as SELECT * FROM LINKS_METADATA;
+create or replace table VIEW_METADATA_BAK as SELECT * FROM VIEW_METADATA;
+create or replace table VIEW_COLUMN_METADATA_BAK as SELECT * FROM VIEW_COLUMN_METADATA;
 
 select * from DATABASE_METADATA_BAK;
 select * from SCHEMA_METADATA_BAK;
 select * from TABLE_METADATA_BAK;
 select * from COLUMN_METADATA_BAK;
 select * from LINKS_METADATA_BAK;
+select * from VIEW_METADATA_BAK;
+select * from VIEW_COLUMN_METADATA_BAK;
 
 select * from DATABASE_METADATA_BAK WHERE "orgId" = 'DMS';
 select * from SCHEMA_METADATA_BAK WHERE "orgId" = 'DMS';

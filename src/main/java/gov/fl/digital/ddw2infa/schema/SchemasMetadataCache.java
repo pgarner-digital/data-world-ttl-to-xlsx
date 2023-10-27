@@ -68,10 +68,10 @@ public class SchemasMetadataCache {
         );
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertStatement)) {
             int rowCount = 1;
-            logger.info("Begin extracting results ...");
+            logger.info("Begin extracting schemas from cache ...");
             for(Map<String,String> schemaIdBySchemaName : schemaIdByDatabaseNameAndSchemaName.values()) {
                 for(Map.Entry<String,String> schemaNameAndId : schemaIdBySchemaName.entrySet()) {
-                    logger.info("Processing schema record: " + rowCount++ + "(" +
+                    logger.info("Adding schema record batch to prepared statement: " + rowCount++ + "(" +
                         localDateTime.until(LocalDateTime.now(), chronoUnit) + " " +
                         chronoUnit.name().toLowerCase() + ").");
                     String schemaName = schemaNameAndId.getKey();
