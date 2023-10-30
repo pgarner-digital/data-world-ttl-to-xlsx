@@ -1,5 +1,6 @@
 package gov.fl.digital.ddw2infa;
 
+import gov.fl.digital.ddw2infa.schema.SchemasMetadataCache;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
@@ -29,7 +30,9 @@ public class Util {
 
     public static String encapsulateDoubleQuotes(String value) { return null == value ? "" : "\"" + value + "\""; }
 
-    public static String removeCommasAndDoubleQuotes(String value) { return null == value ? "" : value.replaceAll("[,|\"]", ""); }
+    public static String removeSpecialCharacters(String value) {
+        return null == value ? "" : value.replaceAll("[,|\"|\r|\n|\\\\]", "");
+    }
     public static void checkNullOrEmpty(String name, String id) {
         if(id == null || id.trim().isBlank()) throw new IllegalArgumentException(name + " is blank.");
     }
@@ -39,7 +42,7 @@ public class Util {
         Model model = ModelFactory.createDefaultModel();
         logger.info("Begin loading " + ttlFilePath + " into model ...");
         model.read("./src/main/resources/" + ttlFilePath);
-        logger.info("Model loaded (" + begin.until(LocalDateTime.now(), ChronoUnit.SECONDS) + " seconds).");
+        logger.info("\nModel loaded (" + begin.until(LocalDateTime.now(), ChronoUnit.SECONDS) + " seconds).");
         return model;
     }
 
@@ -56,6 +59,7 @@ public class Util {
                 props
         );
     }
+
     public static String getSparqlQueryForOrg(String orgId, String queryFilePath) throws IOException {
         String _orgId = orgId.toLowerCase();
         URL _queryFilePath = Util.class.getClassLoader().getResource(queryFilePath);
@@ -65,5 +69,11 @@ public class Util {
         String _firstPrefix = String.format(firstPrefix, _orgId);
         String _secondPrefix = String.format(secondPrefix, _orgId);
         return _firstPrefix + _secondPrefix + oldContent;
+    }
+
+    public static String getSchemaNameHack(String schemaName) {
+        return (null == schemaName || schemaName.isEmpty())
+                ? SchemasMetadataCache.PEOPLE_FIRST_SCHEMA_NAME
+                : schemaName.trim();
     }
 }

@@ -32,7 +32,7 @@ public class Ddw2InfaCustomMetaModelProcessor {
         // Note: try with resources auto closes connection, so no need to explicitly close it.
         try (Connection connection = Util.getConnection(args[0], args[1])) {
 
-            truncateTables(connection);
+            //truncateTables(connection);
 
             for (AgencyAndTtlFileName agencyAndTtlFileName : AgencyAndTtlFileName.values()) {
 
@@ -59,7 +59,8 @@ public class Ddw2InfaCustomMetaModelProcessor {
                             1,
                             ChronoUnit.SECONDS,
                             connection,
-                            orgId
+                            orgId,
+                            begin
                         );
 
                         logger.info("Extracting table metadata");
@@ -71,7 +72,8 @@ public class Ddw2InfaCustomMetaModelProcessor {
                             100,
                             ChronoUnit.SECONDS,
                             connection,
-                            orgId
+                            orgId,
+                            begin
                         );
 
                         logger.info("Extracting view metadata");
@@ -83,7 +85,8 @@ public class Ddw2InfaCustomMetaModelProcessor {
                             100,
                             ChronoUnit.SECONDS,
                             connection,
-                            orgId
+                            orgId,
+                            begin
                         );
 
                         logger.info("Extracting column metadata");
@@ -95,7 +98,8 @@ public class Ddw2InfaCustomMetaModelProcessor {
                             10000,
                             ChronoUnit.MINUTES,
                             connection,
-                            orgId
+                            orgId,
+                            begin
                         );
 
                         logger.info("Extracting view-column metadata");
@@ -107,7 +111,8 @@ public class Ddw2InfaCustomMetaModelProcessor {
                             10000,
                             ChronoUnit.MINUTES,
                             connection,
-                            orgId
+                            orgId,
+                            begin
                         );
 
                         logger.info("Extracting schema metadata");
@@ -141,11 +146,11 @@ public class Ddw2InfaCustomMetaModelProcessor {
         int rowCountDisplayFrequency,
         ChronoUnit logEntryTimeUnit,
         Connection connection,
-        String orgId
+        String orgId,
+        LocalDateTime localDateTime
     ) throws IOException, SQLException {
         String queryString = Util.getSparqlQueryForOrg(orgId, ddwMetadata.getQueryFilePath());
         int rowCount = 1;
-        LocalDateTime localDateTime = LocalDateTime.now();
         Query query = QueryFactory.create(queryString);
         try (QueryExecution queryExecution = QueryExecutionFactory.create(query, model)) {
             ResultSet results = queryExecution.execSelect() ;
@@ -160,7 +165,7 @@ public class Ddw2InfaCustomMetaModelProcessor {
                 rowCount++;
             }
         }
-        ddwMetadata.insertRecords(connection, orgId, localDateTime);
+        ddwMetadata.insertRecords(connection, orgId, localDateTime, rowCountDisplayFrequency);
     }
 
     private static void truncateTables(Connection connection) throws SQLException {

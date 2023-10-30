@@ -1,5 +1,6 @@
 package gov.fl.digital.ddw2infa.schema;
 
+import gov.fl.digital.ddw2infa.Util;
 import gov.fl.digital.ddw2infa.link.LinksMetadataCache;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,13 +20,20 @@ import java.util.stream.Stream;
 public class SchemasMetadataCache {
     public static final String INFA_FILE_NAME = "com.infa.odin.models.relational.Schema.csv";
     public static final String INFA_TABLE_NAME = "SCHEMA_METADATA";
+
+    public static final String PEOPLE_FIRST_SCHEMA_NAME = "PF3Schema";
     private static final Logger logger = LogManager.getLogger(SchemasMetadataCache.class);
 
     private final Map<String,Map<String,String>> schemaIdByDatabaseNameAndSchemaName = new HashMap<>();
 
     public void addRecord(String databaseName, String schemaName, LinksMetadataCache linksMetadataCache) {
         databaseName = databaseName.trim();
-        schemaName = schemaName.trim();
+
+        // PeopleFirst team decided not to provide a schema name for the PF3 database.
+        // If schemaName is not provided, it's manually set because it's used to
+        // populate INFA's "core.name" field, which is required and cannot be empty.
+        schemaName = Util.getSchemaNameHack(schemaName);
+
         String schemaId = "sch." + UUID.randomUUID().toString().replace("-", "");
         Map<String,String> schemaIdBySchemaName = schemaIdByDatabaseNameAndSchemaName.get(databaseName);
         if(null == schemaIdBySchemaName) {

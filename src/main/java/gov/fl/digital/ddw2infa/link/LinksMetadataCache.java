@@ -1,6 +1,7 @@
 package gov.fl.digital.ddw2infa.link;
 
 import gov.fl.digital.ddw2infa.Util;
+import gov.fl.digital.ddw2infa.schema.SchemasMetadataCache;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -176,8 +177,11 @@ public class LinksMetadataCache {
 
     public void addSchema(String dbName, String schemaName, String schemaId) {
         Util.checkNullOrEmpty("dbName", dbName);
-        // Some schema info is redacted, such as the schema for People First (PF3) database in DMS.
-        //Util.checkNullOrEmpty("schemaName", schemaName);
+        // PeopleFirst team decided not to provide a schema name for the PF3 database.
+        // If schemaName is not provided, it's manually set because it's used to
+        // populate INFA's "core.name" field, which is required and cannot be empty.
+        schemaName = Util.getSchemaNameHack(schemaName);
+
         Util.checkNullOrEmpty("schemaId", schemaId);
         if(!links.containsKey(dbName)) {
             throw new IllegalStateException("Attempting to add schema to database that does not exist.");
@@ -196,6 +200,11 @@ public class LinksMetadataCache {
         String tableIdOrViewId
     ) {
         Util.checkNullOrEmpty("dbName", dbName);
+
+        // PeopleFirst team decided not to provide a schema name for the PF3 database.
+        // If schemaName is not provided, it's manually set because it's used to
+        // populate INFA's "core.name" field, which is required and cannot be empty.
+        schemaName = Util.getSchemaNameHack(schemaName);
 
         // Some schema info is redacted by agency customers, such as the schema for People First (PF3) database in DMS.
         //Util.checkNullOrEmpty("schemaName", schemaName);
@@ -238,8 +247,10 @@ public class LinksMetadataCache {
         String columnIdOrViewId
     ) {
         Util.checkNullOrEmpty("dbName", dbName);
-        // Some schema info is redacted, such as the schema for People First (PF3) database in DMS.
-        //Util.checkNullOrEmpty("schemaName", schemaName);
+        // PeopleFirst team decided not to provide a schema name for the PF3 database.
+        // If schemaName is not provided, it's manually set because it's used to
+        // populate INFA's "core.name" field, which is required and cannot be empty.
+        schemaName = Util.getSchemaNameHack(schemaName);
         Util.checkNullOrEmpty("tableNameOrViewName", tableNameOrViewName);
         Util.checkNullOrEmpty("columnNameOrViewColumnName", columnNameOrViewColumnName);
         Util.checkNullOrEmpty("columnIdOrViewId", columnIdOrViewId);

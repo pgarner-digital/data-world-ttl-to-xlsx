@@ -174,14 +174,22 @@ select * from LINKS_METADATA_BAK;
 select * from VIEW_METADATA_BAK;
 select * from VIEW_COLUMN_METADATA_BAK;
 
-select * from DATABASE_METADATA_BAK WHERE "orgId" = 'DMS';
-select * from SCHEMA_METADATA_BAK WHERE "orgId" = 'DMS';
-select * from TABLE_METADATA_BAK WHERE "orgId" = 'DMS';
-select * from COLUMN_METADATA_BAK WHERE "orgId" = 'DMS';
-select * from VIEW_METADATA_BAK WHERE "orgId" = 'DMS';
-select * from VIEW_COLUMN_METADATA_BAK WHERE "orgId" = 'DMS';
-select * from LINKS_METADATA_BAK WHERE orgId = 'DMS';
-select distinct ASSOCIATION from LINKS_METADATA_BAK;
+select count(*) from DATABASE_METADATA_BAK;
+select count(*) from SCHEMA_METADATA_BAK;
+select count(*) from TABLE_METADATA_BAK;
+select count(*) from COLUMN_METADATA_BAK;
+select count(*) from LINKS_METADATA_BAK;
+select count(*) from VIEW_METADATA_BAK;
+select count(*) from VIEW_COLUMN_METADATA_BAK;
+
+
+select * from DATABASE_METADATA_BAK;
+select * from SCHEMA_METADATA_BAK;
+select * from TABLE_METADATA_BAK;
+select * from COLUMN_METADATA_BAK;
+select * from VIEW_METADATA_BAK;
+select * from VIEW_COLUMN_METADATA_BAK;
+select * from LINKS_METADATA_BAK;
 
 -- SELECT t1.*
 -- FROM TABLE_METADATA_BAK t1

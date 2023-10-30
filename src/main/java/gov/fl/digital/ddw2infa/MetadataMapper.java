@@ -13,8 +13,8 @@ public interface MetadataMapper {
         return Util.encapsulateDoubleQuotes(getPropertyValueFrom(querySolution));
     }
 
-    default String getPropertyValueNoEmbeddedQuotesOrCommasFrom(QuerySolution querySolution) {
-        return Util.removeCommasAndDoubleQuotes(getPropertyValueFrom(querySolution));
+    default String removeSpecialCharacters(QuerySolution querySolution) {
+        return Util.removeSpecialCharacters(getPropertyValueFrom(querySolution));
     }
 
     default boolean hasDdwColumnName() { return null != getDdwColumnName() && !getDdwColumnName().isEmpty(); }

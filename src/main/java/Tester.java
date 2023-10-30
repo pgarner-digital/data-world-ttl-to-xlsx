@@ -5,13 +5,11 @@ import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.nio.file.Files;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 
-public class TtlTester {
-    private static final Logger logger = LogManager.getLogger(TtlTester.class);
+public class Tester {
+    private static final Logger logger = LogManager.getLogger(Tester.class);
 
     private static String queryString = """
             PREFIX walls: <http://wallscope.co.uk/ontology/olympics/>
@@ -24,7 +22,13 @@ public class TtlTester {
             }""";
 
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
+        String test = "\"this,\r\n that, the\n other \\ thing\"";
+        logger.info(test);
+        logger.info(Util.removeSpecialCharacters(test));
+    }
+
+    public static void main1(String[] args) {
         Query query = QueryFactory.create(queryString);
         Model model = ModelFactory.createDefaultModel();
         model.read("./src/main/resources/olympics.ttl");

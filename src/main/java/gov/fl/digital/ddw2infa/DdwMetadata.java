@@ -27,7 +27,7 @@ public abstract class DdwMetadata<X extends MetadataMapper> {
     ) {
         fieldRecords.add(
             getPropertyMappers().stream()
-                .map(mapper -> mapper.getPropertyValueNoEmbeddedQuotesOrCommasFrom(querySolution))
+                .map(mapper -> mapper.removeSpecialCharacters(querySolution))
                     .toArray(String[]::new)
         );
         manageLinksAndSchemas(querySolution, schemasMetadataCache, linksMetadataCache);
@@ -36,7 +36,8 @@ public abstract class DdwMetadata<X extends MetadataMapper> {
     public final void insertRecords(
         Connection connection,
         String orgId,
-        LocalDateTime localDateTime
+        LocalDateTime localDateTime,
+        int rowCountDisplayFrequency
     )
         throws SQLException {
         Objects.requireNonNull(connection);
@@ -53,9 +54,11 @@ public abstract class DdwMetadata<X extends MetadataMapper> {
             int rowCount = 1, colCount;
             logger.info("Begin extracting " + getLabel() + " results ...");
             for (String[] values : fieldRecords) {
-                logger.info("Adding " + getLabel() + " record batch to prepared statement: " + rowCount++ + "(" +
+                if(rowCount % rowCountDisplayFrequency == 0) {
+                    logger.info("Adding " + getLabel() + " record batch to prepared statement: " + rowCount++ + "(" +
                         localDateTime.until(LocalDateTime.now(), ChronoUnit.SECONDS) + " " +
-                        ChronoUnit.SECONDS.name().toLowerCase() + ").");
+                            ChronoUnit.SECONDS.name().toLowerCase() + ").");
+                }
                 // Column #1, ORG_ID, is not in the result set.  It's set manually.
                 colCount = 1;
                 preparedStatement.setString(colCount++, orgId);
