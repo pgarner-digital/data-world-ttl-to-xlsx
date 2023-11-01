@@ -37,6 +37,7 @@ public class Ddw2InfaCustomMetaModelProcessor {
             //truncateTables(connection);
 
             AgencyAndTtlFileName[] agencyAndTtlFileNames = new AgencyAndTtlFileName[] {
+/*
                     DJJ,
                     DLA,
                     DMA,
@@ -45,7 +46,8 @@ public class Ddw2InfaCustomMetaModelProcessor {
                     DOAH,
                     DOE,
                     DOEA,
-                    DOH,
+*/
+                    DOH/*,
                     DOL,
                     DOR,
                     DOS,
@@ -69,7 +71,7 @@ public class Ddw2InfaCustomMetaModelProcessor {
                     SCS,
                     SENATE,
                     SRWMD,
-                    VR
+                    VR*/
             };
 
             for (AgencyAndTtlFileName agencyAndTtlFileName : agencyAndTtlFileNames) {

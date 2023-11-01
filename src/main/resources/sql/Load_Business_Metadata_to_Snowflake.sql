@@ -206,6 +206,23 @@ select count(*) from COLUMN_METADATA_PROD where "com.infa.odin.models.relational
 -- create or replace table VIEW_COLUMN_METADATA_PROD as SELECT * FROM VIEW_COLUMN_METADATA_BAK where "orgId" <> 'DOE';
 -- create or replace table LINKS_METADATA_PROD as SELECT * FROM LINKS_METADATA_BAK where orgId <> 'DOE';
 
+select * from DATABASE_METADATA;
+select * from SCHEMA_METADATA;
+select * from TABLE_METADATA;
+select * from COLUMN_METADATA;
+select * from VIEW_METADATA;
+select * from VIEW_COLUMN_METADATA;
+select * from LINKS_METADATA;
+
+select count(*) from DATABASE_METADATA;
+select count(*) from SCHEMA_METADATA;
+select count(*) from TABLE_METADATA;
+select count(*) from COLUMN_METADATA;
+select count(*) from VIEW_METADATA;
+select count(*) from VIEW_COLUMN_METADATA;
+select count(*) from LINKS_METADATA;
+
+
 select * from DATABASE_METADATA_PROD;
 select * from SCHEMA_METADATA_PROD;
 select * from TABLE_METADATA_PROD;
@@ -222,15 +239,6 @@ select count(*) from LINKS_METADATA_PROD;
 select count(*) from VIEW_METADATA_PROD;
 select count(*) from VIEW_COLUMN_METADATA_PROD;
 
-
-select * from DATABASE_METADATA_PROD;
-select * from SCHEMA_METADATA_PROD;
-select * from TABLE_METADATA_PROD;
-select * from COLUMN_METADATA_PROD;
-select * from VIEW_METADATA_PROD;
-select * from VIEW_COLUMN_METADATA_PROD;
-select * from LINKS_METADATA_PROD;
-
 -- SELECT t1.*
 -- FROM TABLE_METADATA_PROD t1
 --          INNER JOIN VIEW_METADATA_PROD t2
@@ -242,6 +250,23 @@ select * from LINKS_METADATA_PROD;
 --                     ON t1."core.externalId" = t2."core.externalId";
 
 select distinct "com.infa.odin.models.relational.Datatype" from VIEW_COLUMN_METADATA;
+
+-----------------------------------------------------------
+select *
+from TABLE_METADATA
+where
+    "com.infa.odin.models.relational.Owner" is not null and
+    "com.infa.odin.models.relational.Owner" <> '' and
+    "orgId" = 'DMS';
+-----------------------------------------------------------
+select count(*)
+from TABLE_METADATA
+where
+    "custom.data.world.import.dataSteward" is not null and
+    "com.infa.odin.models.relational.Owner" is not null;
+select distinct "custom.data.world.import.dataSteward" from TABLE_METADATA where "custom.data.world.import.dataSteward" is not null order by "custom.data.world.import.dataSteward";
+
+
 
 create or replace table TESTING123
 (
