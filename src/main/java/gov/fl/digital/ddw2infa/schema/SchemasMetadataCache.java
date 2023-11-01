@@ -21,7 +21,7 @@ public class SchemasMetadataCache {
     public static final String INFA_FILE_NAME = "com.infa.odin.models.relational.Schema.csv";
     public static final String INFA_TABLE_NAME = "SCHEMA_METADATA";
 
-    public static final String PEOPLE_FIRST_SCHEMA_NAME = "PF3Schema";
+    public static final String SCHEMA_NAME_UNAVAILABLE = "(unavailable)";
     private static final Logger logger = LogManager.getLogger(SchemasMetadataCache.class);
 
     private final Map<String,Map<String,String>> schemaIdByDatabaseNameAndSchemaName = new HashMap<>();

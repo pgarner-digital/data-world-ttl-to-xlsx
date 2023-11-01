@@ -117,20 +117,88 @@ create or replace table LINKS_METADATA
 -- select count(*) from VIEW_COLUMN_METADATA;
 -- select count(*) from LINKS_METADATA;
 
-select * from DATABASE_METADATA;
-select * from SCHEMA_METADATA;
-select * from TABLE_METADATA;
-select * from COLUMN_METADATA;
-select * from VIEW_METADATA;
-select * from VIEW_COLUMN_METADATA;
-select * from LINKS_METADATA;
+select * from DATABASE_METADATA where "orgId" = 'DMS';
+select * from SCHEMA_METADATA where "orgId" = 'DMS';
+select * from TABLE_METADATA where "orgId" = 'DMS';
+select * from COLUMN_METADATA where "orgId" = 'DMS';
+select * from VIEW_METADATA where "orgId" = 'DMS';
+select * from VIEW_COLUMN_METADATA where "orgId" = 'DMS';
+select * from LINKS_METADATA where orgId = 'DMS';
+
+select "orgId", count(*) from DATABASE_METADATA group by "orgId" order by "orgId";
+select "orgId", count(*) from SCHEMA_METADATA group by "orgId" order by "orgId";
+select "orgId", count(*) from TABLE_METADATA group by "orgId" order by "orgId";
+select "orgId", count(*) from COLUMN_METADATA group by "orgId" order by "orgId";
+select "orgId", count(*) from VIEW_METADATA group by "orgId" order by "orgId";
+select "orgId", count(*) from VIEW_COLUMN_METADATA group by "orgId" order by "orgId";
+select orgid, count(*) from LINKS_METADATA group by orgid order by OrgId;
+
+select "orgId", count(*) from DATABASE_METADATA_BAK group by "orgId" order by "orgId";
+select "orgId", count(*) from SCHEMA_METADATA_BAK group by "orgId" order by "orgId";
+select "orgId", count(*) from TABLE_METADATA_BAK group by "orgId" order by "orgId";
+select "orgId", count(*) from COLUMN_METADATA_BAK group by "orgId" order by "orgId";
+select "orgId", count(*) from VIEW_METADATA_BAK group by "orgId" order by "orgId";
+select "orgId", count(*) from VIEW_COLUMN_METADATA_BAK group by "orgId" order by "orgId";
+select orgid, count(*) from LINKS_METADATA_BAK group by orgid order by OrgId;
+
+
+-- delete from DATABASE_METADATA where "orgId" = 'DHSMV';
+-- delete from SCHEMA_METADATA where "orgId" = 'DHSMV';
+-- delete from TABLE_METADATA where "orgId" = 'DHSMV';
+-- delete from COLUMN_METADATA where "orgId" = 'DHSMV';
+-- delete from VIEW_METADATA where "orgId" = 'DHSMV';
+-- delete from VIEW_COLUMN_METADATA where "orgId" = 'DHSMV';
+-- delete from LINKS_METADATA where OrgId = 'DHSMV';
+
+select "com.infa.odin.models.relational.PrimaryKeyColumn", count(*)
+from COLUMN_METADATA_BAK
+group by "com.infa.odin.models.relational.PrimaryKeyColumn";
+
+select count(*)
+from COLUMN_METADATA_BAK
+where "com.infa.odin.models.relational.PrimaryKeyColumn" = "core.name";
+-- 2185
+
+select count(*)
+from COLUMN_METADATA_BAK
+where "com.infa.odin.models.relational.PrimaryKeyColumn" = 'Yes';
+
+
+update COLUMN_METADATA_BAK
+    set "com.infa.odin.models.relational.PrimaryKeyColumn" = 'Yes'
+where
+    "com.infa.odin.models.relational.PrimaryKeyColumn" = "core.name";
+update COLUMN_METADATA_BAK
+    set "com.infa.odin.models.relational.PrimaryKeyColumn" = null
+where
+    "com.infa.odin.models.relational.PrimaryKeyColumn" <> 'Yes';
+
+
+select "orgId", count(*) from SCHEMA_METADATA_BAK where "core.name" like '%PF3%' group by "orgId" order by "orgId";
+update SCHEMA_METADATA_BAK set "core.name" = '(unavailable)' where "core.name" like '%PF3%';
+select "orgId", count(*) from SCHEMA_METADATA_BAK where "core.name" = '(unavailable)' group by "orgId" order by "orgId";
+select * from SCHEMA_METADATA_BAK where "core.name" = '(unavailable)';
+
+
+select * from COLUMN_METADATA_BAK where "com.infa.odin.models.relational.PrimaryKeyColumn" is not null;
+select * from COLUMN_METADATA where "com.infa.odin.models.relational.PrimaryKeyColumn" = 'Yes';
+select count(*) from COLUMN_METADATA_BAK where "com.infa.odin.models.relational.PrimaryKeyColumn" is not null;
+select count(*) from COLUMN_METADATA_BAK where "com.infa.odin.models.relational.PrimaryKeyColumn" is not null;
+
 
 select * from TABLE_METADATA where "core.name" = 'TMP_20200918_LOAD_DOB';
 select * from COLUMN_METADATA where "core.description" like '%,%';
 select * from LINKS_METADATA where Source = 'sch.72624a0ca14946ee918a4f916f435b09';
 select distinct OrgId from LINKS_METADATA;
-
+select * from COLUMN_METADATA where "com.infa.odin.models.relational.PrimaryKeyColumn" is not null;
+select * from COLUMN_METADATA where "com.infa.odin.models.relational.PrimaryKeyColumn" = "core.name" order by "core.name" ;
 select COUNT(DISTINCT SOURCE) from LINKS_METADATA_BAK WHERE orgId = 'DMS' and ASSOCIATION = 'com.infa.odin.models.relational.ViewToViewColumn';
+update COLUMN_METADATA set "com.infa.odin.models.relational.PrimaryKeyColumn" = 'Yes' where "com.infa.odin.models.relational.PrimaryKeyColumn" = "core.name";
+update COLUMN_METADATA set "com.infa.odin.models.relational.PrimaryKeyColumn" = null where "com.infa.odin.models.relational.PrimaryKeyColumn" <> 'Yes';
+select * from COLUMN_METADATA where "com.infa.odin.models.relational.PrimaryKeyColumn" is not null;
+select count(*) from COLUMN_METADATA;
+select count(*) from COLUMN_METADATA_BAK;
+
 -- 4118
 
 -- SELECT COUNT(DISTINCT t1.SOURCE)
@@ -158,18 +226,19 @@ desc table VIEW_COLUMN_METADATA;
 desc table VIEW_METADATA;
 
 
-create or replace table DATABASE_METADATA_BAK as SELECT * FROM DATABASE_METADATA;
-create or replace table SCHEMA_METADATA_BAK as SELECT * FROM SCHEMA_METADATA;
-create or replace table TABLE_METADATA_BAK as SELECT * FROM TABLE_METADATA;
-create or replace table COLUMN_METADATA_BAK as SELECT * FROM COLUMN_METADATA;
-create or replace table LINKS_METADATA_BAK as SELECT * FROM LINKS_METADATA;
-create or replace table VIEW_METADATA_BAK as SELECT * FROM VIEW_METADATA;
-create or replace table VIEW_COLUMN_METADATA_BAK as SELECT * FROM VIEW_COLUMN_METADATA;
+create or replace table DATABASE_METADATA_BAK as SELECT * FROM DATABASE_METADATA where "orgId" <> 'DOE';
+create or replace table SCHEMA_METADATA_BAK as SELECT * FROM SCHEMA_METADATA where "orgId" <> 'DOE';
+create or replace table TABLE_METADATA_BAK as SELECT * FROM TABLE_METADATA where "orgId" <> 'DOE';
+create or replace table COLUMN_METADATA_BAK as SELECT * FROM COLUMN_METADATA where "orgId" <> 'DOE';
+create or replace table VIEW_METADATA_BAK as SELECT * FROM VIEW_METADATA where "orgId" <> 'DOE';
+create or replace table VIEW_COLUMN_METADATA_BAK as SELECT * FROM VIEW_COLUMN_METADATA where "orgId" <> 'DOE';
+create or replace table LINKS_METADATA_BAK as SELECT * FROM LINKS_METADATA where orgId <> 'DOE';
 
 select * from DATABASE_METADATA_BAK;
 select * from SCHEMA_METADATA_BAK;
 select * from TABLE_METADATA_BAK;
-select * from COLUMN_METADATA_BAK;
+select * from COLUMN_METADATA_BAK where "core.externalId" like 'col.aef0243ec45%';
+select * from COLUMN_METADATA_BAK where "com.infa.odin.models.relational.PrimaryKeyColumn" is not null;
 select * from LINKS_METADATA_BAK;
 select * from VIEW_METADATA_BAK;
 select * from VIEW_COLUMN_METADATA_BAK;
@@ -203,262 +272,16 @@ select * from LINKS_METADATA_BAK;
 
 select distinct "com.infa.odin.models.relational.Datatype" from VIEW_COLUMN_METADATA;
 
-select org_id, count(org_id) from DATABASE_METADATA
-where (
-    LENGTH(TRIM(description)) > 0 or
-    LENGTH(TRIM(business_summary)) > 0 or
-    LENGTH(TRIM(data_owner)) > 0 or
-    LENGTH(TRIM(data_steward)) > 0 or
-    LENGTH(TRIM(contact_email)) > 0 or
-    LENGTH(TRIM(program_office)) > 0 or
-    LENGTH(TRIM(technical_steward)) > 0 or
-    LENGTH(TRIM(status)) > 0 or
-    LENGTH(TRIM(restricted_to_public_disclosure)) > 0 or
-    LENGTH(TRIM(data_sharing_agreement_required)) > 0 or
-    LENGTH(TRIM(contains_sensitive_data)) > 0
-)
-group by org_id
-order by org_id;
-
-select org_id, count(org_id) from SCHEMA_METADATA
-where (
-    LENGTH(TRIM(description)) > 0 or
-    LENGTH(TRIM(business_summary)) > 0 or
-    LENGTH(TRIM(data_owner)) > 0 or
-    LENGTH(TRIM(data_steward)) > 0 or
-    LENGTH(TRIM(contact_email)) > 0 or
-    LENGTH(TRIM(program_office)) > 0 or
-    LENGTH(TRIM(technical_steward)) > 0 or
-    LENGTH(TRIM(status)) > 0 or
-    LENGTH(TRIM(restricted_to_public_disclosure)) > 0 or
-    LENGTH(TRIM(data_sharing_agreement_required)) > 0 or
-    LENGTH(TRIM(contains_sensitive_data)) > 0
-)
-group by org_id
-order by org_id;
-
-select org_id, count(org_id) from TABLE_METADATA
-where (
-    LENGTH(TRIM(description)) > 0 or
-    LENGTH(TRIM(business_summary)) > 0 or
-    LENGTH(TRIM(data_owner)) > 0 or
-    LENGTH(TRIM(data_steward)) > 0 or
-    LENGTH(TRIM(contact_email)) > 0 or
-    LENGTH(TRIM(program_office)) > 0 or
-    LENGTH(TRIM(technical_steward)) > 0 or
-    LENGTH(TRIM(status)) > 0 or
-    LENGTH(TRIM(restricted_to_public_disclosure)) > 0 or
-    LENGTH(TRIM(data_sharing_agreement_required)) > 0 or
-    LENGTH(TRIM(contains_sensitive_data)) > 0
-)
-group by org_id
-order by org_id;
-
-select org_id, count(org_id) from VIEW_METADATA
-where (
-    LENGTH(TRIM(description)) > 0 or
-    LENGTH(TRIM(business_summary)) > 0 or
-    LENGTH(TRIM(data_owner)) > 0 or
-    LENGTH(TRIM(data_steward)) > 0 or
-    LENGTH(TRIM(contact_email)) > 0 or
-    LENGTH(TRIM(program_office)) > 0 or
-    LENGTH(TRIM(technical_steward)) > 0 or
-    LENGTH(TRIM(status)) > 0 or
-    LENGTH(TRIM(restricted_to_public_disclosure)) > 0 or
-    LENGTH(TRIM(data_sharing_agreement_required)) > 0 or
-    LENGTH(TRIM(contains_sensitive_data)) > 0
-)
-group by org_id
-order by org_id;
-
-select org_id, count(org_id) from COLUMN_METADATA
-where (
-    LENGTH(TRIM(description)) > 0 or
-    LENGTH(TRIM(business_summary)) > 0 or
-    LENGTH(TRIM(data_owner)) > 0 or
-    LENGTH(TRIM(data_steward)) > 0 or
-    LENGTH(TRIM(contact_email)) > 0 or
-    LENGTH(TRIM(program_office)) > 0 or
-    LENGTH(TRIM(technical_steward)) > 0 or
-    LENGTH(TRIM(status)) > 0 or
-    LENGTH(TRIM(restricted_to_public_disclosure)) > 0 or
-    LENGTH(TRIM(data_sharing_agreement_required)) > 0 or
-    LENGTH(TRIM(contains_sensitive_data)) > 0
-)
-group by org_id
-order by org_id;
-
-select distinct rdf_type from DATABASE_METADATA;
-select distinct rdf_type from SCHEMA_METADATA;
-select distinct rdf_type from TABLE_METADATA;
-select distinct rdf_type from VIEW_METADATA;
-select distinct rdf_type from COLUMN_METADATA;
-
-select distinct org_id, count(org_id) from DATABASE_METADATA group by org_id order by org_id;
-select distinct org_id, count(org_id) from SCHEMA_METADATA group by org_id order by org_id;
-select distinct org_id, count(org_id) from TABLE_METADATA group by org_id order by org_id;
-select distinct org_id, count(org_id) from VIEW_METADATA group by org_id order by org_id;
-select distinct org_id, count(org_id) from COLUMN_METADATA group by org_id order by org_id;
-
--- Power BI queries
-select
-    org_id,
-    iri,
-    rdf_type,
-    name_id,
-    description,
-    business_summary,
-    data_owner,
-    data_steward,
-    contact_email,
-    program_office,
-    technical_steward,
-    status,
-    restricted_to_public_disclosure,
-    data_sharing_agreement_required,
-    contains_sensitive_data
-from DATABASE_METADATA
-where (
-    LENGTH(TRIM(description)) > 0 or
-    LENGTH(TRIM(business_summary)) > 0 or
-    LENGTH(TRIM(data_owner)) > 0 or
-    LENGTH(TRIM(data_steward)) > 0 or
-    LENGTH(TRIM(contact_email)) > 0 or
-    LENGTH(TRIM(program_office)) > 0 or
-    LENGTH(TRIM(technical_steward)) > 0 or
-    LENGTH(TRIM(status)) > 0 or
-    LENGTH(TRIM(restricted_to_public_disclosure)) > 0 or
-    LENGTH(TRIM(data_sharing_agreement_required)) > 0 or
-    LENGTH(TRIM(contains_sensitive_data)) > 0
+create or replace table TESTING123
+(
+    first text,
+    second text,
+    primaryKey text
 );
-
-select
-    org_id,
-    iri,
-    rdf_type,
-    name_id,
-    description,
-    business_summary,
-    data_owner,
-    data_steward,
-    contact_email,
-    program_office,
-    technical_steward,
-    status,
-    restricted_to_public_disclosure,
-    data_sharing_agreement_required,
-    contains_sensitive_data
-from SCHEMA_METADATA
-where (
-    LENGTH(TRIM(description)) > 0 or
-    LENGTH(TRIM(business_summary)) > 0 or
-    LENGTH(TRIM(data_owner)) > 0 or
-    LENGTH(TRIM(data_steward)) > 0 or
-    LENGTH(TRIM(contact_email)) > 0 or
-    LENGTH(TRIM(program_office)) > 0 or
-    LENGTH(TRIM(technical_steward)) > 0 or
-    LENGTH(TRIM(status)) > 0 or
-    LENGTH(TRIM(restricted_to_public_disclosure)) > 0 or
-    LENGTH(TRIM(data_sharing_agreement_required)) > 0 or
-    LENGTH(TRIM(contains_sensitive_data)) > 0
-);
-
-select
-    org_id,
-    iri,
-    rdf_type,
-    name_id,
-    description,
-    business_summary,
-    data_owner,
-    data_steward,
-    contact_email,
-    program_office,
-    technical_steward,
-    status,
-    restricted_to_public_disclosure,
-    data_sharing_agreement_required,
-    contains_sensitive_data
-from TABLE_METADATA
-where (
-    LENGTH(TRIM(description)) > 0 or
-    LENGTH(TRIM(business_summary)) > 0 or
-    LENGTH(TRIM(data_owner)) > 0 or
-    LENGTH(TRIM(data_steward)) > 0 or
-    LENGTH(TRIM(contact_email)) > 0 or
-    LENGTH(TRIM(program_office)) > 0 or
-    LENGTH(TRIM(technical_steward)) > 0 or
-    LENGTH(TRIM(status)) > 0 or
-    LENGTH(TRIM(restricted_to_public_disclosure)) > 0 or
-    LENGTH(TRIM(data_sharing_agreement_required)) > 0 or
-    LENGTH(TRIM(contains_sensitive_data)) > 0
-) and org_id='APD';
-
-select
-    org_id,
-    iri,
-    rdf_type,
-    name_id,
-    description,
-    business_summary,
-    data_owner,
-    data_steward,
-    contact_email,
-    program_office,
-    technical_steward,
-    status,
-    restricted_to_public_disclosure,
-    data_sharing_agreement_required,
-    contains_sensitive_data
-from VIEW_METADATA
-where (
-    LENGTH(TRIM(description)) > 0 or
-    LENGTH(TRIM(business_summary)) > 0 or
-    LENGTH(TRIM(data_owner)) > 0 or
-    LENGTH(TRIM(data_steward)) > 0 or
-    LENGTH(TRIM(contact_email)) > 0 or
-    LENGTH(TRIM(program_office)) > 0 or
-    LENGTH(TRIM(technical_steward)) > 0 or
-    LENGTH(TRIM(status)) > 0 or
-    LENGTH(TRIM(restricted_to_public_disclosure)) > 0 or
-    LENGTH(TRIM(data_sharing_agreement_required)) > 0 or
-    LENGTH(TRIM(contains_sensitive_data)) > 0
-);
-
-select
-    org_id,
-    iri,
-    rdf_type,
-    name_id,
-    description,
-    business_summary,
-    data_owner,
-    data_steward,
-    contact_email,
-    program_office,
-    technical_steward,
-    status,
-    restricted_to_public_disclosure,
-    data_sharing_agreement_required,
-    contains_sensitive_data
-from COLUMN_METADATA
-where (
-    LENGTH(TRIM(description)) > 0 or
-    LENGTH(TRIM(business_summary)) > 0 or
-    LENGTH(TRIM(data_owner)) > 0 or
-    LENGTH(TRIM(data_steward)) > 0 or
-    LENGTH(TRIM(contact_email)) > 0 or
-    LENGTH(TRIM(program_office)) > 0 or
-    LENGTH(TRIM(technical_steward)) > 0 or
-    LENGTH(TRIM(status)) > 0 or
-    LENGTH(TRIM(restricted_to_public_disclosure)) > 0 or
-    LENGTH(TRIM(data_sharing_agreement_required)) > 0 or
-    LENGTH(TRIM(contains_sensitive_data)) > 0
-);
-
-select * from DATABASE_METADATA where LENGTH(TRIM(business_summary)) > 0;
-select * from SCHEMA_METADATA where LENGTH(TRIM(business_summary)) > 0;
-select * from TABLE_METADATA where LENGTH(TRIM(restricted_to_public_disclosure)) > 0;
-select * from VIEW_METADATA where LENGTH(TRIM(business_summary)) > 0;
-select * from COLUMN_METADATA where LENGTH(TRIM(data_sharing_agreement_required)) > 0;
-select * from TABLE_METADATA where org_id = 'APD';
+select * from TESTING123;
+insert into TESTING123 (first, second) VALUES ('id', 'id');
+insert into TESTING123 (first, second) VALUES ('id1', 'id2');
+insert into TESTING123 (first, second) VALUES ('id1', 'id1 id2');
+select * from TESTING123 where TESTING123.first <> TESTING123.second;
+update TESTING123 set primaryKey = 'Yes' where first = second;
+update TESTING123 set primaryKey = null where primaryKey <> 'Yes';

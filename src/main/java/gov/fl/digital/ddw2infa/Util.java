@@ -40,7 +40,7 @@ public class Util {
     public static Model loadModelFrom(String ttlFilePath) {
         LocalDateTime begin = LocalDateTime.now();
         Model model = ModelFactory.createDefaultModel();
-        logger.info("Begin loading " + ttlFilePath + " into model ...");
+        logger.info("\nBegin loading " + ttlFilePath + " into model ...");
         model.read("./src/main/resources/" + ttlFilePath);
         logger.info("\nModel loaded (" + begin.until(LocalDateTime.now(), ChronoUnit.SECONDS) + " seconds).");
         return model;
@@ -73,7 +73,7 @@ public class Util {
 
     public static String getSchemaNameHack(String schemaName) {
         return (null == schemaName || schemaName.isEmpty())
-                ? SchemasMetadataCache.PEOPLE_FIRST_SCHEMA_NAME
+                ? SchemasMetadataCache.SCHEMA_NAME_UNAVAILABLE
                 : schemaName.trim();
     }
 }
