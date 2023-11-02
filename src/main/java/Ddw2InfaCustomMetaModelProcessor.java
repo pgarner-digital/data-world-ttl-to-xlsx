@@ -34,10 +34,23 @@ public class Ddw2InfaCustomMetaModelProcessor {
         // Note: try with resources auto closes connection, so no need to explicitly close it.
         try (Connection connection = Util.getConnection(args[0], args[1])) {
 
-            //truncateTables(connection);
+            truncateTables(connection);
 
             AgencyAndTtlFileName[] agencyAndTtlFileNames = new AgencyAndTtlFileName[] {
-/*
+//                    AHCA,
+
+                    APD/*,
+                    BOG,
+                    CHS,
+                    CITRUS,
+                    DBPR,
+                    DBS,
+                    DCF,
+                    DEM,
+                    DEO,
+                    DEP,
+                    DFS,
+                    DHSMV,
                     DJJ,
                     DLA,
                     DMA,
@@ -46,8 +59,7 @@ public class Ddw2InfaCustomMetaModelProcessor {
                     DOAH,
                     DOE,
                     DOEA,
-*/
-                    DOH/*,
+                    DOH,
                     DOL,
                     DOR,
                     DOS,
@@ -71,7 +83,8 @@ public class Ddw2InfaCustomMetaModelProcessor {
                     SCS,
                     SENATE,
                     SRWMD,
-                    VR*/
+                    VR
+*/
             };
 
             for (AgencyAndTtlFileName agencyAndTtlFileName : agencyAndTtlFileNames) {

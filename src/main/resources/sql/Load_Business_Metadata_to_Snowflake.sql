@@ -252,6 +252,8 @@ select count(*) from VIEW_COLUMN_METADATA_PROD;
 select distinct "com.infa.odin.models.relational.Datatype" from VIEW_COLUMN_METADATA;
 
 -----------------------------------------------------------
+select count(*) from DATABASE_METADATA_PROD where
+
 select *
 from TABLE_METADATA
 where
