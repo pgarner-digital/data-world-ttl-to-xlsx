@@ -10,10 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -77,11 +74,17 @@ public class SchemasMetadataCache {
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertStatement)) {
             int rowCount = 1;
             logger.info("Begin extracting schemas from cache ...");
-            for(Map<String,String> schemaIdBySchemaName : schemaIdByDatabaseNameAndSchemaName.values()) {
+            String databaseName;
+            for(
+                Map.Entry<String, Map<String, String>> schemaIdBySchemaNameByDatabaseName :
+                    schemaIdByDatabaseNameAndSchemaName.entrySet()
+            ) {
+                databaseName = schemaIdBySchemaNameByDatabaseName.getKey();
+                Map<String, String> schemaIdBySchemaName = schemaIdBySchemaNameByDatabaseName.getValue();
                 for(Map.Entry<String,String> schemaNameAndId : schemaIdBySchemaName.entrySet()) {
                     logger.info("Adding schema record batch to prepared statement: " + rowCount++ + "(" +
-                        localDateTime.until(LocalDateTime.now(), chronoUnit) + " " +
-                        chronoUnit.name().toLowerCase() + ").");
+                            localDateTime.until(LocalDateTime.now(), chronoUnit) + " " +
+                            chronoUnit.name().toLowerCase() + ").");
                     String schemaName = schemaNameAndId.getKey();
                     String schemaId = schemaNameAndId.getValue();
                     // Column #1, ORG_ID, is not in the result set.  It's set manually.
@@ -90,12 +93,13 @@ public class SchemasMetadataCache {
                     preparedStatement.setString(3, schemaName);
                     preparedStatement.setString(4, "");
                     preparedStatement.setString(5, "");
-                    preparedStatement.setString(6, "");
+                    preparedStatement.setString(6, databaseName);
                     preparedStatement.addBatch();
                 }
             }
             preparedStatement.executeBatch();
-            logger.info("Committing schema metadata changes to snowflake.\n");
+            logger.info("Committing schema metadata changes to snowflake.  Current processing time: " +
+                localDateTime.until(LocalDateTime.now(), ChronoUnit.HOURS) + " hours.\n");
             connection.commit();
         }
     }

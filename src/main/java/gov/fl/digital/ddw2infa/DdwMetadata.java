@@ -3,7 +3,6 @@ package gov.fl.digital.ddw2infa;
 import gov.fl.digital.ddw2infa.link.LinksMetadataCache;
 import gov.fl.digital.ddw2infa.schema.SchemasMetadataCache;
 import org.apache.jena.query.QuerySolution;
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
@@ -11,25 +10,44 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public abstract class DdwMetadata<X extends MetadataMapper> {
-    private static final Logger logger = LogManager.getLogger(DdwMetadata.class);
-    private final List<String[]> fieldRecords = new LinkedList<>();
+public abstract class DdwMetadata {
+    private final Map<String,Record> fieldRecords = new HashMap<>();
 
     public final void obtainAndCacheRecord(
         QuerySolution querySolution,
         SchemasMetadataCache schemasMetadataCache,
         LinksMetadataCache linksMetadataCache
     ) {
-        fieldRecords.add(
-            getPropertyMappers().stream()
+        MetadataMapper[] propertyMappers = getPropertyMappers();
+        String[] recordValues = Arrays.stream(propertyMappers)
                 .map(mapper -> mapper.removeSpecialCharacters(querySolution))
-                    .toArray(String[]::new)
-        );
+                .toArray(String[]::new);
+        Record newOrDuplicateRecord = new Record(recordValues, propertyMappers);
+        if(fieldRecords.containsKey(newOrDuplicateRecord.primaryKey)) {
+            Record record = fieldRecords.get(newOrDuplicateRecord.primaryKey);
+            record.addDuplicate(newOrDuplicateRecord);
+        }
+        else {
+            fieldRecords.put(newOrDuplicateRecord.primaryKey, newOrDuplicateRecord);
+        }
+
+/*      TODO: For testing
+
+        List<X> propertyMappers = getPropertyMappers();
+        int colNum = 0;
+        getLogger().info("\n\n");
+        for(String fieldRecord: fieldRecords.get(fieldRecords.size()-1)) {
+            X propertyMapper = propertyMappers.get(colNum++);
+            String infaColumnName = propertyMapper.getInfaColumnName();
+
+            getLogger().info(String.format("%s.%s = '%s'", getLabel(), infaColumnName, fieldRecord));
+        }
+        getLogger().info("\n");
+*/
+
         manageLinksAndSchemas(querySolution, schemasMetadataCache, linksMetadataCache);
     }
 
@@ -43,32 +61,56 @@ public abstract class DdwMetadata<X extends MetadataMapper> {
         Objects.requireNonNull(connection);
         Objects.requireNonNull(orgId);
         Objects.requireNonNull(localDateTime);
-        String insertStatement = String.format(
-            "INSERT INTO %s (\"orgId\"%s) VALUES (?%s)",
-            getInfaTableName(),
-            getPropertyMappers().stream().filter(MetadataMapper::hasDdwColumnName).map(mapper -> ", \"" + mapper.getInfaColumnName() + "\"").collect(Collectors.joining()),
-            getPropertyMappers().stream().filter(MetadataMapper::hasDdwColumnName).map(mapper -> ", ?").collect(Collectors.joining())
-        );
-        logger.info(insertStatement);
-        try (PreparedStatement preparedStatement = connection.prepareStatement(insertStatement)) {
+        String nonDuplicateInsertStatement = getInsertStatement(false);
+        getLogger().info(nonDuplicateInsertStatement);
+        final List<Record> duplicates = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(nonDuplicateInsertStatement)) {
             int rowCount = 1, colCount;
-            logger.info("Begin extracting " + getLabel() + " results ...");
-            for (String[] values : fieldRecords) {
+            getLogger().info("Begin extracting " + getLabel() + " results ...");
+            for(Record record: fieldRecords.values()) {
                 if(rowCount % rowCountDisplayFrequency == 0) {
-                    logger.info("Adding " + getLabel() + " record batch to prepared statement: " + rowCount++ + "(" +
+                    getLogger().info(
+                        "Adding " + getLabel() + " record batch to prepared statement: " + rowCount++ + "(" +
                         localDateTime.until(LocalDateTime.now(), ChronoUnit.SECONDS) + " " +
-                            ChronoUnit.SECONDS.name().toLowerCase() + ").");
+                        ChronoUnit.SECONDS.name().toLowerCase() + ")."
+                    );
                 }
+                if(record.hasDuplicates()) { duplicates.add(record); }
                 // Column #1, ORG_ID, is not in the result set.  It's set manually.
                 colCount = 1;
                 preparedStatement.setString(colCount++, orgId);
-
-                for (String value : values) { preparedStatement.setString(colCount++, value); }
+                for (String value : record.rowValues) { preparedStatement.setString(colCount++, value); }
                 preparedStatement.addBatch();
             }
             preparedStatement.executeBatch();
-            logger.info("Committing " + getLabel() + " metadata changes to snowflake.\n");
+            getLogger().info("Committing " + getLabel() + " metadata changes to snowflake.\n");
             connection.commit();
+        }
+        if(!duplicates.isEmpty()) {
+            String duplicateInsertStatement = getInsertStatement(true);
+            try (PreparedStatement preparedStatement = connection.prepareStatement(duplicateInsertStatement)) {
+                int rowCount = 1, colCount;
+                getLogger().info("Begin extracting " + getLabel() + " duplicate results ...");
+                for(Record record: duplicates) {
+                    if(rowCount % rowCountDisplayFrequency == 0) {
+                        getLogger().info(
+                            "Adding " + getLabel() + " duplicate record batch to prepared statement: " + rowCount++ + "(" +
+                                localDateTime.until(LocalDateTime.now(), ChronoUnit.SECONDS) + " " +
+                                ChronoUnit.SECONDS.name().toLowerCase() + ")."
+                        );
+                    }
+                    // Column #1, ORG_ID, is not in the result set.  It's set manually.
+                    for(String[] row : record.getOriginalRowPlusDuplicateRows()) {
+                        colCount = 1;
+                        preparedStatement.setString(colCount++, orgId);
+                        for (String value : row) { preparedStatement.setString(colCount++, value); }
+                        preparedStatement.addBatch();
+                    }
+                }
+                preparedStatement.executeBatch();
+                getLogger().info("Committing " + getLabel() + " duplicate metadata changes to snowflake.\n");
+                connection.commit();
+            }
         }
     }
 
@@ -94,7 +136,8 @@ public abstract class DdwMetadata<X extends MetadataMapper> {
 
     public abstract String getInfaTableName();
 
-    protected abstract List<X> getPropertyMappers();
+    protected abstract MetadataMapper[] getPropertyMappers();
+
     protected abstract void updateSchemas(
         QuerySolution querySolution,
         SchemasMetadataCache schemasMetadataCache,
@@ -102,4 +145,72 @@ public abstract class DdwMetadata<X extends MetadataMapper> {
     );
 
     protected abstract void updateLinks(QuerySolution querySolution, LinksMetadataCache linksMetadataCache);
+
+    protected abstract Logger getLogger();
+
+    private String getInsertStatement(boolean isDuplicate) {
+        String tableName = getInfaTableName();
+        if(isDuplicate) { tableName += "_duplicates"; }
+        return String.format(
+            "INSERT INTO %s (\"orgId\"%s) VALUES (?%s)",
+            tableName,
+            Arrays.stream(getPropertyMappers()).filter(MetadataMapper::hasDdwColumnName).
+                map(mapper -> ", \"" + mapper.getInfaColumnName() + "\"").collect(Collectors.joining()),
+            Arrays.stream(getPropertyMappers()).filter(MetadataMapper::hasDdwColumnName).
+                map(mapper -> ", ?").collect(Collectors.joining())
+        );
+    }
+
+    private static class Record implements Comparable<Record> {
+        private final String primaryKey;
+        private final String[] rowValues;
+        private final List<String[]> duplicateRecords = new LinkedList<>();
+
+        Record(String[] rowValues, MetadataMapper[] mappers) {
+            Objects.requireNonNull(rowValues);
+            Objects.requireNonNull(mappers);
+            if(
+                mappers.length > 0 &&
+                mappers.length == rowValues.length &&   // mappers were used to obtain row-values, so length must be same
+                mappers[0].name().equals("externalId")  // the first mapper MUST be the externalId mapper
+            ) {
+                this.primaryKey = rowValues[0];
+                this.rowValues = rowValues;
+            }
+            else {
+                throw new IllegalArgumentException("The first metadata mapper MUST be externalId");
+            }
+        }
+
+        void addDuplicate(Record duplicateRecord) {
+            Objects.requireNonNull(duplicateRecord);
+            if(this.primaryKey.equals(duplicateRecord.primaryKey)) {
+                duplicateRecords.add(rowValues);
+            }
+            else {
+                throw new IllegalArgumentException("Attempt to add duplicate record having different primary key.");
+            }
+        }
+
+        boolean hasDuplicates() { return duplicateRecords.size() > 1; }
+
+        List<String[]> getOriginalRowPlusDuplicateRows() {
+            List<String[]> temp = duplicateRecords;
+            temp.add(rowValues);
+            return temp;
+        }
+
+        @Override public int compareTo(Record that) { return this.primaryKey.compareTo(that.primaryKey); }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || getClass() != that.getClass()) return false;
+            Record thatRecord = (Record) that;
+            return this.primaryKey.equals(thatRecord.primaryKey);
+        }
+
+        @Override public int hashCode() { return Objects.hash(primaryKey); }
+
+        public String[] getRowValues() { return rowValues; }
+    }
 }

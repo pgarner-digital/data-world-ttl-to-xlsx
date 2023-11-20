@@ -298,6 +298,30 @@
         "attributeType": "VIEWABLE"
       },
       "projectionExpressions": []
+    },
+    {
+      "name": "dataOwner",
+      "label": "Data Owner",
+      "dataType": "core.String",
+      "description": "",
+      "multivalued": false,
+      "deprecated": false,
+      "derived": false,
+      "data": false,
+      "defaultValues": [],
+      "custom": false,
+      "isSystem": false,
+      "embedded": false,
+      "reference": "",
+      "referencedAttributes": [],
+      "searchConfiguration": {
+        "suggestable": false,
+        "aggregatable": false,
+        "sortable": false,
+        "fuzzy": true,
+        "attributeType": "VIEWABLE"
+      },
+      "projectionExpressions": []
     }
   ],
   "classAttributes": [
@@ -446,6 +470,18 @@
       "materialized": false
     },
     {
+      "className": "com.infa.odin.models.relational.Table",
+      "attributeName": "custom.data.world.import.dataOwner",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": false,
+      "custom": false,
+      "materialized": false
+    },
+    {
       "className": "com.infa.odin.models.relational.View",
       "attributeName": "custom.data.world.import.businessSummary",
       "isRequired": false,
@@ -554,6 +590,18 @@
       "materialized": false
     },
     {
+      "className": "com.infa.odin.models.relational.View",
+      "attributeName": "custom.data.world.import.dataOwner",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": false,
+      "custom": false,
+      "materialized": false
+    },
+    {
       "className": "com.infa.odin.models.relational.Column",
       "attributeName": "custom.data.world.import.businessSummary",
       "isRequired": false,
@@ -626,6 +674,18 @@
       "materialized": false
     },
     {
+      "className": "com.infa.odin.models.relational.Column",
+      "attributeName": "custom.data.world.import.dataOwner",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": false,
+      "custom": false,
+      "materialized": false
+    },
+    {
       "className": "com.infa.odin.models.relational.ViewColumn",
       "attributeName": "custom.data.world.import.businessSummary",
       "isRequired": false,
@@ -688,6 +748,18 @@
     {
       "className": "com.infa.odin.models.relational.ViewColumn",
       "attributeName": "custom.data.world.import.technicalSteward",
+      "isRequired": false,
+      "isCuratable": false,
+      "deprecated": false,
+      "followers": [],
+      "isHidden": false,
+      "cdc": false,
+      "custom": false,
+      "materialized": false
+    },
+    {
+      "className": "com.infa.odin.models.relational.ViewColumn",
+      "attributeName": "custom.data.world.import.dataOwner",
       "isRequired": false,
       "isCuratable": false,
       "deprecated": false,
@@ -707,6 +779,6 @@
   "classPartitionKeys": [],
   "associationPartitionKeys": [],
   "identity": "",
-  "version": 2,
+  "version": 3,
   "modifiedBy": "patrick.garner@digital.fl.gov"
 }

@@ -1,6 +1,5 @@
 import gov.fl.digital.ddw2infa.AgencyAndTtlFileName;
 import gov.fl.digital.ddw2infa.DdwMetadata;
-import gov.fl.digital.ddw2infa.MetadataMapper;
 import gov.fl.digital.ddw2infa.Util;
 import gov.fl.digital.ddw2infa.column.ColumnsDdwMetadata;
 import gov.fl.digital.ddw2infa.database.DatabaseDdwMetadata;
@@ -31,166 +30,208 @@ public class Ddw2InfaCustomMetaModelProcessor {
 
         LocalDateTime begin = LocalDateTime.now();
 
-        // Note: try with resources auto closes connection, so no need to explicitly close it.
-        try (Connection connection = Util.getConnection(args[0], args[1])) {
+        AgencyAndTtlFileName[] agencyAndTtlFileNames = new AgencyAndTtlFileName[]{
+/*                    AHCA,
+                APD,
+                BOG,
+                CHS,
+                CITRUS,
+                DBPR,
+                DBS,
+                DCF,
+                DEM,
+                DEO,
+                DEP,
+                DFS,
+                DHSMV,
+                DJJ,
+                DLA,
+                DMA,
+                DMS,
+                DOACS,
+                DOAH,
+                DOE,
+                DOEA,
+                DOH,
+                DOL,*/
+                DOR/*,
+                DOS,
+                DOT,
+                DVA,
+                EOG,
+                FCHR,
+                FCOR,
+                FDC,
+                FDLE,
+                FSDB,
+                FWC,
+                GAL,
+                HOUSE,
+                JAC,
+                NFWMD,
+                OEL,
+                OLITS,
+                PERC,
+                PSC,
+                SCS,
+                SENATE,
+                SRWMD,
+                VR*/
+        };
 
-            //truncateTables(connection);
-
-            AgencyAndTtlFileName[] agencyAndTtlFileNames = new AgencyAndTtlFileName[] {
-                    DJJ,
-                    DLA,
-                    DMA,
-                    DMS,
-                    DOACS,
-                    DOAH,
-                    DOE,
-                    DOEA,
-                    DOH,
-                    DOL,
-                    DOR,
-                    DOS,
-                    DOT,
-                    DVA,
-                    EOG,
-                    FCHR,
-                    FCOR,
-                    FDC,
-                    FDLE,
-                    FSDB,
-                    FWC,
-                    GAL,
-                    HOUSE,
-                    JAC,
-                    NFWMD,
-                    OEL,
-                    OLITS,
-                    PERC,
-                    PSC,
-                    SCS,
-                    SENATE,
-                    SRWMD,
-                    VR
-            };
-
+        try {
             for (AgencyAndTtlFileName agencyAndTtlFileName : agencyAndTtlFileNames) {
-//            for (AgencyAndTtlFileName agencyAndTtlFileName : AgencyAndTtlFileName.values()) {
                 Model model = Util.loadModelFrom(agencyAndTtlFileName.getFileName());
+                DatabaseDdwMetadata databaseDdwMetadata = new DatabaseDdwMetadata();
+                TablesDdwMetadata tablesDdwMetadata = new TablesDdwMetadata();
+                ViewsDdwMetadata viewsDdwMetadata = new ViewsDdwMetadata();
+                ColumnsDdwMetadata columnsDdwMetadata = new ColumnsDdwMetadata();
+                ViewColumnsDdwMetadata viewColumnsDdwMetadata = new ViewColumnsDdwMetadata();
                 SchemasMetadataCache schemasMetadataCache = new SchemasMetadataCache();
                 LinksMetadataCache linksMetadataCache = new LinksMetadataCache();
                 String orgId = agencyAndTtlFileName.getOrgId();
-                try {
+
+                // Note: try-with-resources auto closes connection, so no need to explicitly close it.
+                // Don't want to keep connection idle too long (max is 4 hours before token expires).
+                // Databases, tables, and views all together take < 4 hours so they are grouped
+                // under one try-with-resources.
+                try (Connection connection = Util.getConnection(args[0], args[1])) {
+                    connection.setAutoCommit(false);
+                    truncateTables(connection);
 
                     logger.info("\nExtracting database metadata");
-                    pushToSnowflake(
+                    loadMetadata(
                         model,
-                        new DatabaseDdwMetadata(),
+                        databaseDdwMetadata,
                         schemasMetadataCache,
                         linksMetadataCache,
                         1,
                         ChronoUnit.SECONDS,
-                        connection,
                         orgId,
                         begin
                     );
+                    databaseDdwMetadata.insertRecords(connection, orgId, begin, 1);
 
                     logger.info("Extracting table metadata");
-                    pushToSnowflake(
+                    loadMetadata(
                         model,
-                        new TablesDdwMetadata(),
+                        tablesDdwMetadata,
                         schemasMetadataCache,
                         linksMetadataCache,
                         100,
                         ChronoUnit.SECONDS,
-                        connection,
                         orgId,
                         begin
                     );
+                    tablesDdwMetadata.insertRecords(connection, orgId, begin, 100);
 
                     logger.info("Extracting view metadata");
-                    pushToSnowflake(
+                    loadMetadata(
                         model,
-                        new ViewsDdwMetadata(),
+                        viewsDdwMetadata,
                         schemasMetadataCache,
                         linksMetadataCache,
                         100,
                         ChronoUnit.SECONDS,
-                        connection,
                         orgId,
                         begin
                     );
-
-                    logger.info("Extracting column metadata");
-                    pushToSnowflake(
-                        model,
-                        new ColumnsDdwMetadata(),
-                        schemasMetadataCache,
-                        linksMetadataCache,
-                        10000,
-                        ChronoUnit.MINUTES,
-                        connection,
-                        orgId,
-                        begin
-                    );
-
-                    logger.info("Extracting view-column metadata");
-                    pushToSnowflake(
-                        model,
-                        new ViewColumnsDdwMetadata(),
-                        schemasMetadataCache,
-                        linksMetadataCache,
-                        10000,
-                        ChronoUnit.MINUTES,
-                        connection,
-                        orgId,
-                        begin
-                    );
-
-                    logger.info("Extracting schema metadata");
-                    schemasMetadataCache.pushToSnowflake(connection, begin, ChronoUnit.SECONDS, orgId);
-
-                    logger.info("Extracting links metadata");
-                    linksMetadataCache.pushToSnowflake(connection, begin, ChronoUnit.SECONDS, orgId);
-
-                } catch (SQLException e) {
-                    System.err.println("Unable to execute SQL. Rolling back snowflake import.");
-                    connection.rollback();
-                    throw e;
+                    viewsDdwMetadata.insertRecords(connection, orgId, begin, 100);
                 }
-                logger.info("Total processing time: " + begin.until(LocalDateTime.now(), ChronoUnit.MINUTES) + " minutes.");
-            }
 
-            //updatePrimaryKeyColumn(connection);
+                logger.info("Extracting column metadata");
+                loadMetadata(
+                    model,
+                    columnsDdwMetadata,
+                    schemasMetadataCache,
+                    linksMetadataCache,
+                    10000,
+                    ChronoUnit.MINUTES,
+                    orgId,
+                    begin
+                );
+
+                // Columns take a long time to extract.  Don't want to keep connection
+                // idle too long (max is 4 hours before token expires).  So create
+                // new connection. Note: try with resources auto closes connection,
+                // so no need to explicitly close it.
+                try (Connection connection = Util.getConnection(args[0], args[1])) {
+                    connection.setAutoCommit(false);
+                    columnsDdwMetadata.insertRecords(connection, orgId, begin, 10000);
+                }
+
+                logger.info("Extracting view-column metadata");
+                loadMetadata(
+                    model,
+                    viewColumnsDdwMetadata,
+                    schemasMetadataCache,
+                    linksMetadataCache,
+                    10000,
+                    ChronoUnit.MINUTES,
+                    orgId,
+                    begin
+                );
+
+                // Columns take a long time to extract.  Don't want to keep connection
+                // idle too long (max is 4 hours before token expires).  So create
+                // new connection.  Note: try with resources auto closes connection,
+                // so no need to explicitly close it.
+                try (Connection connection = Util.getConnection(args[0], args[1])) {
+                    connection.setAutoCommit(false);
+                    viewColumnsDdwMetadata.insertRecords(connection, orgId, begin, 10000);
+                }
+
+                logger.info("Extracting schema metadata");
+                // Note: try with resources auto closes connection, so no need to explicitly close it.
+                try (Connection connection = Util.getConnection(args[0], args[1])) {
+                    connection.setAutoCommit(false);
+                    schemasMetadataCache.pushToSnowflake(connection, begin, ChronoUnit.SECONDS, orgId);
+                }
+
+                logger.info("Extracting links metadata");
+                // Note: try with resources auto closes connection, so no need to explicitly close it.
+                try (Connection connection = Util.getConnection(args[0], args[1])) {
+                    connection.setAutoCommit(false);
+                    linksMetadataCache.pushToSnowflake(connection, begin, ChronoUnit.SECONDS, orgId);
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Unable to execute SQL. Total time: " +
+                    begin.until(LocalDateTime.now(), ChronoUnit.HOURS) +
+                    " " +
+                    ChronoUnit.HOURS.name().toLowerCase());
+            throw e;
         }
+        logger.info("Completed all processing.  Current time: " +
+                begin.until(LocalDateTime.now(), ChronoUnit.HOURS) + " hours.");
     }
 
-    private static <X extends MetadataMapper> void pushToSnowflake(
-        Model model,
-        DdwMetadata<X> ddwMetadata,
-        SchemasMetadataCache schemasMetadataCache,
-        LinksMetadataCache linksMetadataCache,
-        int rowCountDisplayFrequency,
-        ChronoUnit logEntryTimeUnit,
-        Connection connection,
-        String orgId,
-        LocalDateTime localDateTime
+    private static void loadMetadata(
+            Model model,
+            DdwMetadata ddwMetadata,
+            SchemasMetadataCache schemasMetadataCache,
+            LinksMetadataCache linksMetadataCache,
+            int rowCountDisplayFrequency,
+            ChronoUnit logEntryTimeUnit,
+            String orgId,
+            LocalDateTime localDateTime
     ) throws IOException, SQLException {
         String queryString = Util.getSparqlQueryForOrg(orgId, ddwMetadata.getQueryFilePath());
         int rowCount = 1;
         Query query = QueryFactory.create(queryString);
         try (QueryExecution queryExecution = QueryExecutionFactory.create(query, model)) {
-            ResultSet results = queryExecution.execSelect() ;
+            ResultSet results = queryExecution.execSelect();
             while (results.hasNext()) {
-                if(rowCount % rowCountDisplayFrequency == 0) {
+                if (rowCount % rowCountDisplayFrequency == 0) {
                     logger.info("Obtaining " + ddwMetadata.getLabel() + " record from TTL: " + (rowCount + 1) +
-                            "(" + localDateTime.until(LocalDateTime.now(), logEntryTimeUnit) + " " +
-                            logEntryTimeUnit.name().toLowerCase() + ").");
+                        "(" + localDateTime.until(LocalDateTime.now(), logEntryTimeUnit) + " " +
+                        logEntryTimeUnit.name().toLowerCase() + ").");
                 }
                 QuerySolution querySolution = results.nextSolution();
                 ddwMetadata.obtainAndCacheRecord(querySolution, schemasMetadataCache, linksMetadataCache);
                 rowCount++;
             }
         }
-        ddwMetadata.insertRecords(connection, orgId, localDateTime, rowCountDisplayFrequency);
     }
 
     private static void truncateTables(Connection connection) throws SQLException {
@@ -203,17 +244,6 @@ public class Ddw2InfaCustomMetaModelProcessor {
             truncateStatement.execute(String.format(truncateStatementText, ViewsDdwMetadata.INFA_TABLE_NAME));
             truncateStatement.execute(String.format(truncateStatementText, ViewColumnsDdwMetadata.INFA_TABLE_NAME));
             truncateStatement.execute(String.format(truncateStatementText, LinksMetadataCache.INFA_TABLE_NAME));
-        }
-    }
-
-    private static void updatePrimaryKeyColumn(Connection connection) throws SQLException {
-        String setPkYesStatementText = "update %s set \"com.infa.odin.models.relational.PrimaryKeyColumn\" = 'Yes' " +
-                "where \"com.infa.odin.models.relational.PrimaryKeyColumn\" = \"core.name\"";
-        String setPkNonYesToNullStatementText = "update %s set \"com.infa.odin.models.relational.PrimaryKeyColumn\" = " +
-                "null where \"com.infa.odin.models.relational.PrimaryKeyColumn\" <> 'Yes'";
-        try (Statement truncateStatement = connection.createStatement()) {
-            truncateStatement.execute(String.format(setPkYesStatementText, ColumnsDdwMetadata.INFA_TABLE_NAME));
-            truncateStatement.execute(String.format(setPkNonYesToNullStatementText, ColumnsDdwMetadata.INFA_TABLE_NAME));
         }
     }
 }

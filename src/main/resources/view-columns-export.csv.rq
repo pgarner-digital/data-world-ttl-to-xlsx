@@ -7,13 +7,11 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-SELECT
-    #("fl-dms" AS ?agency)
+SELECT DISTINCT
     ?columnTypeName
     ?columnSize
     ?columnIndex
     ?columnIsNullable
-    #(GROUP_CONCAT(?collection_name;SEPARATOR=", ") as ?collections) ###  <-- I commented this out on 10/21/23
     ?type_prefix  # NOT USED BUT INCLUDED IN RESULT SET FOR NOW
     ?database_name
     ?table_name
@@ -124,24 +122,23 @@ WHERE
     }
 }
 GROUP BY
-?columnTypeName
-?columnSize
-?columnIndex
-?columnIsNullable
-?type_prefix
-?type
-?database_name
-?table_name
-?schema
-?table_name
-?column_name
-?column_IRI
-?description
-?business_summary
-?restricted_to_public_disclosure_per_federal_or_state_law
-?sensitive_data
-?data_ownner
-?data_steward
-?technical_steward
-?status
-?isPrimaryKey
+    ?columnTypeName
+    ?columnSize
+    ?columnIndex
+    ?columnIsNullable
+    ?type_prefix  # NOT USED BUT INCLUDED IN RESULT SET FOR NOW
+    ?database_name
+    ?table_name
+    ?schema
+    ?type
+    ?column_name
+    ?column_IRI
+    ?description
+    ?business_summary
+    ?restricted_to_public_disclosure_per_federal_or_state_law
+    ?sensitive_data
+    ?data_ownner
+    ?data_steward
+    ?technical_steward
+    ?status
+    ?isPrimaryKey

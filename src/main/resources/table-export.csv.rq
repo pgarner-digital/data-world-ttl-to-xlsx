@@ -100,20 +100,20 @@ WHERE
     }
 }
 GROUP BY
-?type_prefix
-?schema
-?type
-?database_name
-?table_name
-?table_IRI
-?description
-?business_summary
-?restricted_to_public_disclosure_per_federal_or_state_law
-?sensitive_data
-?data_sharing_agreement
-?program_office
-?data_steward
-?data_ownner
-?technical_steward
-?contact_email
-?status
+    ?type_prefix
+    ?database_name
+    ?schema
+    ?type
+    ?table_name
+    ?table_IRI
+    ?description
+    ?business_summary
+    ?restricted_to_public_disclosure_per_federal_or_state_law
+    ?sensitive_data
+    ?data_sharing_agreement
+    ?program_office
+    ?data_steward
+    ?data_ownner
+    ?technical_steward
+    ?contact_email
+    ?status

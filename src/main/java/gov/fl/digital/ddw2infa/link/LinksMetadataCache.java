@@ -141,7 +141,8 @@ public class LinksMetadataCache {
                 }
             }
             preparedStatement.executeBatch();
-            logger.info("Committing table links metadata changes to Snowflake.\n");
+            logger.info("Committing links metadata changes to Snowflake.  Current processing time: " +
+                    localDateTime.until(LocalDateTime.now(), ChronoUnit.HOURS) + " hours.\n");
             connection.commit();
         }
     }
@@ -252,7 +253,8 @@ public class LinksMetadataCache {
         // populate INFA's "core.name" field, which is required and cannot be empty.
         schemaName = Util.getSchemaNameHack(schemaName);
         Util.checkNullOrEmpty("tableNameOrViewName", tableNameOrViewName);
-        Util.checkNullOrEmpty("columnNameOrViewColumnName", columnNameOrViewColumnName);
+        // DOR has a blank column- or view-column, which needs to be resolved.
+        //Util.checkNullOrEmpty("columnNameOrViewColumnName", columnNameOrViewColumnName);
         Util.checkNullOrEmpty("columnIdOrViewId", columnIdOrViewId);
         if(!links.containsKey(dbName)) {
             // Method LinksMetadataCache#addDatabase must be called before this method is invoked.
@@ -281,11 +283,19 @@ public class LinksMetadataCache {
         if(tableOrViewMap.containsKey(tableNameOrViewName)) {
             IdAndChildren<String> tableOrViewIdAndChildren = tableOrViewMap.get(tableNameOrViewName);
             if(tableOrViewIdAndChildren.containsChild(columnNameOrViewColumnName)) {
+                logger.info(
+                        "Attempting to add " + tableOrView.getColumnLabel() + " '" +
+                            columnNameOrViewColumnName + "' to table '" + tableNameOrViewName + "' in schema '" +
+                                schemaName + "' and in database '" + dbName + "' but the column already exists."
+                );
+
+/*              TODO: restore unique constraint check after testing
                 throw new IllegalStateException(
                     "Attempting to add " + tableOrView.getColumnLabel() + " '" +
                         columnNameOrViewColumnName + "' to table '" + tableNameOrViewName + "' in schema '" +
                             schemaName + "' and in database '" + dbName + "' but the column already exists."
                 );
+*/
             }
             else {
                 tableOrViewIdAndChildren.addChild(columnNameOrViewColumnName, columnIdOrViewId);
