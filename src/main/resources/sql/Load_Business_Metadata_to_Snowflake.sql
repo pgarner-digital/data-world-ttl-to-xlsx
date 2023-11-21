@@ -156,7 +156,7 @@ INSERT INTO DATABASE_METADATA_BAK (
     "custom.data.world.import.databaseServer",
     "custom.data.world.import.databasePort"
 FROM DATABASE_METADATA
-WHERE "orgId"='BOG';
+WHERE "orgId"='DBPR';
 
 INSERT INTO SCHEMA_METADATA_BAK (
     "orgId",
@@ -173,7 +173,7 @@ INSERT INTO SCHEMA_METADATA_BAK (
       "com.infa.odin.models.relational.Comment",
       "com.infa.odin.models.relational.Owner"
 FROM SCHEMA_METADATA
-WHERE "orgId"='BOG';
+WHERE "orgId"='DBPR';
 
 INSERT INTO TABLE_METADATA_BAK (
     "orgId",
@@ -210,7 +210,7 @@ INSERT INTO TABLE_METADATA_BAK (
       "custom.data.world.import.technicalSteward",
       "custom.data.world.import.dataOwner"
 FROM TABLE_METADATA
-WHERE "orgId"='BOG';
+WHERE "orgId"='DBPR';
 
 INSERT INTO COLUMN_METADATA_BAK (
     "orgId",
@@ -247,7 +247,7 @@ INSERT INTO COLUMN_METADATA_BAK (
       "custom.data.world.import.technicalSteward",
       "custom.data.world.import.dataOwner"
 FROM COLUMN_METADATA
-WHERE "orgId"='BOG';
+WHERE "orgId"='DBPR';
 
 INSERT INTO VIEW_METADATA_BAK (
     "orgId",
@@ -284,7 +284,7 @@ INSERT INTO VIEW_METADATA_BAK (
       "custom.data.world.import.status",
       "custom.data.world.import.dataOwner"
 FROM VIEW_METADATA
-WHERE "orgId"='BOG';
+WHERE "orgId"='DBPR';
 
 INSERT INTO VIEW_COLUMN_METADATA_BAK (
     "orgId",
@@ -319,7 +319,7 @@ INSERT INTO VIEW_COLUMN_METADATA_BAK (
       "custom.data.world.import.technicalSteward",
       "custom.data.world.import.dataOwner"
 FROM VIEW_COLUMN_METADATA
-WHERE "orgId"='BOG';
+WHERE "orgId"='DBPR';
 
 INSERT INTO LINKS_METADATA_BAK
 (
@@ -333,7 +333,7 @@ INSERT INTO LINKS_METADATA_BAK
     TARGET,
     ASSOCIATION
 FROM LINKS_METADATA
-WHERE ORGID='BOG';
+WHERE ORGID='DBPR';
 
 
 select "orgId", count(*) from DATABASE_METADATA group by "orgId" order by "orgId";
@@ -368,14 +368,29 @@ select "orgId", count(*) from VIEW_METADATA_PROD group by "orgId" order by "orgI
 select "orgId", count(*) from VIEW_COLUMN_METADATA_PROD group by "orgId" order by "orgId";
 select orgid, count(*) from LINKS_METADATA_PROD group by orgid order by OrgId;
 
--- delete from DATABASE_METADATA where "orgId" = 'DHSMV';
--- delete from SCHEMA_METADATA where "orgId" = 'DHSMV';
--- delete from TABLE_METADATA where "orgId" = 'DHSMV';
--- delete from COLUMN_METADATA where "orgId" = 'DHSMV';
--- delete from VIEW_METADATA where "orgId" = 'DHSMV';
--- delete from VIEW_COLUMN_METADATA where "orgId" = 'DHSMV';
--- delete from LINKS_METADATA where OrgId = 'DHSMV';
+select * from DATABASE_METADATA_PROD where "orgId"='DOR';
+select * from SCHEMA_METADATA_PROD where "orgId"='DOR';
+select * from TABLE_METADATA_PROD where "orgId"='DOR';
+select * from COLUMN_METADATA_PROD where "orgId"='DOR';
+select * from VIEW_METADATA_PROD where "orgId"='DOR';
+select * from VIEW_COLUMN_METADATA_PROD where "orgId"='DOR';
+select * from LINKS_METADATA_PROD where orgId='DOR';
 
+select count(*) from DATABASE_METADATA_PROD;
+select count(*) from SCHEMA_METADATA_PROD;
+select count(*) from TABLE_METADATA_PROD;
+select count(*) from COLUMN_METADATA_PROD;
+select count(*) from VIEW_METADATA_PROD;
+select count(*) from VIEW_COLUMN_METADATA_PROD;
+select count(*) from LINKS_METADATA_PROD;
+
+
+SELECT "orgId", count(*) FROM DATABASE_METADATA_DUPLICATES group by "orgId";
+SELECT "orgId", count(*) FROM SCHEMA_METADATA_DUPLICATES group by "orgId";
+SELECT "orgId", count(*) FROM TABLE_METADATA_DUPLICATES group by "orgId";
+SELECT "orgId", count(*) FROM COLUMN_METADATA_DUPLICATES group by "orgId";
+SELECT "orgId", count(*) FROM VIEW_METADATA_DUPLICATES group by "orgId";
+SELECT "orgId", count(*) FROM VIEW_COLUMN_METADATA_DUPLICATES group by "orgId";
 
 SELECT * FROM DATABASE_METADATA_DUPLICATES;
 SELECT * FROM SCHEMA_METADATA_DUPLICATES;
@@ -390,6 +405,13 @@ SELECT COUNT(*) FROM TABLE_METADATA_DUPLICATES;
 SELECT COUNT(*) FROM COLUMN_METADATA_DUPLICATES;
 SELECT COUNT(*) FROM VIEW_METADATA_DUPLICATES;
 SELECT COUNT(*) FROM VIEW_COLUMN_METADATA_DUPLICATES;
+
+SELECT "orgId", count(*) FROM DATABASE_METADATA_DUPLICATES_BAK group by "orgId";
+SELECT "orgId", count(*) FROM SCHEMA_METADATA_DUPLICATES_BAK group by "orgId";
+SELECT "orgId", count(*) FROM TABLE_METADATA_DUPLICATES_BAK group by "orgId";
+SELECT "orgId", count(*) FROM COLUMN_METADATA_DUPLICATES_BAK group by "orgId";
+SELECT "orgId", count(*) FROM VIEW_METADATA_DUPLICATES_BAK group by "orgId";
+SELECT "orgId", count(*) FROM VIEW_COLUMN_METADATA_DUPLICATES_BAK group by "orgId";
 
 -- create or replace table DATABASE_METADATA_DUPLICATES_BAK as SELECT * FROM DATABASE_METADATA_DUPLICATES;
 -- create or replace table SCHEMA_METADATA_DUPLICATES_BAK as SELECT * FROM SCHEMA_METADATA_DUPLICATES;

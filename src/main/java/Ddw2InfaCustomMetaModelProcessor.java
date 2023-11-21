@@ -53,8 +53,8 @@ public class Ddw2InfaCustomMetaModelProcessor {
                 DOE,
                 DOEA,
                 DOH,
-                DOL,*/
-                DOR/*,
+                DOL,
+                DOR,
                 DOS,
                 DOT,
                 DVA,
