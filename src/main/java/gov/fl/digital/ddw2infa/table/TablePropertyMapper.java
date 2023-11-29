@@ -66,7 +66,7 @@ enum TablePropertyMapper implements MetadataMapper {
     },
     name("core.name", "table_name"),
     description("core.description", "description"),
-    owner("com.infa.odin.models.relational.Owner", "data_ownner"),
+    owner("com.infa.odin.models.relational.Owner", "schema"),
     businessSummary("custom.data.world.import.businessSummary", "business_summary"),
     contactEmail("custom.data.world.import.contactEmail", "contact_email"),
     dataSharingAgreement("custom.data.world.import.dataSharingAgreement", "data_sharing_agreement"),
@@ -77,10 +77,10 @@ enum TablePropertyMapper implements MetadataMapper {
     status("custom.data.world.import.status", "status"),
     tableType("com.infa.odin.models.relational.TableType", "type"),
     technicalSteward("custom.data.world.import.technicalSteward", "technical_steward"),
+    dataOwner("custom.data.world.import.dataOwner", "data_ownner"),
 
     // The following DDW fields are used to link a table to its parent in the hierarchy
     databaseName(null, "database_name"),
-    schema(null, "schema"),
 
     // The following INFA fields are not used by DDW
     comment("com.infa.odin.models.relational.Comment", null),
@@ -89,14 +89,13 @@ enum TablePropertyMapper implements MetadataMapper {
     partitioned("com.infa.odin.models.relational.Partitioned", null),
     provider("com.infa.odin.models.relational.Provider", null);
 
-    static final List<TablePropertyMapper> MAPPERS;
+    static final MetadataMapper[] MAPPERS;
 
     static {
-
         MAPPERS = Arrays.stream(TablePropertyMapper.values())
                 // Remove DW columns that don't have matching INFA columns because they aren't used
                 .filter(i -> null != i.infaColumnName)
-                .collect(Collectors.toList());
+                .toArray(MetadataMapper[]::new);
     }
 
     final String infaColumnName;

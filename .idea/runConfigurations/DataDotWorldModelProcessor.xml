@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="DataDotWorldModelProcessor" type="Application" factoryName="Application" nameIsGenerated="true">
     <option name="MAIN_CLASS_NAME" value="DataDotWorldModelProcessor" />
-    <module name="data-world-ttl-to-csv" />
+    <module name="data-world-ttl-to-xlsx" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

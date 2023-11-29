@@ -83,7 +83,21 @@ enum ColumnPropertyMapper implements MetadataMapper {
     },
     description("core.description", "description"),
     name("core.name", "column_name"),
-    isPrimaryKey("com.infa.odin.models.relational.PrimaryKeyColumn", "isPrimaryKey"),
+    isPrimaryKey("com.infa.odin.models.relational.PrimaryKeyColumn", "isPrimaryKey") {
+        @Override public String getPropertyValueFrom(QuerySolution querySolution) {
+            String result = "No";
+            String upper_case_column_name = Util.stringValueOf(querySolution.get(name.ddwColumnName)).toUpperCase();
+            String[] stringArray = Util.stringValueOf(querySolution.get(ddwColumnName)).split(",");
+            if(
+                stringArray.length == 1 &&
+                null != stringArray[0] &&
+                stringArray[0].toUpperCase().equals(upper_case_column_name)
+            ) {
+                result = "Yes";
+            }
+            return result;
+        }
+    },
     nullable("com.infa.odin.models.relational.Nullable", "columnIsNullable") {
         @Override public String getPropertyValueFrom(QuerySolution querySolution) {
             String result = "";
@@ -108,6 +122,7 @@ enum ColumnPropertyMapper implements MetadataMapper {
     sensitiveData("custom.data.world.import.sensitiveData", "sensitive_data"),
     status("custom.data.world.import.status", "status"),
     technicalSteward("custom.data.world.import.technicalSteward", "technical_steward"),
+    dataOwner("custom.data.world.import.dataOwner", "data_ownner"),
 
     // The following INFA fields are not used by DDW,
     businessDescription("core.businessDescription", null),
@@ -123,22 +138,17 @@ enum ColumnPropertyMapper implements MetadataMapper {
     // hierarchy view documents the attributes by displaying the progression from database to schema
     // to table to column so no need to document the fields as properties of column.
     databaseName(null, "database_name"),
-    owner(null, "data_ownner"),
     schema(null, "schema"),
     tableName(null, "table_name"),
     typePrefix(null, "type_prefix");
 
-    static final List<ColumnPropertyMapper> MAPPERS;
-    static final String CSV_HEADER;
+    static final MetadataMapper[] MAPPERS;
 
     static {
         MAPPERS = Arrays.stream(ColumnPropertyMapper.values())
             // Remove DW columns that don't have matching INFA columns and vice versa because they aren't used
             .filter(i -> null != i.infaColumnName)
-            .collect(Collectors.toList());
-        CSV_HEADER = "\"" + MAPPERS.stream()
-            .map(mapper -> mapper.infaColumnName)
-            .collect(Collectors.joining("\",\"")) + "\"";
+            .toArray(MetadataMapper[]::new);
     }
 
     final String infaColumnName;

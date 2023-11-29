@@ -21,8 +21,14 @@ public class Tester {
              ?athlete rdfs:label ?name .
             }""";
 
-
     public static void main(String[] args) {
+        String[] test1 = "1,2".split(",");
+        logger.info(test1.length);
+        String[] test2 = "1".split(",");
+        logger.info(test2.length);
+    }
+
+    public static void main2(String[] args) {
         String test = "\"this,\r\n that, the\n other \\ thing\"";
         logger.info(test);
         logger.info(Util.removeSpecialCharacters(test));

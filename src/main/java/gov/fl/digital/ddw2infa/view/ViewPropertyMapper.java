@@ -65,7 +65,7 @@ enum ViewPropertyMapper implements MetadataMapper {
     },
     name("core.name", "table_name"),
     description("core.description", "description"),
-    owner("com.infa.odin.models.relational.Owner", "data_ownner"),
+    owner("com.infa.odin.models.relational.Owner", "schema"),
     viewType("com.infa.odin.models.relational.ViewType", "type"),
     businessSummary("custom.data.world.import.businessSummary", "business_summary"),
     restrictedToPublic("custom.data.world.import.restrictedToPublic", "restricted_to_public_disclosure_per_federal_or_state_law"),
@@ -76,10 +76,10 @@ enum ViewPropertyMapper implements MetadataMapper {
     technicalSteward("custom.data.world.import.technicalSteward", "technical_steward"),
     contactEmail("custom.data.world.import.contactEmail", "contact_email"),
     status("custom.data.world.import.status", "status"),
+    dataOwner("custom.data.world.import.dataOwner", "data_ownner"),
 
     // The following DDW fields are used to link a table to its parent in the hierarchy
     databaseName(null, "database_name"),
-    schema(null, "schema"),
 
     // The following INFA fields are not used by DDW
     comment("com.infa.odin.models.relational.Comment", null),
@@ -88,14 +88,13 @@ enum ViewPropertyMapper implements MetadataMapper {
     partitioned("com.infa.odin.models.relational.Partitioned", null),
     provider("com.infa.odin.models.relational.Provider", null);
 
-    static final List<ViewPropertyMapper> MAPPERS;
+    static final MetadataMapper[] MAPPERS;
 
     static {
-
         MAPPERS = Arrays.stream(ViewPropertyMapper.values())
                 // Remove DW columns that don't have matching INFA columns because they aren't used
                 .filter(i -> null != i.infaColumnName)
-                .collect(Collectors.toList());
+                .toArray(MetadataMapper[]::new);
     }
 
     final String infaColumnName;

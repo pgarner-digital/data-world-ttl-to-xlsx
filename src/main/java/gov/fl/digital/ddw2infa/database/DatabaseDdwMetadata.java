@@ -1,14 +1,19 @@
 package gov.fl.digital.ddw2infa.database;
 
+import gov.fl.digital.ddw2infa.MetadataMapper;
+import gov.fl.digital.ddw2infa.column.ColumnsDdwMetadata;
 import gov.fl.digital.ddw2infa.link.LinksMetadataCache;
 import gov.fl.digital.ddw2infa.DdwMetadata;
 import gov.fl.digital.ddw2infa.schema.SchemasMetadataCache;
 import org.apache.jena.query.QuerySolution;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.stream.Stream;
 
-public class DatabaseDdwMetadata extends DdwMetadata<DatabasePropertyMapper> {
+public class DatabaseDdwMetadata extends DdwMetadata {
+    private static final Logger logger = LogManager.getLogger(DatabaseDdwMetadata.class);
     public static final String INFA_FILE_NAME = "com.infa.odin.models.relational.Database.csv";
     public static final String INFA_TABLE_NAME = "DATABASE_METADATA";
 
@@ -16,7 +21,7 @@ public class DatabaseDdwMetadata extends DdwMetadata<DatabasePropertyMapper> {
 
     @Override public String getInfaTableName() { return INFA_TABLE_NAME; }
 
-    @Override protected List<DatabasePropertyMapper> getPropertyMappers() { return DatabasePropertyMapper.MAPPERS; }
+    @Override protected MetadataMapper[] getPropertyMappers() { return DatabasePropertyMapper.MAPPERS; }
 
     @Override public String getLabel() { return "database"; }
 
@@ -56,4 +61,6 @@ public class DatabaseDdwMetadata extends DdwMetadata<DatabasePropertyMapper> {
         updateLinks(querySolution, linksMetadataCache);
         updateSchemas(querySolution, schemasMetadataCache, linksMetadataCache);
     }
+
+    @Override protected Logger getLogger() { return logger; }
 }

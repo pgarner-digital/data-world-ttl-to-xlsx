@@ -102,6 +102,7 @@ enum ViewColumnPropertyMapper implements MetadataMapper {
     status("custom.data.world.import.status", "status"),
     restrictedToPublic("custom.data.world.import.restrictedToPublic", "restricted_to_public_disclosure_per_federal_or_state_law"),
     technicalSteward("custom.data.world.import.technicalSteward", "technical_steward"),
+    dataOwner("custom.data.world.import.dataOwner", "data_ownner"),
 
     // The following INFA fields are not used by DDW,
     comment("com.infa.odin.models.relational.Comment", null),
@@ -114,22 +115,17 @@ enum ViewColumnPropertyMapper implements MetadataMapper {
     // hierarchy view documents the attributes by displaying the progression from database to schema
     // to table to column so no need to document the fields as properties of column.
     databaseName(null, "database_name"),
-    owner(null, "data_ownner"),
     schema(null, "schema"),
     tableName(null, "table_name"),
     typePrefix(null, "type_prefix");
 
-    static final List<ViewColumnPropertyMapper> MAPPERS;
-    static final String CSV_HEADER;
+    static final MetadataMapper[] MAPPERS;
 
     static {
         MAPPERS = Arrays.stream(ViewColumnPropertyMapper.values())
             // Remove DW columns that don't have matching INFA columns and vice versa because they aren't used
             .filter(i -> null != i.infaColumnName)
-            .collect(Collectors.toList());
-        CSV_HEADER = "\"" + MAPPERS.stream()
-            .map(mapper -> mapper.infaColumnName)
-            .collect(Collectors.joining("\",\"")) + "\"";
+            .toArray(MetadataMapper[]::new);
     }
 
     final String infaColumnName;

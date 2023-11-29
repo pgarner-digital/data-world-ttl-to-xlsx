@@ -13,6 +13,7 @@ SELECT DISTINCT
 ?jdbcURL
 ?databaseServer
 ?databasePort
+(GROUP_CONCAT(?databaseSchema;SEPARATOR=", ") as ?schemas)
 
 WHERE
 {
@@ -40,6 +41,7 @@ WHERE
         dct:identifier ?collection_name .
     }
 }
+
 GROUP BY
 ?databaseiri
 ?databaseName

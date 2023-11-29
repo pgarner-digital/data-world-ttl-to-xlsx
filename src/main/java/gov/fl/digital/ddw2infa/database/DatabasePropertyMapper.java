@@ -73,13 +73,13 @@ enum DatabasePropertyMapper implements MetadataMapper {
     // so no need to document schemas as an attribute of database.
     schemas(null, "schemas");
 
-    static final List<DatabasePropertyMapper> MAPPERS;
+    static final MetadataMapper[] MAPPERS;
 
     static {
         MAPPERS = Arrays.stream(DatabasePropertyMapper.values())
             // Remove DW columns that don't have matching INFA columns because they aren't used
             .filter(databasePropertyMapper -> null != databasePropertyMapper.infaColumnName)
-            .collect(Collectors.toList());
+                .toArray(MetadataMapper[]::new);
     }
 
     final String infaColumnName;
