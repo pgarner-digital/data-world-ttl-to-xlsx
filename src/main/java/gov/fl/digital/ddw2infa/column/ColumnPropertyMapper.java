@@ -18,6 +18,7 @@ enum ColumnPropertyMapper implements MetadataMapper {
         data_ownner
         data_steward
         database_name
+        databaseIRI
         description
         restricted_to_public_disclosure_per_federal_or_state_law
         schema
@@ -138,6 +139,16 @@ enum ColumnPropertyMapper implements MetadataMapper {
     // hierarchy view documents the attributes by displaying the progression from database to schema
     // to table to column so no need to document the fields as properties of column.
     databaseName(null, "database_name"),
+    databaseIRI(null, "databaseIRI") {
+        @Override public String getPropertyValueFrom(QuerySolution querySolution) {
+            String result = "";
+            if(null != ddwColumnName) {
+                String[] stringArray = Util.stringValueOf(querySolution.get(ddwColumnName)).split("ddw-catalogs/");
+                result = stringArray[stringArray.length - 1];
+            }
+            return result;
+        }
+    },
     schema(null, "schema"),
     tableName(null, "table_name"),
     typePrefix(null, "type_prefix");

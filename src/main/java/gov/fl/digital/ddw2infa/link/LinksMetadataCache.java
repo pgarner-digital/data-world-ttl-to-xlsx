@@ -169,25 +169,25 @@ public class LinksMetadataCache {
 */
     }
 
-    // This design assumes there are no duplicate database names within an organization.
-    public void addDatabase(String dbName, String dbId) {
-        Util.checkNullOrEmpty("dbName", dbName);
-        Util.checkNullOrEmpty("dbId", dbId);
-        if(!links.containsKey(dbName)) { links.put(dbName, new IdAndChildren<>(dbId)); }
+    public void addDatabase(String databaseIRI) {
+        Util.checkNullOrEmpty("databaseIRI", databaseIRI);
+        if(!links.containsKey(databaseIRI)) {
+            links.put(databaseIRI, new IdAndChildren<>(databaseIRI));
+        }
     }
 
-    public void addSchema(String dbName, String schemaName, String schemaId) {
-        Util.checkNullOrEmpty("dbName", dbName);
+    public void addSchema(String databaseIRI, String schemaName, String schemaId) {
+        Util.checkNullOrEmpty("databaseIRI", databaseIRI);
         // PeopleFirst team decided not to provide a schema name for the PF3 database.
         // If schemaName is not provided, it's manually set because it's used to
         // populate INFA's "core.name" field, which is required and cannot be empty.
         schemaName = Util.getSchemaNameHack(schemaName);
 
         Util.checkNullOrEmpty("schemaId", schemaId);
-        if(!links.containsKey(dbName)) {
+        if(!links.containsKey(databaseIRI)) {
             throw new IllegalStateException("Attempting to add schema to database that does not exist.");
         }
-        IdAndChildren<IdAndChildren<Map<String, IdAndChildren<String>>>> dbIdAndChildren = links.get(dbName);
+        IdAndChildren<IdAndChildren<Map<String, IdAndChildren<String>>>> dbIdAndChildren = links.get(databaseIRI);
         if(dbIdAndChildren.doesNotContainChild(schemaName)) {
             dbIdAndChildren.addChild(schemaName, new IdAndChildren<>(schemaId));
         }
@@ -195,12 +195,12 @@ public class LinksMetadataCache {
 
     public void addTableOrView(
         TableOrView tableOrView,
-        String dbName,
+        String databaseIRI,
         String schemaName,
         String tableNameOrViewName,
         String tableIdOrViewId
     ) {
-        Util.checkNullOrEmpty("dbName", dbName);
+        Util.checkNullOrEmpty("databaseIRI", databaseIRI);
 
         // PeopleFirst team decided not to provide a schema name for the PF3 database.
         // If schemaName is not provided, it's manually set because it's used to
@@ -213,16 +213,16 @@ public class LinksMetadataCache {
         Util.checkNullOrEmpty("tableNameOrViewName", tableNameOrViewName);
         Util.checkNullOrEmpty("tableIdOrViewId", tableIdOrViewId);
 
-        if(!links.containsKey(dbName)) {
+        if(!links.containsKey(databaseIRI)) {
             // Method LinksMetadataCache#addDatabase must be called before this method is invoked.
             throw new IllegalStateException("Attempting to add " + tableOrView.name() + " '"+ tableNameOrViewName +
-                "' to schema '"+ schemaName + "' but schema's database '" + dbName + "' does not exist.");
+                "' to schema '"+ schemaName + "' but schema's database '" + databaseIRI + "' does not exist.");
         }
-        IdAndChildren<IdAndChildren<Map<String, IdAndChildren<String>>>> dbIdAndChildren = links.get(dbName);
+        IdAndChildren<IdAndChildren<Map<String, IdAndChildren<String>>>> dbIdAndChildren = links.get(databaseIRI);
         if(dbIdAndChildren.doesNotContainChild(schemaName)) {
             // Method LinksMetadataCache#addSchema must be called before this method is invoked.
             throw new IllegalStateException("Attempting to add " + tableOrView.name() + " '"+ tableNameOrViewName +
-                "' to schema '"+ schemaName + "', which does not exist in database '"+ dbName + "'.");
+                "' to schema '"+ schemaName + "', which does not exist in database '"+ databaseIRI + "'.");
         }
         IdAndChildren<Map<String, IdAndChildren<String>>> schemaIdAndChildren = dbIdAndChildren.getChild(schemaName);
         Map<String,IdAndChildren<String>> tableOrViewMap;
@@ -241,13 +241,13 @@ public class LinksMetadataCache {
 
     public void addColumnOrViewColumn(
         TableOrView tableOrView,
-        String dbName,
+        String databaseIRI,
         String schemaName,
         String tableNameOrViewName,
         String columnNameOrViewColumnName,
         String columnIdOrViewId
     ) {
-        Util.checkNullOrEmpty("dbName", dbName);
+        Util.checkNullOrEmpty("databaseIRI", databaseIRI);
         // PeopleFirst team decided not to provide a schema name for the PF3 database.
         // If schemaName is not provided, it's manually set because it's used to
         // populate INFA's "core.name" field, which is required and cannot be empty.
@@ -256,20 +256,20 @@ public class LinksMetadataCache {
         // DOR has a blank column- or view-column, which needs to be resolved.
         //Util.checkNullOrEmpty("columnNameOrViewColumnName", columnNameOrViewColumnName);
         Util.checkNullOrEmpty("columnIdOrViewId", columnIdOrViewId);
-        if(!links.containsKey(dbName)) {
+        if(!links.containsKey(databaseIRI)) {
             // Method LinksMetadataCache#addDatabase must be called before this method is invoked.
             throw new IllegalStateException(
                 "Attempting to add "+ tableOrView.getColumnLabel() + " '"+
                     columnNameOrViewColumnName + "' to table '" + tableNameOrViewName + "' in schema '"+ schemaName +
-                        "' but database '" + dbName + "' does not exist."
+                        "' but database '" + databaseIRI + "' does not exist."
             );
         }
-        IdAndChildren<IdAndChildren<Map<String, IdAndChildren<String>>>> dbIdAndChildren = links.get(dbName);
+        IdAndChildren<IdAndChildren<Map<String, IdAndChildren<String>>>> dbIdAndChildren = links.get(databaseIRI);
         if(dbIdAndChildren.doesNotContainChild(schemaName)) {
             // Method LinksMetadataCache#addSchema must be called before this method is invoked.
             throw new IllegalStateException("Attempting to add "+ tableOrView.getColumnLabel() + " '"+
                 columnNameOrViewColumnName + "' to table '" + tableNameOrViewName + "' in schema '"+ schemaName +
-                    "' and in database '" + dbName + "' but schema does not exist.");
+                    "' and in database '" + databaseIRI + "' but schema does not exist.");
         }
         IdAndChildren<Map<String, IdAndChildren<String>>> schemaIdAndChildren = dbIdAndChildren.getChild(schemaName);
         if(schemaIdAndChildren.doesNotContainChild(tableOrView.name())) {
@@ -277,7 +277,7 @@ public class LinksMetadataCache {
             // into the data structure, must be called before this method is invoked.
             throw new IllegalStateException("Attempting to add "+ tableOrView.getColumnLabel() + " '"+
                 columnNameOrViewColumnName + "' to table '" + tableNameOrViewName + "' in schema '"+ schemaName +
-                    "' and in database '" + dbName + "' but the '" + tableOrView.name() + "' filter does not exist.");
+                    "' and in database '" + databaseIRI + "' but the '" + tableOrView.name() + "' filter does not exist.");
         }
         Map<String,IdAndChildren<String>> tableOrViewMap = schemaIdAndChildren.getChild(tableOrView.name());
         if(tableOrViewMap.containsKey(tableNameOrViewName)) {
@@ -286,14 +286,14 @@ public class LinksMetadataCache {
                 logger.info(
                         "Attempting to add " + tableOrView.getColumnLabel() + " '" +
                             columnNameOrViewColumnName + "' to table '" + tableNameOrViewName + "' in schema '" +
-                                schemaName + "' and in database '" + dbName + "' but the column already exists."
+                                schemaName + "' and in database '" + databaseIRI + "' but the column already exists."
                 );
 
 /*              TODO: restore unique constraint check after testing
                 throw new IllegalStateException(
                     "Attempting to add " + tableOrView.getColumnLabel() + " '" +
                         columnNameOrViewColumnName + "' to table '" + tableNameOrViewName + "' in schema '" +
-                            schemaName + "' and in database '" + dbName + "' but the column already exists."
+                            schemaName + "' and in database '" + databaseIRI + "' but the column already exists."
                 );
 */
             }
@@ -304,7 +304,7 @@ public class LinksMetadataCache {
         else {
             throw new IllegalStateException("Attempting to add "+ tableOrView.getColumnLabel() + " '"+
                 columnNameOrViewColumnName + "' to table '" + tableNameOrViewName + "' in schema '"+ schemaName +
-                    "' and in database '" + dbName + "' in the '" + tableOrView.name() + "' filter but the " +
+                    "' and in database '" + databaseIRI + "' in the '" + tableOrView.name() + "' filter but the " +
                         "table or view named '" + tableNameOrViewName + "' does not exist.");
         }
    }

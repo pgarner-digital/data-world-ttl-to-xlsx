@@ -30,20 +30,19 @@ public class DatabaseDdwMetadata extends DdwMetadata {
         SchemasMetadataCache schemasMetadataCache,
         LinksMetadataCache linksMetadataCache
     ) {
-        String dbName = DatabasePropertyMapper.name.getPropertyValueFrom(querySolution);
+        String databaseIRI = DatabasePropertyMapper.externalId.getPropertyValueFrom(querySolution);
         String commaSeparatedSchemaNames = DatabasePropertyMapper.schemas.getPropertyValueFrom(querySolution);
         if(!commaSeparatedSchemaNames.isBlank()) {
             String[] schemaNames = commaSeparatedSchemaNames.split("\\s*,\\s*");
             Stream.of(schemaNames)
                 .filter(schemaName -> !schemaName.isBlank())
-                    .forEach(schemaName -> schemasMetadataCache.addRecord(dbName, schemaName, linksMetadataCache));
+                    .forEach(schemaName -> schemasMetadataCache.addRecord(databaseIRI, schemaName, linksMetadataCache));
         }
     }
 
     @Override protected void updateLinks(QuerySolution querySolution, LinksMetadataCache linksMetadataCache) {
-        String dbId = DatabasePropertyMapper.externalId.getPropertyValueFrom(querySolution);
-        String dbName = DatabasePropertyMapper.name.getPropertyValueFrom(querySolution);
-        linksMetadataCache.addDatabase(dbName, dbId);
+        String databaseIRI = DatabasePropertyMapper.externalId.getPropertyValueFrom(querySolution);
+        linksMetadataCache.addDatabase(databaseIRI);
     }
 
     @Override protected void manageLinksAndSchemas(

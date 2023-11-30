@@ -13,6 +13,7 @@ SELECT DISTINCT
     ?columnIndex
     ?columnIsNullable
     ?type_prefix  # NOT USED BUT INCLUDED IN RESULT SET FOR NOW
+    ?databaseIRI
     ?database_name
     ?table_name
     ?schema
@@ -127,6 +128,7 @@ GROUP BY
     ?columnIndex
     ?columnIsNullable
     ?type_prefix  # NOT USED BUT INCLUDED IN RESULT SET FOR NOW
+    ?databaseIRI
     ?database_name
     ?table_name
     ?schema

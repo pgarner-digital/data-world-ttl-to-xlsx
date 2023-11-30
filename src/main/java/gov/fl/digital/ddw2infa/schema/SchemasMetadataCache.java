@@ -21,10 +21,10 @@ public class SchemasMetadataCache {
     public static final String SCHEMA_NAME_UNAVAILABLE = "(unavailable)";
     private static final Logger logger = LogManager.getLogger(SchemasMetadataCache.class);
 
-    private final Map<String,Map<String,String>> schemaIdByDatabaseNameAndSchemaName = new HashMap<>();
+    private final Map<String,Map<String,String>> schemaIdByDatabaseIdAndSchemaName = new HashMap<>();
 
-    public void addRecord(String databaseName, String schemaName, LinksMetadataCache linksMetadataCache) {
-        databaseName = databaseName.trim();
+    public void addRecord(String databaseIRI, String schemaName, LinksMetadataCache linksMetadataCache) {
+        databaseIRI = databaseIRI.trim();
 
         // PeopleFirst team decided not to provide a schema name for the PF3 database.
         // If schemaName is not provided, it's manually set because it's used to
@@ -32,10 +32,10 @@ public class SchemasMetadataCache {
         schemaName = Util.getSchemaNameHack(schemaName);
 
         String schemaId = "sch." + UUID.randomUUID().toString().replace("-", "");
-        Map<String,String> schemaIdBySchemaName = schemaIdByDatabaseNameAndSchemaName.get(databaseName);
+        Map<String,String> schemaIdBySchemaName = schemaIdByDatabaseIdAndSchemaName.get(databaseIRI);
         if(null == schemaIdBySchemaName) {
             schemaIdBySchemaName = new HashMap<>();
-            schemaIdByDatabaseNameAndSchemaName.put(databaseName, schemaIdBySchemaName);
+            schemaIdByDatabaseIdAndSchemaName.put(databaseIRI, schemaIdBySchemaName);
             schemaIdBySchemaName.put(schemaName, schemaId);
         }
         else {
@@ -43,7 +43,7 @@ public class SchemasMetadataCache {
         }
 
         // Links management
-        linksMetadataCache.addSchema(databaseName, schemaName, schemaId);
+        linksMetadataCache.addSchema(databaseIRI, schemaName, schemaId);
     }
 
     public void pushToSnowflake(
@@ -77,7 +77,7 @@ public class SchemasMetadataCache {
             String databaseName;
             for(
                 Map.Entry<String, Map<String, String>> schemaIdBySchemaNameByDatabaseName :
-                    schemaIdByDatabaseNameAndSchemaName.entrySet()
+                    schemaIdByDatabaseIdAndSchemaName.entrySet()
             ) {
                 databaseName = schemaIdBySchemaNameByDatabaseName.getKey();
                 Map<String, String> schemaIdBySchemaName = schemaIdBySchemaNameByDatabaseName.getValue();

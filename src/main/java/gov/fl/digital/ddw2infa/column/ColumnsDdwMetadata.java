@@ -32,20 +32,20 @@ public class ColumnsDdwMetadata extends DdwMetadata {
         SchemasMetadataCache schemasMetadataCache,
         LinksMetadataCache linksMetadataCache
     ) {
-        String dbName = ColumnPropertyMapper.databaseName.getPropertyValueFrom(querySolution);
+        String databaseIRI = ColumnPropertyMapper.databaseIRI.getPropertyValueFrom(querySolution);
         String schemaName = ColumnPropertyMapper.schema.getPropertyValueFrom(querySolution);
-        schemasMetadataCache.addRecord(dbName, schemaName, linksMetadataCache);
+        schemasMetadataCache.addRecord(databaseIRI, schemaName, linksMetadataCache);
     }
 
     @Override protected void updateLinks(QuerySolution querySolution, LinksMetadataCache linksMetadataCache) {
-        String dbName = ColumnPropertyMapper.databaseName.getPropertyValueFrom(querySolution);
+        String databaseIRI = ColumnPropertyMapper.databaseIRI.getPropertyValueFrom(querySolution);
         String schemaName = ColumnPropertyMapper.schema.getPropertyValueFrom(querySolution);
         String tableName = ColumnPropertyMapper.tableName.getPropertyValueFrom(querySolution);
         String columnName = ColumnPropertyMapper.name.getPropertyValueFrom(querySolution);
         String columnId = ColumnPropertyMapper.externalId.getPropertyValueFrom(querySolution);
         linksMetadataCache.addColumnOrViewColumn(
             LinksMetadataCache.TableOrView.table,
-            dbName,
+            databaseIRI,
             schemaName,
             tableName,
             columnName,

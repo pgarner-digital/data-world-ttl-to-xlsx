@@ -30,17 +30,17 @@ public class TablesDdwMetadata extends DdwMetadata {
         SchemasMetadataCache schemasMetadataCache,
         LinksMetadataCache linksMetadataCache
     ) {
-        String dbName = TablePropertyMapper.databaseName.getPropertyValueFrom(querySolution);
+        String databaseIRI = TablePropertyMapper.databaseIRI.getPropertyValueFrom(querySolution);
         String schemaName = TablePropertyMapper.owner.getPropertyValueFrom(querySolution);
-        schemasMetadataCache.addRecord(dbName, schemaName, linksMetadataCache);
+        schemasMetadataCache.addRecord(databaseIRI, schemaName, linksMetadataCache);
     }
 
     @Override protected void updateLinks(QuerySolution querySolution, LinksMetadataCache linksMetadataCache) {
-        String dbName = TablePropertyMapper.databaseName.getPropertyValueFrom(querySolution);
+        String databaseIRI = TablePropertyMapper.databaseIRI.getPropertyValueFrom(querySolution);
         String schemaName = TablePropertyMapper.owner.getPropertyValueFrom(querySolution);
         String tableName = TablePropertyMapper.name.getPropertyValueFrom(querySolution);
         String tableId = TablePropertyMapper.externalId.getPropertyValueFrom(querySolution);
-        linksMetadataCache.addTableOrView(LinksMetadataCache.TableOrView.table, dbName, schemaName, tableName, tableId);
+        linksMetadataCache.addTableOrView(LinksMetadataCache.TableOrView.table, databaseIRI, schemaName, tableName, tableId);
     }
 
     @Override protected Logger getLogger() { return logger; }

@@ -31,169 +31,171 @@ public class Ddw2InfaCustomMetaModelProcessor {
         LocalDateTime begin = LocalDateTime.now();
 
         AgencyAndTtlFileName[] agencyAndTtlFileNames = new AgencyAndTtlFileName[]{
-/*                    AHCA,
-                APD,
-                BOG,
-                CHS,
-                CITRUS,
-                DBPR,
-                DBS,
-                DCF,
-                DEM,
-                DEO,
-                DEP,
-                DFS,
-                DHSMV,
-                DJJ,
-                DLA,
-                DMA,
-                DMS,
-                DOACS,
-                DOAH,
-                DOE,
-                DOEA,
-                DOH,
-                DOL,
-                DOR,
-                DOS,
-                DOT,
-                DVA,
-                EOG,
-                FCHR,
-                FCOR,
-                FDC,
-                FDLE,
-                FSDB,
-                FWC,
-                GAL,
-                HOUSE,
-                JAC,
-                NFWMD,
-                OEL,
-                OLITS,
-                PERC,
-                PSC,
-                SCS,
-                SENATE,
-                SRWMD,
-                VR*/
+            AHCA,
+            APD,
+            BOG,
+            CHS,
+            CITRUS,
+            DBPR,
+            DBS,
+            DCF,
+            DEM,
+            DEO,
+            DEP,
+            DFS,
+            DHSMV,
+            DJJ,
+            DLA,
+            DMA,
+            DMS,
+            DOACS,
+            DOAH,
+            DOE,
+            DOEA,
+            DOH,
+            DOL,
+            DOR,
+            DOS,
+            DOT,
+            DVA,
+            EOG,
+            FCHR,
+            FCOR,
+            FDC,
+            FDLE,
+            FSDB,
+            FWC,
+            GAL,
+            HOUSE,
+            JAC,
+            NFWMD,
+            OEL,
+            OLITS,
+            PERC,
+            PSC,
+            SCS,
+            SENATE,
+            SRWMD,
+            VR
         };
 
         try {
-            for (AgencyAndTtlFileName agencyAndTtlFileName : agencyAndTtlFileNames) {
-                Model model = Util.loadModelFrom(agencyAndTtlFileName.getFileName());
-                DatabaseDdwMetadata databaseDdwMetadata = new DatabaseDdwMetadata();
-                TablesDdwMetadata tablesDdwMetadata = new TablesDdwMetadata();
-                ViewsDdwMetadata viewsDdwMetadata = new ViewsDdwMetadata();
-                ColumnsDdwMetadata columnsDdwMetadata = new ColumnsDdwMetadata();
-                ViewColumnsDdwMetadata viewColumnsDdwMetadata = new ViewColumnsDdwMetadata();
-                SchemasMetadataCache schemasMetadataCache = new SchemasMetadataCache();
-                LinksMetadataCache linksMetadataCache = new LinksMetadataCache();
-                String orgId = agencyAndTtlFileName.getOrgId();
 
-                // Note: try-with-resources auto closes connection, so no need to explicitly close it.
-                // Don't want to keep connection idle too long (max is 4 hours before token expires).
-                // Databases, tables, and views all together take < 4 hours so they are grouped
-                // under one try-with-resources.
-                try (Connection connection = Util.getConnection(args[0], args[1])) {
-                    connection.setAutoCommit(false);
-                    truncateTables(connection);
+            // TODO: set agency name here:
+            AgencyAndTtlFileName agencyAndTtlFileName = null;
 
-                    logger.info("\nExtracting database metadata");
-                    loadMetadata(
-                        model,
-                        databaseDdwMetadata,
-                        schemasMetadataCache,
-                        linksMetadataCache,
-                        1,
-                        ChronoUnit.SECONDS,
-                        orgId,
-                        begin
-                    );
-                    databaseDdwMetadata.insertRecords(connection, orgId, begin, 1);
+            Model model = Util.loadModelFrom(agencyAndTtlFileName.getFileName());
+            DatabaseDdwMetadata databaseDdwMetadata = new DatabaseDdwMetadata();
+            TablesDdwMetadata tablesDdwMetadata = new TablesDdwMetadata();
+            ViewsDdwMetadata viewsDdwMetadata = new ViewsDdwMetadata();
+            ColumnsDdwMetadata columnsDdwMetadata = new ColumnsDdwMetadata();
+            ViewColumnsDdwMetadata viewColumnsDdwMetadata = new ViewColumnsDdwMetadata();
+            SchemasMetadataCache schemasMetadataCache = new SchemasMetadataCache();
+            LinksMetadataCache linksMetadataCache = new LinksMetadataCache();
+            String orgId = agencyAndTtlFileName.getOrgId();
 
-                    logger.info("Extracting table metadata");
-                    loadMetadata(
-                        model,
-                        tablesDdwMetadata,
-                        schemasMetadataCache,
-                        linksMetadataCache,
-                        100,
-                        ChronoUnit.SECONDS,
-                        orgId,
-                        begin
-                    );
-                    tablesDdwMetadata.insertRecords(connection, orgId, begin, 100);
+            // Note: try-with-resources auto closes connection, so no need to explicitly close it.
+            // Don't want to keep connection idle too long (max is 4 hours before token expires).
+            // Databases, tables, and views all together take < 4 hours so they are grouped
+            // under one try-with-resources.
+            try (Connection connection = Util.getConnection(args[0], args[1])) {
+                connection.setAutoCommit(false);
+                truncateTables(connection);
 
-                    logger.info("Extracting view metadata");
-                    loadMetadata(
-                        model,
-                        viewsDdwMetadata,
-                        schemasMetadataCache,
-                        linksMetadataCache,
-                        100,
-                        ChronoUnit.SECONDS,
-                        orgId,
-                        begin
-                    );
-                    viewsDdwMetadata.insertRecords(connection, orgId, begin, 100);
-                }
-
-                logger.info("Extracting column metadata");
+                logger.info("\nExtracting database metadata");
                 loadMetadata(
                     model,
-                    columnsDdwMetadata,
+                    databaseDdwMetadata,
                     schemasMetadataCache,
                     linksMetadataCache,
-                    10000,
-                    ChronoUnit.MINUTES,
+                    1,
+                    ChronoUnit.SECONDS,
                     orgId,
                     begin
                 );
+                databaseDdwMetadata.insertRecords(connection, orgId, begin, 1);
 
-                // Columns take a long time to extract.  Don't want to keep connection
-                // idle too long (max is 4 hours before token expires).  So create
-                // new connection. Note: try with resources auto closes connection,
-                // so no need to explicitly close it.
-                try (Connection connection = Util.getConnection(args[0], args[1])) {
-                    connection.setAutoCommit(false);
-                    columnsDdwMetadata.insertRecords(connection, orgId, begin, 10000);
-                }
-
-                logger.info("Extracting view-column metadata");
+                logger.info("Extracting table metadata");
                 loadMetadata(
                     model,
-                    viewColumnsDdwMetadata,
+                    tablesDdwMetadata,
                     schemasMetadataCache,
                     linksMetadataCache,
-                    10000,
-                    ChronoUnit.MINUTES,
+                    100,
+                    ChronoUnit.SECONDS,
                     orgId,
                     begin
                 );
+                tablesDdwMetadata.insertRecords(connection, orgId, begin, 100);
 
-                // Columns take a long time to extract.  Don't want to keep connection
-                // idle too long (max is 4 hours before token expires).  So create
-                // new connection.  Note: try with resources auto closes connection,
-                // so no need to explicitly close it.
-                try (Connection connection = Util.getConnection(args[0], args[1])) {
-                    connection.setAutoCommit(false);
-                    viewColumnsDdwMetadata.insertRecords(connection, orgId, begin, 10000);
-                }
+                logger.info("Extracting view metadata");
+                loadMetadata(
+                    model,
+                    viewsDdwMetadata,
+                    schemasMetadataCache,
+                    linksMetadataCache,
+                    100,
+                    ChronoUnit.SECONDS,
+                    orgId,
+                    begin
+                );
+                viewsDdwMetadata.insertRecords(connection, orgId, begin, 100);
+            }
 
-                logger.info("Extracting schema metadata");
-                // Note: try with resources auto closes connection, so no need to explicitly close it.
-                try (Connection connection = Util.getConnection(args[0], args[1])) {
-                    connection.setAutoCommit(false);
-                    schemasMetadataCache.pushToSnowflake(connection, begin, ChronoUnit.SECONDS, orgId);
-                }
+            logger.info("Extracting column metadata");
+            loadMetadata(
+                model,
+                columnsDdwMetadata,
+                schemasMetadataCache,
+                linksMetadataCache,
+                10000,
+                ChronoUnit.MINUTES,
+                orgId,
+                begin
+            );
 
-                logger.info("Extracting links metadata");
-                // Note: try with resources auto closes connection, so no need to explicitly close it.
-                try (Connection connection = Util.getConnection(args[0], args[1])) {
-                    connection.setAutoCommit(false);
-                    linksMetadataCache.pushToSnowflake(connection, begin, ChronoUnit.SECONDS, orgId);
-                }
+            // Columns take a long time to extract.  Don't want to keep connection
+            // idle too long (max is 4 hours before token expires).  So create
+            // new connection. Note: try with resources auto closes connection,
+            // so no need to explicitly close it.
+            try (Connection connection = Util.getConnection(args[0], args[1])) {
+                connection.setAutoCommit(false);
+                columnsDdwMetadata.insertRecords(connection, orgId, begin, 10000);
+            }
+
+            logger.info("Extracting view-column metadata");
+            loadMetadata(
+                model,
+                viewColumnsDdwMetadata,
+                schemasMetadataCache,
+                linksMetadataCache,
+                10000,
+                ChronoUnit.MINUTES,
+                orgId,
+                begin
+            );
+
+            // Columns take a long time to extract.  Don't want to keep connection
+            // idle too long (max is 4 hours before token expires).  So create
+            // new connection.  Note: try with resources auto closes connection,
+            // so no need to explicitly close it.
+            try (Connection connection = Util.getConnection(args[0], args[1])) {
+                connection.setAutoCommit(false);
+                viewColumnsDdwMetadata.insertRecords(connection, orgId, begin, 10000);
+            }
+
+            logger.info("Extracting schema metadata");
+            // Note: try with resources auto closes connection, so no need to explicitly close it.
+            try (Connection connection = Util.getConnection(args[0], args[1])) {
+                connection.setAutoCommit(false);
+                schemasMetadataCache.pushToSnowflake(connection, begin, ChronoUnit.SECONDS, orgId);
+            }
+
+            logger.info("Extracting links metadata");
+            // Note: try with resources auto closes connection, so no need to explicitly close it.
+            try (Connection connection = Util.getConnection(args[0], args[1])) {
+                connection.setAutoCommit(false);
+                linksMetadataCache.pushToSnowflake(connection, begin, ChronoUnit.SECONDS, orgId);
             }
         } catch (SQLException e) {
             logger.error("Unable to execute SQL. Total time: " +
@@ -244,6 +246,13 @@ public class Ddw2InfaCustomMetaModelProcessor {
             truncateStatement.execute(String.format(truncateStatementText, ViewsDdwMetadata.INFA_TABLE_NAME));
             truncateStatement.execute(String.format(truncateStatementText, ViewColumnsDdwMetadata.INFA_TABLE_NAME));
             truncateStatement.execute(String.format(truncateStatementText, LinksMetadataCache.INFA_TABLE_NAME));
+
+            truncateStatement.execute(String.format(truncateStatementText, DatabaseDdwMetadata.INFA_TABLE_NAME + "_duplicates"));
+            truncateStatement.execute(String.format(truncateStatementText, SchemasMetadataCache.INFA_TABLE_NAME + "_duplicates"));
+            truncateStatement.execute(String.format(truncateStatementText, TablesDdwMetadata.INFA_TABLE_NAME + "_duplicates"));
+            truncateStatement.execute(String.format(truncateStatementText, ColumnsDdwMetadata.INFA_TABLE_NAME + "_duplicates"));
+            truncateStatement.execute(String.format(truncateStatementText, ViewsDdwMetadata.INFA_TABLE_NAME + "_duplicates"));
+            truncateStatement.execute(String.format(truncateStatementText, ViewColumnsDdwMetadata.INFA_TABLE_NAME + "_duplicates"));
         }
     }
 }

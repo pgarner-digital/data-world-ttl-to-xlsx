@@ -10,6 +10,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 SELECT DISTINCT
     ?type_prefix
     ?database_name
+    ?databaseIRI
     ?schema
     ?type
     ?table_name
@@ -102,6 +103,7 @@ WHERE
 GROUP BY
     ?type_prefix
     ?database_name
+    ?databaseIRI
     ?schema
     ?type
     ?table_name

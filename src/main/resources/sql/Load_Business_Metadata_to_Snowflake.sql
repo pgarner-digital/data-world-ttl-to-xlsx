@@ -109,13 +109,13 @@ create or replace table LINKS_METADATA
 --truncate table VIEW_METADATA;
 --truncate table VIEW_COLUMN_METADATA;
 
--- select count(*) from DATABASE_METADATA;
--- select count(*) from SCHEMA_METADATA;
--- select count(*) from TABLE_METADATA;
--- select count(*) from COLUMN_METADATA;
--- select count(*) from VIEW_METADATA;
--- select count(*) from VIEW_COLUMN_METADATA;
--- select count(*) from LINKS_METADATA;
+select count(*) from DATABASE_METADATA;
+select count(*) from SCHEMA_METADATA;
+select count(*) from TABLE_METADATA;
+select count(*) from COLUMN_METADATA;
+select count(*) from VIEW_METADATA;
+select count(*) from VIEW_COLUMN_METADATA;
+select count(*) from LINKS_METADATA;
 
 select * from DATABASE_METADATA;
 select * from SCHEMA_METADATA;
@@ -156,7 +156,7 @@ INSERT INTO DATABASE_METADATA_BAK (
     "custom.data.world.import.databaseServer",
     "custom.data.world.import.databasePort"
 FROM DATABASE_METADATA
-WHERE "orgId"='DBPR';
+WHERE "orgId"='DOH';
 
 INSERT INTO SCHEMA_METADATA_BAK (
     "orgId",
@@ -173,7 +173,7 @@ INSERT INTO SCHEMA_METADATA_BAK (
       "com.infa.odin.models.relational.Comment",
       "com.infa.odin.models.relational.Owner"
 FROM SCHEMA_METADATA
-WHERE "orgId"='DBPR';
+WHERE "orgId"='DOH';
 
 INSERT INTO TABLE_METADATA_BAK (
     "orgId",
@@ -210,7 +210,7 @@ INSERT INTO TABLE_METADATA_BAK (
       "custom.data.world.import.technicalSteward",
       "custom.data.world.import.dataOwner"
 FROM TABLE_METADATA
-WHERE "orgId"='DBPR';
+WHERE "orgId"='DOH';
 
 INSERT INTO COLUMN_METADATA_BAK (
     "orgId",
@@ -247,7 +247,7 @@ INSERT INTO COLUMN_METADATA_BAK (
       "custom.data.world.import.technicalSteward",
       "custom.data.world.import.dataOwner"
 FROM COLUMN_METADATA
-WHERE "orgId"='DBPR';
+WHERE "orgId"='DOH';
 
 INSERT INTO VIEW_METADATA_BAK (
     "orgId",
@@ -284,7 +284,7 @@ INSERT INTO VIEW_METADATA_BAK (
       "custom.data.world.import.status",
       "custom.data.world.import.dataOwner"
 FROM VIEW_METADATA
-WHERE "orgId"='DBPR';
+WHERE "orgId"='DOH';
 
 INSERT INTO VIEW_COLUMN_METADATA_BAK (
     "orgId",
@@ -319,7 +319,7 @@ INSERT INTO VIEW_COLUMN_METADATA_BAK (
       "custom.data.world.import.technicalSteward",
       "custom.data.world.import.dataOwner"
 FROM VIEW_COLUMN_METADATA
-WHERE "orgId"='DBPR';
+WHERE "orgId"='DOH';
 
 INSERT INTO LINKS_METADATA_BAK
 (
@@ -333,7 +333,7 @@ INSERT INTO LINKS_METADATA_BAK
     TARGET,
     ASSOCIATION
 FROM LINKS_METADATA
-WHERE ORGID='DBPR';
+WHERE ORGID='DOH';
 
 
 select "orgId", count(*) from DATABASE_METADATA group by "orgId" order by "orgId";
@@ -427,30 +427,9 @@ SELECT * FROM COLUMN_METADATA_DUPLICATES_BAK;
 SELECT * FROM VIEW_METADATA_DUPLICATES_BAK;
 SELECT * FROM VIEW_COLUMN_METADATA_DUPLICATES_BAK;
 
-
--- select "com.infa.odin.models.relational.PrimaryKeyColumn", count(*)
--- from COLUMN_METADATA_BAK
--- group by "com.infa.odin.models.relational.PrimaryKeyColumn";
---
--- select count(*)
--- from COLUMN_METADATA_BAK
--- where "com.infa.odin.models.relational.PrimaryKeyColumn" = "core.name";
--- -- 2185
---
--- select count(*)
--- from COLUMN_METADATA_BAK
--- where "com.infa.odin.models.relational.PrimaryKeyColumn" = 'Yes';
-
-
--- update COLUMN_METADATA_BAK
---     set "com.infa.odin.models.relational.PrimaryKeyColumn" = 'Yes'
--- where
---     "com.infa.odin.models.relational.PrimaryKeyColumn" = "core.name";
--- update COLUMN_METADATA_BAK
---     set "com.infa.odin.models.relational.PrimaryKeyColumn" = null
--- where
---     "com.infa.odin.models.relational.PrimaryKeyColumn" <> 'Yes';
-
+-- Scratch:
+desc table VIEW_METADATA_DUPLICATES_BAK;
+desc table VIEW_METADATA_DUPLICATES;
 
 -- select "core.externalId", count(*) from COLUMN_METADATA group by "core.externalId" having count(*) > 1;
 -- select "core.externalId", count(*) from VIEW_COLUMN_METADATA group by "core.externalId" having count(*) > 1;
@@ -522,3 +501,22 @@ FROM COLUMN_METADATA_BAK t1
                     ON t1."core.externalId" = t2."core.externalId";
 
 select distinct "com.infa.odin.models.relational.Datatype" from VIEW_COLUMN_METADATA;
+
+-----------------------------------------------------------
+select count(*) from DATABASE_METADATA_PROD where
+
+select *
+from TABLE_METADATA
+where
+    "com.infa.odin.models.relational.Owner" is not null and
+    "com.infa.odin.models.relational.Owner" <> '' and
+    "orgId" = 'DMS';
+-----------------------------------------------------------
+select count(*)
+from TABLE_METADATA
+where
+    "custom.data.world.import.dataSteward" is not null and
+    "com.infa.odin.models.relational.Owner" is not null;
+select distinct "custom.data.world.import.dataSteward" from TABLE_METADATA where "custom.data.world.import.dataSteward" is not null order by "custom.data.world.import.dataSteward";
+
+

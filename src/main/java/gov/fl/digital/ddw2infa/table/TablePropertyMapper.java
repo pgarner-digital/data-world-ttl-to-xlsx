@@ -16,6 +16,7 @@ enum TablePropertyMapper implements MetadataMapper {
             description
             data_ownner
             database_name
+            databaseIRI
             schema
             type_prefix
             type
@@ -81,6 +82,16 @@ enum TablePropertyMapper implements MetadataMapper {
 
     // The following DDW fields are used to link a table to its parent in the hierarchy
     databaseName(null, "database_name"),
+    databaseIRI(null, "databaseIRI") {
+        @Override public String getPropertyValueFrom(QuerySolution querySolution) {
+            String result = "";
+            if(null != ddwColumnName) {
+                String[] stringArray = Util.stringValueOf(querySolution.get(ddwColumnName)).split("ddw-catalogs/");
+                result = stringArray[stringArray.length - 1];
+            }
+            return result;
+        }
+    },
 
     // The following INFA fields are not used by DDW
     comment("com.infa.odin.models.relational.Comment", null),
