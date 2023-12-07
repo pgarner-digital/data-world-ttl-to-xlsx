@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f23f759c-479f-4240-b368-6cc6f4e98620" name="Changes" comment="Temp save to work from home">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/sql/Load_Business_Metadata_to_Snowflake.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sql/Load_Business_Metadata_to_Snowflake.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/Presentation 12-08-2023.docx" beforeDir="false" afterPath="$PROJECT_DIR$/docs/Presentation 12-08-2023.docx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,14 +115,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.Ddw2InfaCustomMetaModelProcessor">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Base64EncoderForAlteryx" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="gov.fl.digital.ddw2infa.Base64EncoderForAlteryx" />
       <module name="data-world-ttl-to-xlsx" />
@@ -140,6 +131,12 @@
     <configuration name="Tester" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Tester" />
       <module name="data-world-ttl-to-xlsx" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
