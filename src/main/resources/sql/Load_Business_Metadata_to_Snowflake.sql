@@ -10,6 +10,7 @@ create or replace table DATABASE_METADATA
     "custom.data.world.import.databaseServer" text,
     "custom.data.world.import.databasePort" text
 );
+
 create or replace table SCHEMA_METADATA
 (
     "orgId" text,
@@ -101,7 +102,7 @@ create or replace table LINKS_METADATA
     Target text,
     Association text
 );
-
+select distinct ASSOCIATION from LINKS_METADATA_PROD;
 --truncate table DATABASE_METADATA;
 --truncate table SCHEMA_METADATA;
 --truncate table TABLE_METADATA;
